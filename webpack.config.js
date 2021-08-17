@@ -5,25 +5,37 @@ const MiniCSS = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: './src/js/index.js',
+
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
     },
+
     devServer: {
         contentBase: path.join(__dirname, `public`),
         publicPath: '/public/',
         compress: true,
         port: 9000,
     },
+
     mode: 'development',
+
+    watch: true,
+
     module: {
         rules: [
             {
                 test: /\.scss$/,
                 use: ['style-loader', MiniCSS.loader, 'css-loader', 'sass-loader'],
             },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+            },
         ],
     },
+
     plugins: [
         new Html({
             filename: 'index.html',
