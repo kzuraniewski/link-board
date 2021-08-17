@@ -1,27 +1,34 @@
 {
-  "name": "linkboard",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nick-here/LinkBoard.git"
-  },
-  "author": "nick-here",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nick-here/LinkBoard/issues"
-  },
-  "homepage": "https://github.com/nick-here/LinkBoard#readme",
-  "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
-    "babel-loader": "^8.2.2",
-    "webpack": "^5.50.0",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^3.11.2"
-  }
+    "name": "linkboard",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "webpack",
+        "dev": "webpack serve"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nick-here/LinkBoard.git"
+    },
+    "author": "nick-here",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/nick-here/LinkBoard/issues"
+    },
+    "homepage": "https://github.com/nick-here/LinkBoard#readme",
+    "devDependencies": {
+        "@babel/core": "^7.15.0",
+        "@babel/preset-env": "^7.15.0",
+        "babel-loader": "^8.2.2",
+        "css-loader": "^6.2.0",
+        "html-webpack-plugin": "^5.3.2",
+        "mini-css-extract-plugin": "^2.2.0",
+        "sass": "^1.38.0",
+        "sass-loader": "^12.1.0",
+        "style-loader": "^3.2.1",
+        "webpack": "^5.50.0",
+        "webpack-cli": "^4.8.0",
+        "webpack-dev-server": "^3.11.2"
+    }
 }
