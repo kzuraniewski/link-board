@@ -14,9 +14,29 @@ export default function Tile({ title, link, size }) {
     //         </MDBCardOverlay>
     //     </MDBCard>
     // );
+
+    // Grid size of a tile
+    const sizes = {
+        l: {
+            x: 2,
+            y: 2,
+        },
+        m: {
+            x: 2,
+            y: 1,
+        },
+        s: {
+            x: 1,
+            y: 1,
+        },
+    };
+
+    // dynamic bg image and size
     const style = {
         backgroundImage: `url(${placeholder})`,
         backgroundSize: 'cover',
+        width: sizes[size].x + 'rem',
+        height: sizes[size].y + 'rem',
     };
 
     return (
