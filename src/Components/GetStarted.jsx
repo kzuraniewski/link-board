@@ -1,8 +1,8 @@
 import { MDBCol, MDBRow } from 'mdb-react-ui-kit';
 import React from 'react';
 import Logo from './Logo';
-import badBookmarks from '../images/bad-bookmarks.png';
-import goodBookmarks from '../images/good-bookmarks.png';
+// import badBookmarks from '../images/bad-bookmarks.png';
+// import goodBookmarks from '../images/good-bookmarks.png';
 
 export default function GetStarted() {
     return (
@@ -21,11 +21,11 @@ export default function GetStarted() {
                         </p>
                     </MDBCol>
                     <MDBCol size='md' className='d-flex flex-column align-items-center justify-content-center'>
-                        <img src={badBookmarks} alt='Bad bookmarks' className='img-fluid' />
+                        <img src={'badBookmarks'} alt='Bad bookmarks' className='img-fluid' />
                         <h3>
                             <i className='fas fa-long-arrow-alt-down mt-3 mb-3'></i>
                         </h3>
-                        <img src={goodBookmarks} alt='Good bookmarks' className='img-fluid' />
+                        <img src={'goodBookmarks'} alt='Good bookmarks' className='img-fluid' />
                     </MDBCol>
                 </MDBRow>
             </article>
@@ -39,7 +39,7 @@ export default function GetStarted() {
                         className='d-flex flex-column justify-content-center align-items-stretch'
                     >
                         <h1 className='text-dark'>Store your links in one place</h1>
-                        <p>Manage your board by adding and grouping tiles.</p>
+                        <p>Gain access to your bookmarks from any browser or device.</p>
                     </MDBCol>
                 </MDBRow>
             </article>
