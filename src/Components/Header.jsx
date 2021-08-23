@@ -40,7 +40,7 @@ export default function Header() {
                 <MDBCollapse navbar show={showBasic}>
                     <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
                         <MDBNavbarItem>
-                            <MDBNavbarLink href='#' onClick={() => setShowBasic(false)}>
+                            <MDBNavbarLink href='#/board' onClick={() => setShowBasic(false)}>
                                 Your board
                             </MDBNavbarLink>
                         </MDBNavbarItem>
