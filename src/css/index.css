@@ -8,3 +8,36 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.pointer {
+    cursor: pointer !important;
+}
+
+.btn-edit:hover {
+    color: #1266f1;
+}
+
+/* group */
+.group-content {
+    display: grid;
+    gap: 10px 10px;
+}
+
+.group-arrow {
+    transition: 0.1s;
+}
+
+.group-arrow--hidden {
+    transform: rotate(90deg);
+}
+
+/* tile */
+.tile-mask {
+    background: rgb(194, 194, 194);
+    background: linear-gradient(180deg, rgba(194, 194, 194, 0.6) 0%, rgba(0, 0, 5, 0.9) 80%);
+    background-position: bottom;
+}
+
+.tile-link {
+    font-size: 0.6em;
+}
