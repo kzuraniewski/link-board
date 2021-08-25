@@ -12,17 +12,17 @@ export function Tile({ title, link }) {
 
     return (
         <a
-            className='tile d-block text-light overflow-hidden rounded m-1 d-block'
+            className='tile'
             href={link}
             target='_blank'
             style={style}
             onMouseEnter={() => setEditable(true)}
             onMouseLeave={() => setEditable(false)}
         >
-            <div className='tile-mask w-100 h-100 d-flex flex-column justify-content-end p-2 position-relative'>
+            <div className='tile__mask'>
                 {editable && (
                     <button
-                        className='btn-edit text-light bg-transparent border-0 position-absolute top-0 end-0 mt-2 me-2'
+                        className='tile__btn-edit'
                         onClick={e => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -34,8 +34,8 @@ export function Tile({ title, link }) {
                     </button>
                 )}
 
-                <h5 className='text-truncate user-select-none'>{title}</h5>
-                <p className='tile-link text-truncate user-select-none mb-0'>{link}</p>
+                <h5 className='tile__title'>{title}</h5>
+                <p className='tile__link'>{link}</p>
             </div>
         </a>
     );

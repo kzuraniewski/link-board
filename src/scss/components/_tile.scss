@@ -1,23 +1,32 @@
 .tile {
-    width: 100%;
+    @include ext-each(d-block, text-light, overflow-hidden, rounded, m-1, d-block);
+
+    width: 10rem;
+    height: 10rem;
 
     flex-shrink: 0;
 
     background-size: cover;
     cursor: default;
 
-    @include media-breakpoint-up(sm) {
-        width: 10rem;
-        height: 10rem;
+    &__mask {
+        @include ext-each(w-100, h-100, d-flex, flex-column, justify-content-end, p-2, position-relative);
+
+        background: linear-gradient(180deg, rgba(194, 194, 194, 0.6) 0%, rgba(0, 0, 5, 0.9) 80%);
+        background-position: bottom;
     }
-}
 
-.tile-mask {
-    background: rgb(194, 194, 194);
-    background: linear-gradient(180deg, rgba(194, 194, 194, 0.6) 0%, rgba(0, 0, 5, 0.9) 80%);
-    background-position: bottom;
-}
+    &__btn-edit {
+        @include ext-each(text-light, bg-transparent, border-0, position-absolute, top-0, end-0, mt-2, me-2);
+    }
 
-.tile-link {
-    font-size: 0.6em;
+    &__title {
+        @include ext-each(text-truncate, user-select-none);
+    }
+
+    &__link {
+        @include ext-each(text-truncate, user-select-none, mb-0);
+
+        font-size: 0.6em;
+    }
 }
