@@ -13,6 +13,13 @@
 
     @include ext-each(w-100);
 
+    transition: 0.1s;
+
     color: $secondary !important;
     border-color: $secondary !important;
+
+    &:hover {
+        background-color: $secondary !important;
+        color: $light !important;
+    }
 }
