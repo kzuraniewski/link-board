@@ -1,4 +1,4 @@
-import { MDBCollapse, MDBContainer } from 'mdb-react-ui-kit';
+import { MDBCol, MDBCollapse, MDBContainer, MDBRow } from 'mdb-react-ui-kit';
 import React, { useState } from 'react';
 import placeholder from '../images/placeholder.jpeg';
 
@@ -6,54 +6,36 @@ function Tile({ position, size, title, link }) {
     const [editMode, setEditMode] = useState(false);
     const [editable, setEditable] = useState(false);
 
-    // Grid size of a tile
-    const sizes = {
-        l: {
-            x: 2,
-            y: 2,
-        },
-        m: {
-            x: 2,
-            y: 1,
-        },
-        s: {
-            x: 1,
-            y: 1,
-        },
-    };
-
     // dynamic bg image and size
     const style = {
         backgroundImage: `url(${placeholder})`,
         backgroundSize: 'cover',
 
-        width: sizes[size].x * 5 + 'rem',
-        height: sizes[size].y * 5 + 'rem',
-
-        gridRowStart: position[0],
-        gridRowEnd: position[0] + sizes[size].x,
-        gridColumnStart: position[1],
-        gridColumnEnd: position[1] + sizes[size].y,
     };
 
     return (
         <div
-            className='text-light overflow-hidden rounded'
+            className='text-light overflow-hidden rounded m-1 d-inline-block'
             style={style}
             onMouseEnter={() => setEditable(true)}
             onMouseLeave={() => setEditable(false)}
+            onClick={() => (location.href = link)}
         >
             <div className='tile-mask w-100 h-100 d-flex flex-column justify-content-end p-2 position-relative'>
                 {editable && (
-                    <button className='btn-edit text-light bg-transparent border-0 position-absolute top-0 end-0 mt-2 me-2'>
+                    <button
+                        className='btn-edit text-light bg-transparent border-0 position-absolute top-0 end-0 mt-2 me-2'
+                        onClick={e => {
+                            e.preventDefault();
+                            setEditMode(editMode => !editMode);
+                        }}
+                    >
                         <i className='fas fa-pen'></i>
                     </button>
                 )}
 
-                <a href='#' className='text-light'>
-                    <h5 className='text-truncate user-select-none'>{title}</h5>
-                    <p className='tile-link text-truncate user-select-none mb-0'>{link}</p>
-                </a>
+                <h5 className='text-truncate user-select-none'>{title}</h5>
+                <p className='tile-link text-truncate user-select-none mb-0'>{link}</p>
             </div>
         </div>
     );
@@ -74,7 +56,7 @@ function BoardGroup({ name, children = null }) {
                 ></i>
             </div>
             <MDBCollapse show={show} className='p-2'>
-                <div className='group-content'>{children}</div>
+                <div className='d-flex h-100'>{children}</div>
             </MDBCollapse>
         </div>
     );

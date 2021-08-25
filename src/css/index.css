@@ -32,6 +32,11 @@ code {
 }
 
 /* tile */
+.tile {
+    width: 10rem;
+    height: 10rem;
+}
+
 .tile-mask {
     background: rgb(194, 194, 194);
     background: linear-gradient(180deg, rgba(194, 194, 194, 0.6) 0%, rgba(0, 0, 5, 0.9) 80%);
