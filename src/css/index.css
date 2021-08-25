@@ -16,22 +16,3 @@ code {
 .btn-edit:hover {
     color: #1266f1;
 }
-
-/* tile */
-.tile {
-    width: 10rem;
-    height: 10rem;
-
-    background-size: cover;
-    cursor: default;
-}
-
-.tile-mask {
-    background: rgb(194, 194, 194);
-    background: linear-gradient(180deg, rgba(194, 194, 194, 0.6) 0%, rgba(0, 0, 5, 0.9) 80%);
-    background-position: bottom;
-}
-
-.tile-link {
-    font-size: 0.6em;
-}

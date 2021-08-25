@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Components/Header';
-import Board from './Components/Board';
+import Board from './Components/board/Board';
 import GetStarted from './Components/GetStarted';
 import About from './Components/About';
 import Intro from './Components/Intro';
