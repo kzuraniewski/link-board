@@ -1,6 +1,4 @@
 .logo {
-    @include ext-each(text-light);
-
     &--link {
         @include ext-each(text-decoration-underline);
     }
