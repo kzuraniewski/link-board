@@ -35,6 +35,9 @@ code {
 .tile {
     width: 10rem;
     height: 10rem;
+
+    background-size: cover;
+    cursor: default;
 }
 
 .tile-mask {
