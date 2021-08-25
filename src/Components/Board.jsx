@@ -9,8 +9,6 @@ function Tile({ title, link }) {
     // dynamic bg image and size
     const style = {
         backgroundImage: `url(${placeholder})`,
-        backgroundSize: 'cover',
-        cursor: 'default'
     };
 
     return (
