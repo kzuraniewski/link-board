@@ -5,15 +5,13 @@ export default function Logo({ small = false }) {
         <>
             {small ? (
                 <>
-                    <span className='text-white logo-link'>L</span>
-                    <span className='text-light'>B</span>
+                    <span className='logo logo--link'>L</span>
+                    <span className='logo'>B</span>
                 </>
             ) : (
                 <>
-                    <span className='text-light'>
-                        <span className='text-white logo-link'>Link</span>
-                        Board
-                    </span>
+                    <span className='logo logo--link'>Link</span>
+                    <span className='logo'>Board</span>
                 </>
             )}
         </>
