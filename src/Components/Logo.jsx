@@ -6,7 +6,7 @@ export default function Logo({ small = false }) {
             {small ? (
                 <>
                     <span className='text-white logo-link'>L</span>
-                    <span className='text-dark'>B</span>
+                    <span className='text-light'>B</span>
                 </>
             ) : (
                 <>
