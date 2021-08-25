@@ -54,7 +54,7 @@ export default function Board() {
     }, []);
 
     return (
-        <MDBContainer className='py-4'>
+        <MDBContainer className='board'>
             {/* translate groups into components */}
             {groups.map(({ name, open, tiles }, index) => (
                 <BoardGroup key={index} name={name} open={open}>
