@@ -3,25 +3,21 @@
 
 $primary: #303841;
 $secondary: #00adb5;
-$success: #00b74a;
-$info: #39c0ed;
-$warning: #ffa900;
-$danger: #f93154;
-$light: #fbfbfb;
-$dark: #262626;
+$light: #eeeeee;
+$accent: #ff5722;
 
 $theme-colors: (
     "primary": $primary,
     "secondary": $secondary,
-    "success": $success,
-    "info": $info,
-    "warning": $warning,
-    "danger": $danger,
     "light": $light,
-    "dark": $dark,
+    "accent": $accent,
 );
 
 @import "../../node_modules/mdb-react-ui-kit/dist/scss/bootstrap/bootstrap";
+
+body {
+    background-color: #eeeeee;
+}
 
 .header {
     background-color: $primary !important;
