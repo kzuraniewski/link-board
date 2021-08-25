@@ -5,6 +5,10 @@
 
     &__content-container {
         @include ext-each(d-flex, flex-column, justify-content-center);
+
+        &.article__content-container--center {
+            @include ext-each(align-items-center);
+        }
     }
 
     &__big {
@@ -17,10 +21,6 @@
 
     &__row {
         @include ext-each(flex-wrap-reverse);
-    }
-
-    &__col {
-        @include ext-each(d-flex, flex-column, align-items-center, justify-content-center);
     }
 
     &__cta {

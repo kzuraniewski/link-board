@@ -10,7 +10,7 @@ export default function Intro() {
             <div className='article__group'>
                 <MDBContainer>
                     <MDBRow className='article__row'>
-                        <MDBCol size='md' className='article__col'>
+                        <MDBCol size='md' className='article__content-container'>
                             <h1 className='article__big'>
                                 Too many bookmarks? <Logo /> is for you!
                             </h1>
@@ -21,12 +21,20 @@ export default function Intro() {
                                 Get started
                             </MDBBtn>
                         </MDBCol>
-                        <MDBCol size='md' className='article__col'>
-                            <img src={'badBookmarks'} alt='Bad bookmarks' className='article__image' />
+                        <MDBCol size='md' className='article__content-container article__content-container--center'>
+                            <img
+                                src={'badBookmarks'}
+                                alt='Bad bookmarks'
+                                className='article__image'
+                            />
 
                             <i className='fas fa-long-arrow-alt-down article__arrow'></i>
 
-                            <img src={'goodBookmarks'} alt='Good bookmarks' className='article__image' />
+                            <img
+                                src={'goodBookmarks'}
+                                alt='Good bookmarks'
+                                className='article__image'
+                            />
                         </MDBCol>
                     </MDBRow>
                 </MDBContainer>
@@ -34,8 +42,8 @@ export default function Intro() {
 
             <div className='article__group'>
                 <MDBContainer>
-                    <MDBRow>
-                        <MDBCol size='md' className='article__content-container'>
+                    <MDBRow className='article__row'>
+                        <MDBCol size='md' className='article__content-container article__content-container--center'>
                             <img src='asd' alt='Board preview' className='article__image' />
                         </MDBCol>
 
