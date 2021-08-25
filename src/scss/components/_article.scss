@@ -1,0 +1,35 @@
+.article {
+    &__group {
+        @include ext-each(p-5, mt-5);
+    }
+
+    &__content-container {
+        @include ext-each(d-flex, flex-column, justify-content-center);
+    }
+
+    &__big {
+        @include ext-each(text-dark);
+    }
+
+    &__image {
+        @include ext-each(img-fluid);
+    }
+
+    &__row {
+        @include ext-each(flex-wrap-reverse);
+    }
+
+    &__col {
+        @include ext-each(d-flex, flex-column, align-items-center, justify-content-center);
+    }
+
+    &__cta {
+        @include ext-each(mt-3, ms-0, me-auto);
+    }
+
+    &__arrow {
+        @include ext-each(mt-3, mb-3);
+
+        font-size: 2rem;
+    }
+}
