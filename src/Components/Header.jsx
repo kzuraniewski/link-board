@@ -22,9 +22,8 @@ export default function Header() {
     const [showBasic, setShowBasic] = useState(false);
 
     return (
-        // <MDBNavbar expand='lg' dark bgColor='primary'>
         <MDBNavbar expand='lg' dark className='header'>
-            <MDBContainer className='d-flex justify-content-between'>
+            <MDBContainer className='header__navbar-container'>
                 <MDBNavbarBrand href='#'>
                     <Logo />
                 </MDBNavbarBrand>
@@ -39,7 +38,7 @@ export default function Header() {
                 </MDBNavbarToggler>
 
                 <MDBCollapse navbar show={showBasic}>
-                    <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+                    <MDBNavbarNav className='header__nav'>
                         <MDBNavbarItem>
                             <MDBNavbarLink href='#/board' onClick={() => setShowBasic(false)}>
                                 Your board
