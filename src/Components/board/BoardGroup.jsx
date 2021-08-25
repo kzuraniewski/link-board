@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 
 export function BoardGroup({ name, open, children = null }) {
     const [show, setShow] = useState(open);
+    const [editMode, setEditMode] = useState(name.length ? false : true);
+
+    useEffect(() => {}, [editMode]);
 
     return (
         <div className={`mb-3 p-1 group rounded text-light`}>
@@ -10,7 +13,14 @@ export function BoardGroup({ name, open, children = null }) {
                 className='w-100 p-1 d-flex justify-content-between user-select-none pointer'
                 onClick={() => setShow(show => !show)}
             >
-                <h6 className='my-auto'>{name}</h6>
+                {/* name or input */}
+                {editMode ? (
+                    <input type='text' placeholder='Name' className='group__input bg-transparent text-light border-0 border-bottom border-light' onClick={e => e.stopPropagation()} />
+                ) : (
+                    <h6 className='my-auto'>{name}</h6>
+                )}
+
+                {/* Icons */}
                 <div className='d-flex'>
                     <button
                         className='btn-blank text-light me-5'
@@ -30,8 +40,15 @@ export function BoardGroup({ name, open, children = null }) {
                 </div>
             </div>
 
+            {/* Group content */}
             <MDBCollapse show={show}>
-                <div className='d-flex flex-wrap'>{children}</div>
+                {children.length ? (
+                    <div className='d-flex flex-wrap'>{children}</div>
+                ) : (
+                    <div className='p-5 d-flex justify-content-center align-items-center opacity-50'>
+                        This group has no links yet
+                    </div>
+                )}
             </MDBCollapse>
         </div>
     );

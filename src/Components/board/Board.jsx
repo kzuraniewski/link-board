@@ -17,7 +17,17 @@ function AddGroup({ onAdd }) {
 export default function Board() {
     const [groups, setGroups] = useState([]);
 
-    const addGroup = () => {};
+    const addGroup = () => {
+        // add new empty editable group
+        setGroups(groups => [
+            ...groups,
+            {
+                name: '',
+                open: true,
+                tiles: [],
+            },
+        ]);
+    };
 
     //test
     useEffect(() => {

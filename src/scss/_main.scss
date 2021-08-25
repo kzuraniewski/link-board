@@ -15,6 +15,10 @@ $theme-colors: (
 
 @import "../../node_modules/mdb-react-ui-kit/dist/scss/bootstrap/bootstrap";
 
+html {
+    overflow-y: scroll;
+}
+
 body {
     background-color: #eeeeee;
 }

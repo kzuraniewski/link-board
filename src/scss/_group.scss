@@ -14,4 +14,9 @@
             opacity: 0;
         }
     }
+
+    &__input::placeholder {
+        color: $light;
+        opacity: 0.5;
+    }
 }
