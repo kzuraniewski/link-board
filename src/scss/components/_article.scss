@@ -1,6 +1,10 @@
 .article {
     &__group {
         @include ext-each(p-5, mt-5);
+
+        &:nth-of-type(2n) {
+            background-color: $secondary;
+        }
     }
 
     &__content-container {
@@ -25,6 +29,8 @@
 
     &__cta {
         @include ext-each(mt-3, ms-0, me-auto);
+
+        background-color: $accent !important;
     }
 
     &__arrow {
