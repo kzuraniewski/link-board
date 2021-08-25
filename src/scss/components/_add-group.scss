@@ -1,0 +1,18 @@
+.add-group {
+    // @include ext-each(
+    //     p-2,
+    //     btn-blank,
+    //     d-flex,
+    //     align-items-center,
+    //     justify-content-center,
+    //     text-light,
+    //     add-group,
+    //     rounded,
+    //     w-100
+    // );
+
+    @include ext-each(w-100);
+
+    color: $secondary !important;
+    border-color: $secondary !important;
+}

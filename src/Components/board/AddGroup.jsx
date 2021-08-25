@@ -1,12 +1,14 @@
+import { MDBBtn } from 'mdb-react-ui-kit';
 import React from 'react';
 
 export function AddGroup({ onAdd }) {
     return (
-        <button
-            className='p-2 btn-blank d-flex align-items-center justify-content-center text-light bg-secondary add-group rounded w-100'
+        <MDBBtn
+            className='add-group'
+            outline
             onClick={onAdd}
         >
             <i className='fas fa-plus'></i>
-        </button>
+        </MDBBtn>
     );
 }
