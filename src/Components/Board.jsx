@@ -1,5 +1,5 @@
 import { MDBCol, MDBCollapse, MDBContainer, MDBRow } from 'mdb-react-ui-kit';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import placeholder from '../images/placeholder.jpeg';
 
 function Tile({ title, link }) {
@@ -45,15 +45,29 @@ function BoardGroup({ name, children = null }) {
     const [show, setShow] = useState(false);
 
     return (
-        <div className='mb-3'>
+        <div className={`mb-3 rounded p-1 group${show ? '' : ' group--hidden'}`}>
             <div
                 className='d-flex justify-content-between user-select-none pointer'
                 onClick={() => setShow(show => !show)}
             >
                 <h6>{name}</h6>
-                <i
-                    className={`fas fa-sort-down group-arrow${show ? '' : ' group-arrow--hidden'}`}
-                ></i>
+                <div>
+                    <button
+                        className='btn-blank'
+                        onClick={e => {
+                            e.stopPropagation();
+                        }}
+                    >
+                        <i
+                            className={`fas fa-plus group__add${show ? '' : ' group__add--hidden'}`}
+                        ></i>
+                    </button>
+                    <i
+                        className={`fas fa-sort-down group__arrow ms-5${
+                            show ? '' : ' group__arrow--hidden'
+                        }`}
+                    ></i>
+                </div>
             </div>
             <MDBCollapse show={show} className='p-2'>
                 <div className='d-flex h-100'>{children}</div>
@@ -63,15 +77,54 @@ function BoardGroup({ name, children = null }) {
 }
 
 export default function Board() {
+    const [groups, setGroups] = useState([]);
+
+    //test
+    useEffect(() => {
+        setGroups([
+            {
+                name: 'General',
+                tiles: [
+                    {
+                        title: 'Lorem',
+                        link: 'https://google.com',
+                    },
+                    {
+                        title: 'Ipsum',
+                        link: 'https://google.com',
+                    },
+                    {
+                        title: 'Dolor',
+                        link: 'https://google.com',
+                    },
+                ],
+            },
+            {
+                name: 'Group test',
+                tiles: [
+                    {
+                        title: 'Sit',
+                        link: 'https://googlr.com',
+                    },
+                ],
+            },
+        ]);
+    }, []);
+
+    useEffect(() => {
+        console.log(groups);
+    }, [groups]);
+
     return (
         <MDBContainer className='bg-light text-dark shadow-2-strong rounded p-4 my-3'>
-            <BoardGroup name='Group 1'>
-                <Tile title='Lorem ipsum' link='https://google.com' />
-                <Tile title='Lorem ipsum' link='https://google.com' />
-            </BoardGroup>
-            <BoardGroup name='Group 2'>
-                <Tile title='Lorem ipsum' link='https://google.com' />
-            </BoardGroup>
+            {/* translate groups into components */}
+            {groups.map(({ name, tiles }, index) => (
+                <BoardGroup key={index} name={name}>
+                    {tiles.map(({ title, link }, index) => (
+                        <Tile key={index} title={title} link={link} />
+                    ))}
+                </BoardGroup>
+            ))}
         </MDBContainer>
     );
 }
