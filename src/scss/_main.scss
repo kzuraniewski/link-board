@@ -1,19 +1,7 @@
-// @import "../../node_modules/mdb-react-ui-kit/dist/scss/bootstrap/variables";
-// @import "../../node_modules/mdb-react-ui-kit/dist/scss/bootstrap/functions";
-
 $primary: #303841;
 $secondary: #00adb5;
 $light: #eeeeee;
 $accent: #ff5722;
-
-$theme-colors: (
-    "primary": $primary,
-    "secondary": $secondary,
-    "light": $light,
-    "accent": $accent,
-);
-
-@import "../../node_modules/mdb-react-ui-kit/dist/scss/bootstrap/bootstrap";
 
 html {
     overflow-y: scroll;
