@@ -14,6 +14,7 @@ export function Tile({ title, link }) {
         <a
             className='tile d-block text-light overflow-hidden rounded m-1 d-block'
             href={link}
+            target='_blank'
             style={style}
             onMouseEnter={() => setEditable(true)}
             onMouseLeave={() => setEditable(false)}
