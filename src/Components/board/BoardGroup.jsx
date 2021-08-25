@@ -5,7 +5,7 @@ export function BoardGroup({ name, children = null }) {
     const [show, setShow] = useState(false);
 
     return (
-        <div className={`mb-3 p-1 bg-light border border-primary border-2 rounded`}>
+        <div className={`mb-3 p-1 group rounded text-light`}>
             <div
                 className='btn-blank w-100 p-1 d-flex justify-content-between user-select-none pointer'
                 onClick={() => setShow(show => !show)}
@@ -13,7 +13,7 @@ export function BoardGroup({ name, children = null }) {
                 <h6 className='my-auto'>{name}</h6>
                 <div className='d-flex'>
                     <button
-                        className='btn-blank'
+                        className='btn-blank text-light'
                         onClick={e => {
                             e.stopPropagation();
                         }}

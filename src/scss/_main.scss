@@ -23,12 +23,12 @@ $theme-colors: (
 
 @import "../../node_modules/mdb-react-ui-kit/dist/scss/bootstrap/bootstrap";
 
-body {
-    background-color: $secondary !important;
-}
-
 .header {
     background-color: $primary !important;
+}
+
+.group {
+    background-color: $secondary !important;
 }
 
 // temporary
