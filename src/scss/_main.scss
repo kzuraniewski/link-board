@@ -9,25 +9,15 @@ html {
 
 body {
     background-color: #eeeeee;
+    margin: 0;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .header {
-    background-color: $primary !important;
+    background-color: $primary;
 }
-
-.group {
-    background-color: $secondary !important;
-}
-
-// temporary
-.bg-primary {
-    background-color: $primary !important;
-}
-
-.bg-secondary {
-    background-color: $secondary !important;
-}
-//
 
 .logo-link {
     text-decoration: underline;
@@ -36,4 +26,16 @@ body {
 .btn-blank {
     border: none;
     background: none;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
+
+.btn-edit:hover {
+    color: #1266f1;
 }

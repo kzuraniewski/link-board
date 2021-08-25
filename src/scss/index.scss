@@ -1,5 +1,8 @@
 @import "../../node_modules/mdb-react-ui-kit/dist/scss/bootstrap/bootstrap";
 
+@import "utils/reset";
+@import "utils/bs-mixin";
+
 @import "main";
-@import "group";
-@import "tile";
+
+@import "components";

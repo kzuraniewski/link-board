@@ -1,0 +1,5 @@
+@mixin bs-mixin($classes...) {
+    @each $class in $classes {
+        @extend #{$class};
+    }
+}
