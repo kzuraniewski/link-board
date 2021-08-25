@@ -1,18 +1,8 @@
 import { MDBContainer } from 'mdb-react-ui-kit';
 import React, { useEffect, useState } from 'react';
+import { AddGroup } from './AddGroup';
 import { BoardGroup } from './BoardGroup';
 import { Tile } from './Tile';
-
-function AddGroup({ onAdd }) {
-    return (
-        <button
-            className='p-2 btn-blank d-flex align-items-center justify-content-center text-light bg-secondary add-group rounded w-100'
-            onClick={onAdd}
-        >
-            <i className='fas fa-plus'></i>
-        </button>
-    );
-}
 
 export default function Board() {
     const [groups, setGroups] = useState([]);

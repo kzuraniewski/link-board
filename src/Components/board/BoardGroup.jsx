@@ -15,7 +15,14 @@ export function BoardGroup({ name, open, children = null }) {
             >
                 {/* name or input */}
                 {editMode ? (
-                    <input type='text' placeholder='Name' className='group__input bg-transparent text-light border-0 border-bottom border-light' onClick={e => e.stopPropagation()} />
+                    <input
+                        type='text'
+                        placeholder='Name'
+                        className='group__input bg-transparent text-light border-0 border-bottom border-light'
+                        onClick={e => {
+                            e.stopPropagation();
+                        }}
+                    />
                 ) : (
                     <h6 className='my-auto'>{name}</h6>
                 )}
