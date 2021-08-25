@@ -22,7 +22,8 @@ export default function Header() {
     const [showBasic, setShowBasic] = useState(false);
 
     return (
-        <MDBNavbar expand='lg' light bgColor='light'>
+        // <MDBNavbar expand='lg' dark bgColor='primary'>
+        <MDBNavbar expand='lg' dark className='header'>
             <MDBContainer className='d-flex justify-content-between'>
                 <MDBNavbarBrand href='#'>
                     <Logo />

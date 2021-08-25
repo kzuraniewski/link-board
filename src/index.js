@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/reset.css';
 import './css/index.css';
-import './scss/main.scss';
+import './scss/index.scss';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';

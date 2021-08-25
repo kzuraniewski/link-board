@@ -1,0 +1,23 @@
+.group {
+    transition: 0.1s;
+
+    &--hidden {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &__arrow {
+        transition: 0.1s;
+
+        &--hidden {
+            transform: rotate(90deg);
+        }
+    }
+
+    &__add {
+        transition: 0.1s;
+
+        &--hidden {
+            opacity: 0;
+        }
+    }
+}

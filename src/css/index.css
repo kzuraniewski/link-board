@@ -17,20 +17,6 @@ code {
     color: #1266f1;
 }
 
-/* group */
-.group-content {
-    display: grid;
-    gap: 10px 10px;
-}
-
-.group-arrow {
-    transition: 0.1s;
-}
-
-.group-arrow--hidden {
-    transform: rotate(90deg);
-}
-
 /* tile */
 .tile {
     width: 10rem;
