@@ -1,5 +1,38 @@
-.group {
+.board-group {
+    @include ext-each(mb-3, p-1, rounded, text-light);
+
     background-color: $secondary;
+
+    &__topbar {
+        @include ext-each(w-100, p-1, d-flex, justify-content-between, user-select-none, pointer);
+    }
+
+    &__name {
+        @include ext-each(my-auto);
+    }
+
+    &__name-input {
+        @include ext-each(bg-transparent, text-light, border-0, border-bottom, border-light);
+
+        &::placeholder {
+            color: $light;
+            opacity: 0.5;
+        }
+    }
+
+    &__icons-container {
+        @include ext-each(d-flex);
+    }
+
+    &__btn-add {
+        @include ext-each(btn-blank, text-light, me-5);
+
+        transition: 0.1s;
+
+        &--hidden {
+            opacity: 0;
+        }
+    }
 
     &__arrow {
         transition: 0.1s;
@@ -9,16 +42,13 @@
         }
     }
 
-    &__add {
-        transition: 0.1s;
-
-        &--hidden {
-            opacity: 0;
-        }
+    &__tiles-container {
+        @include ext-each(d-flex, flex-wrap);
     }
 
-    &__input::placeholder {
-        color: $light;
+    &__empty {
+        @include ext-each(p-5, d-flex, justify-content-center, align-items-center);
+
         opacity: 0.5;
     }
 }

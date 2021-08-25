@@ -8,40 +8,35 @@ export function BoardGroup({ name, open, children = null }) {
     useEffect(() => {}, [editMode]);
 
     return (
-        <div className={`mb-3 p-1 group rounded text-light`}>
-            <div
-                className='w-100 p-1 d-flex justify-content-between user-select-none pointer'
-                onClick={() => setShow(show => !show)}
-            >
+        <div className='board-group'>
+            <div className='board-group__topbar' onClick={() => setShow(show => !show)}>
                 {/* name or input */}
                 {editMode ? (
                     <input
                         type='text'
                         placeholder='Name'
-                        className='group__input bg-transparent text-light border-0 border-bottom border-light'
+                        className='board-group__name-input'
                         onClick={e => {
                             e.stopPropagation();
                         }}
                     />
                 ) : (
-                    <h6 className='my-auto'>{name}</h6>
+                    <h6 className='board-group__name'>{name}</h6>
                 )}
 
                 {/* Icons */}
-                <div className='d-flex'>
+                <div className='board-group__icons-container'>
                     <button
-                        className='btn-blank text-light me-5'
+                        className={`board-group__btn-add${show ? '' : ' board-group__btn-add--hidden'}`}
                         onClick={e => {
                             if (show) e.stopPropagation();
                         }}
                     >
-                        <i
-                            className={`fas fa-plus group__add${show ? '' : ' group__add--hidden'}`}
-                        ></i>
+                        <i className='fas fa-plus'></i>
                     </button>
                     <i
-                        className={`fas fa-sort-down group__arrow${
-                            show ? '' : ' group__arrow--hidden'
+                        className={`fas fa-sort-down board-group__arrow${
+                            show ? '' : ' board-group__arrow--hidden'
                         }`}
                     ></i>
                 </div>
@@ -50,9 +45,9 @@ export function BoardGroup({ name, open, children = null }) {
             {/* Group content */}
             <MDBCollapse show={show}>
                 {children.length ? (
-                    <div className='d-flex flex-wrap'>{children}</div>
+                    <div className='board-group__tiles-container'>{children}</div>
                 ) : (
-                    <div className='p-5 d-flex justify-content-center align-items-center opacity-50'>
+                    <div className='board-group__empty'>
                         This group has no links yet
                     </div>
                 )}
