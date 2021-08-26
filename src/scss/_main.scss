@@ -15,6 +15,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/// General classes
+
 .logo-link {
     text-decoration: underline;
 }
@@ -22,10 +28,6 @@ body {
 .btn-blank {
     border: none;
     background: none;
-}
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .pointer {
