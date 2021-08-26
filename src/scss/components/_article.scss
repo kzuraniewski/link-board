@@ -4,6 +4,15 @@
 
         &:nth-of-type(2n) {
             background-color: $secondary;
+            color: $light;
+
+            .article__big {
+                @include ext-each(text-white);
+            }
+
+            .fas {
+                color: $light;
+            }
         }
     }
 

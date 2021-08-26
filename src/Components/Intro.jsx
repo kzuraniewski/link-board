@@ -51,6 +51,24 @@ export default function Intro() {
 
             <div className='article__group'>
                 <MDBContainer>
+                    <div className='article__content-container article__content-container--center'>
+                        <h1 className='article__big'>
+                            Over <span className='accent'>1</span> users worldwide
+                        </h1>
+                        <p>Join our community today!</p>
+
+                        {/* icons */}
+                        <div className='article__icon-container'>
+                            <i className='fas fa-mobile'></i>
+                            <i className='fas fa-tablet'></i>
+                            <i className='fas fa-laptop'></i>
+                        </div>
+                    </div>
+                </MDBContainer>
+            </div>
+
+            <div className='article__group'>
+                <MDBContainer>
                     <MDBRow className='article__row'>
                         <MDBCol
                             size='md'
@@ -64,24 +82,6 @@ export default function Intro() {
                             <p>Gain access to your bookmarks from any browser or device.</p>
                         </MDBCol>
                     </MDBRow>
-                </MDBContainer>
-            </div>
-
-            <div className='article__group'>
-                <MDBContainer>
-                    <div className='article__content-container article__content-container--center'>
-                        <h1 className='article__big'>
-                            Over <span className='accent'>1</span> users worldwide
-                        </h1>
-                        <p>Join our community today!</p>
-                        
-                        {/* icons */}
-                        <div className='article__icon-container'>
-                            <i className='fas fa-mobile'></i>
-                            <i className="fas fa-tablet"></i>
-                            <i className="fas fa-laptop"></i>
-                        </div>
-                    </div>
                 </MDBContainer>
             </div>
         </article>
