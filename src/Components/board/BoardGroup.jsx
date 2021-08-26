@@ -1,11 +1,20 @@
 import { MDBCollapse } from 'mdb-react-ui-kit';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
-export function BoardGroup({ name, open, children = null }) {
+export function BoardGroup({ name, setName, open, children = null }) {
     const [show, setShow] = useState(open);
     const [editMode, setEditMode] = useState(name.length ? false : true);
+    const [inputValue, setInputValue] = useState(name);
 
-    useEffect(() => {}, [editMode]);
+    const nameInput = useRef(null);
+
+    useEffect(() => {
+        if (editMode) nameInput.current.focus();
+        else {
+            // set group name
+            if (inputValue !== name) setName(inputValue);
+        }
+    }, [editMode]);
 
     return (
         <div className='board-group'>
@@ -13,11 +22,21 @@ export function BoardGroup({ name, open, children = null }) {
                 {/* name or input */}
                 {editMode ? (
                     <input
+                        ref={nameInput}
                         type='text'
                         placeholder='Name'
                         className='board-group__name-input'
+                        value={inputValue}
+                        onChange={e => setInputValue(e.target.value)}
                         onClick={e => {
+                            // TODO adding tiles
                             e.stopPropagation();
+                        }}
+                        onBlur={() => {
+                            setEditMode(false);
+                        }}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') setEditMode(false);
                         }}
                     />
                 ) : (
@@ -27,7 +46,9 @@ export function BoardGroup({ name, open, children = null }) {
                 {/* Icons */}
                 <div className='board-group__icons-container'>
                     <button
-                        className={`board-group__btn-add${show ? '' : ' board-group__btn-add--hidden'}`}
+                        className={`board-group__btn-add${
+                            show ? '' : ' board-group__btn-add--hidden'
+                        }`}
                         onClick={e => {
                             if (show) e.stopPropagation();
                         }}
@@ -47,9 +68,7 @@ export function BoardGroup({ name, open, children = null }) {
                 {children.length ? (
                     <div className='board-group__tiles-container'>{children}</div>
                 ) : (
-                    <div className='board-group__empty'>
-                        This group has no links yet
-                    </div>
+                    <div className='board-group__empty'>This group has no links yet</div>
                 )}
             </MDBCollapse>
         </div>

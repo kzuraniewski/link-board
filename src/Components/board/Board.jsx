@@ -53,11 +53,26 @@ export default function Board() {
         ]);
     }, []);
 
+    useEffect(() => console.log(groups), [groups]);
+
     return (
         <MDBContainer className='board'>
             {/* translate groups into components */}
             {groups.map(({ name, open, tiles }, index) => (
-                <BoardGroup key={index} name={name} open={open}>
+                <BoardGroup
+                    key={index}
+                    name={name}
+                    open={open}
+                    setName={name => {
+                        // Update board's name in the groups object
+                        setGroups(groups => {
+                            const t = [...groups];
+                            t[index].name = name;
+
+                            return t;
+                        });
+                    }}
+                >
                     {tiles.map(({ title, link }, index) => (
                         <Tile key={index} title={title} link={link} />
                     ))}
