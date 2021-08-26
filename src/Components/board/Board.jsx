@@ -53,8 +53,6 @@ export default function Board() {
         ]);
     }, []);
 
-    useEffect(() => console.log(groups), [groups]);
-
     return (
         <MDBContainer className='board'>
             {/* translate groups into components */}
