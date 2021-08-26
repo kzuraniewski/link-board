@@ -17,11 +17,23 @@ export default function Intro() {
                             <p>
                                 Clean up your bookmarks bar by moving them to <Logo small />.
                             </p>
-                            <MDBBtn href='#/getstarted' className='article__cta'>
-                                Get started
-                            </MDBBtn>
+
+                            <div className='btn-container'>
+                                <MDBBtn href='#/getstarted' className='article__cta'>
+                                    Get started
+                                </MDBBtn>
+                                <MDBBtn
+                                    href='#/board'
+                                    className='article__cta article__cta--alt'
+                                >
+                                    Your board
+                                </MDBBtn>
+                            </div>
                         </MDBCol>
-                        <MDBCol size='md' className='article__content-container article__content-container--center'>
+                        <MDBCol
+                            size='md'
+                            className='article__content-container article__content-container--center'
+                        >
                             <img
                                 src={'badBookmarks'}
                                 alt='Bad bookmarks'
@@ -43,7 +55,10 @@ export default function Intro() {
             <div className='article__group'>
                 <MDBContainer>
                     <MDBRow className='article__row'>
-                        <MDBCol size='md' className='article__content-container article__content-container--center'>
+                        <MDBCol
+                            size='md'
+                            className='article__content-container article__content-container--center'
+                        >
                             <img src='asd' alt='Board preview' className='article__image' />
                         </MDBCol>
 

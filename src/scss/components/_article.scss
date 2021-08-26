@@ -28,9 +28,15 @@
     }
 
     &__cta {
-        @include ext-each(mt-3, ms-0, me-auto);
+        @include ext-each(me-3);
 
         background-color: $accent !important;
+    }
+
+    &__cta--alt {
+        background: none !important;
+        border: 2px solid $accent !important;
+        color: $accent !important;
     }
 
     &__arrow {

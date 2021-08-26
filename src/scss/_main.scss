@@ -37,3 +37,7 @@ code {
 .btn-edit:hover {
     color: #1266f1;
 }
+
+.btn-container {
+    @include ext-each(d-flex);
+}
