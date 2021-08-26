@@ -19,6 +19,11 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+a:focus {
+    outline: 0;
+    border: none;
+}
+
 /// General classes
 
 .logo-link {
