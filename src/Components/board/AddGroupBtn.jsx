@@ -1,7 +1,7 @@
 import { MDBBtn } from 'mdb-react-ui-kit';
 import React from 'react';
 
-export function AddGroup({ onAdd }) {
+export function AddGroupBtn({ onAdd }) {
     return (
         <MDBBtn
             className='add-group'
