@@ -11,13 +11,15 @@ export function GroupName({ name, setName }) {
     const nameInput = useRef(null);
 
     const maxDigits = 20;
+    const defaultName = 'New group';
 
     useEffect(() => {
         // focus input on edit mode or pass the name up to Group element
         if (editMode) nameInput.current.focus();
         else {
             // set group name
-            if (inputValue !== name) setName(inputValue);
+            if (!inputValue.length) setName(defaultName);
+            else if (inputValue !== name) setName(inputValue);
         }
     }, [editMode]);
 
