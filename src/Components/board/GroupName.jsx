@@ -29,7 +29,7 @@ export function GroupName({ name, setName }) {
                 ref={nameInput}
                 type='text'
                 placeholder='Name'
-                className='board-group__name-input'
+                className='name-input'
                 value={inputValue}
                 onChange={e => {
                     const val = e.target.value;
