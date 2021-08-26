@@ -11,6 +11,15 @@
         @include ext-each(my-auto);
     }
 
+    &__name-input {
+        @include ext-each(bg-transparent, text-light, border-0, border-bottom, border-light);
+
+        &::placeholder {
+            color: $light;
+            opacity: 0.5;
+        }
+    }
+
     &__icons-container {
         @include ext-each(d-flex);
     }
