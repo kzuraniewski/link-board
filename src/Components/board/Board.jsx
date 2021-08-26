@@ -1,6 +1,6 @@
 import { MDBContainer } from 'mdb-react-ui-kit';
 import React, { useEffect, useState } from 'react';
-import { AddGroup } from './AddGroup';
+import { AddGroupBtn } from './AddGroupBtn';
 import { BoardGroup } from './BoardGroup';
 import { Tile } from './Tile';
 
@@ -76,7 +76,7 @@ export default function Board() {
                     ))}
                 </BoardGroup>
             ))}
-            <AddGroup onAdd={addGroup} />
+            <AddGroupBtn onAdd={addGroup} />
         </MDBContainer>
     );
 }
