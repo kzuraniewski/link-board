@@ -28,5 +28,6 @@
         @include ext-each(text-truncate, user-select-none, mb-0);
 
         font-size: 0.6em;
+        color: $accent;
     }
 }
