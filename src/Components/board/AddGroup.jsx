@@ -5,6 +5,8 @@ export function AddGroup({ onAdd }) {
     return (
         <MDBBtn
             className='add-group'
+            size='sm'
+            block
             outline
             onClick={onAdd}
         >
