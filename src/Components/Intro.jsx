@@ -22,10 +22,7 @@ export default function Intro() {
                                 <MDBBtn href='#/getstarted' className='article__cta'>
                                     Get started
                                 </MDBBtn>
-                                <MDBBtn
-                                    href='#/board'
-                                    className='article__cta article__cta--alt'
-                                >
+                                <MDBBtn href='#/board' className='article__cta article__cta--alt'>
                                     Your board
                                 </MDBBtn>
                             </div>
@@ -67,6 +64,24 @@ export default function Intro() {
                             <p>Gain access to your bookmarks from any browser or device.</p>
                         </MDBCol>
                     </MDBRow>
+                </MDBContainer>
+            </div>
+
+            <div className='article__group'>
+                <MDBContainer>
+                    <div className='article__content-container article__content-container--center'>
+                        <h1 className='article__big'>
+                            Over <span className='accent'>1</span> users worldwide
+                        </h1>
+                        <p>Join our community today!</p>
+                        
+                        {/* icons */}
+                        <div className='article__icon-container'>
+                            <i className='fas fa-mobile'></i>
+                            <i className="fas fa-tablet"></i>
+                            <i className="fas fa-laptop"></i>
+                        </div>
+                    </div>
                 </MDBContainer>
             </div>
         </article>

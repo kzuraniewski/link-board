@@ -1,6 +1,6 @@
 .article {
     &__group {
-        @include ext-each(p-5, mt-5);
+        padding: 8rem 0;
 
         &:nth-of-type(2n) {
             background-color: $secondary;
@@ -12,6 +12,17 @@
 
         &.article__content-container--center {
             @include ext-each(align-items-center);
+        }
+    }
+
+    &__icon-container {
+        @include ext-each(d-flex, p-2, mt-3);
+
+        .fas {
+            @include ext-each(mx-4);
+
+            font-size: 2.4rem;
+            color: $secondary;
         }
     }
 

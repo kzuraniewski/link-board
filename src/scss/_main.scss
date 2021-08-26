@@ -25,13 +25,17 @@ code {
     text-decoration: underline;
 }
 
+.pointer {
+    cursor: pointer !important;
+}
+
+.accent {
+    color: $accent;
+}
+
 .btn-blank {
     border: none;
     background: none;
-}
-
-.pointer {
-    cursor: pointer !important;
 }
 
 .btn-edit:hover {
