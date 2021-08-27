@@ -19,6 +19,14 @@ export default function Board() {
         ]);
     };
 
+    const setTileData = (groupIndex, tileIndex, tileData) => {
+        setGroups(groups => {
+            let t = [...groups];
+            t[groupIndex].tiles[tileIndex] = { ...tileData };
+            return t;
+        });
+    };
+
     //test
     useEffect(() => {
         setGroups([
@@ -51,28 +59,35 @@ export default function Board() {
                 ],
             },
         ]);
+
+        setTileData(0, 1, { title: 'asdf', link: 'dedasd' });
     }, []);
 
     return (
         <MDBContainer className='board'>
             {/* translate groups into components */}
-            {groups.map(({ name, open, tiles }, index) => (
+            {groups.map(({ name, open, tiles }, groupIndex) => (
                 <BoardGroup
-                    key={index}
+                    key={groupIndex}
                     name={name}
                     open={open}
                     setName={name => {
                         // Update board's name in the groups object
                         setGroups(groups => {
                             const t = [...groups];
-                            t[index].name = name;
+                            t[groupIndex].name = name;
 
                             return t;
                         });
                     }}
                 >
-                    {tiles.map(({ title, link }, index) => (
-                        <Tile key={index} title={title} link={link} />
+                    {tiles.map(({ title, link }, tileIndex) => (
+                        <Tile
+                            key={tileIndex}
+                            title={title}
+                            link={link}
+                            setTileData={tileData => setTileData(groupIndex, tileIndex, tileData)}
+                        />
                     ))}
                 </BoardGroup>
             ))}
