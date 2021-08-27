@@ -4,7 +4,16 @@ import { AddTileBtn } from './AddTileBtn';
 import { CollapseArrow } from './CollapseArrow';
 import { EditableProperty } from './EditableProperty';
 
-export function BoardGroup({ name, setName, open, children = null }) {
+/**
+ * Hideable and editable board group containing its tiles
+ * @param {object} props
+ * @param {string} props.name - name of the group
+ * @param {function} props.setName - callback to update this group's name in the parent component
+ * @param {function} props.addTile - callback to store new tile in parent component
+ * @param {boolean} [props.open = true] - whether the group is open
+ * @param {any} [props.children = null]
+ */
+export function BoardGroup({ name, setName, addTile, open = true, children = null }) {
     const [show, setShow] = useState(open);
     const [editMode, setEditMode] = useState(name.length ? false : true);
 
@@ -38,9 +47,12 @@ export function BoardGroup({ name, setName, open, children = null }) {
                 {children.length ? (
                     <div className='board-group__tiles-container'>
                         {children}
-                        <AddTileBtn show={show} />
+
+                        {/* new tile button */}
+                        <AddTileBtn show={show} onClick={addTile} />
                     </div>
                 ) : (
+                    // default text
                     <div className='board-group__empty'>This group has no links yet</div>
                 )}
             </MDBCollapse>

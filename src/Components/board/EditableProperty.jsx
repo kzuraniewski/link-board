@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
  * @param {string} [props.className = null] - optional class
  * @param {string} [props.value = ''] - initial value
  * @param {string} [props.defaultValue] - value used instead of empty string
+ * @param {string} [props.placeholder] - input field's placeholder
  * @param {boolean} [props.focus] - whether the property should be focused and selected on edit mode
  * @param {boolean} [props.exitOnBlur] - whether to call onPropertySet on blur
  * @param {number} [props.maxDigits] - maximal length of input value
@@ -16,6 +17,7 @@ export function EditableProperty({
     editMode,
     value = '',
     defaultValue = '',
+    placeholder = '',
     className = null,
     focus = false,
     exitOnBlur = false,
@@ -62,6 +64,7 @@ export function EditableProperty({
             spellCheck='false'
             className={className}
             value={propertyValue}
+            placeholder={placeholder}
             disabled={!editMode}
             onChange={e => {
                 const value = e.target.value;
