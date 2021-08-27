@@ -2,7 +2,6 @@ import { MDBCollapse } from 'mdb-react-ui-kit';
 import React, { useState } from 'react';
 import { AddTileBtn } from './AddTileBtn';
 import { CollapseArrow } from './CollapseArrow';
-import { GroupName } from './GroupName';
 import { EditableProperty } from './EditableProperty';
 
 export function BoardGroup({ name, setName, open, children = null }) {
