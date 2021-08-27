@@ -10,7 +10,13 @@ export function BoardGroup({ name, setName, open, children = null }) {
 
     return (
         <div className='board-group'>
-            <div className='board-group__topbar' onClick={() => setShow(show => !show)}>
+            <div
+                className='board-group__topbar'
+                onClick={() => {
+                    // Lock board group toggling when in edit mode
+                    if (!editMode) setShow(show => !show);
+                }}
+            >
                 <EditableProperty
                     editMode={editMode}
                     value={name}

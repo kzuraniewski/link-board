@@ -55,7 +55,6 @@ export function EditableProperty({
             className={className}
             value={propertyValue}
             disabled={!editMode}
-            onClick={e => e.stopPropagation()}
             onChange={e => {
                 const value = e.target.value;
                 if (value.length <= maxDigits) setPropertyValue(value);
