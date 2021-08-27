@@ -1,29 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import placeholder from '../../images/placeholder.jpeg';
+import { EditableProperty } from './EditableProperty';
 
 export function Tile({ title, link, setTileData }) {
     const [editMode, setEditMode] = useState(false);
     const [showEditBtn, setShowEditBtn] = useState(false);
-
-    const [titleValue, setTitleValue] = useState(title);
-    const titleInput = useRef(null);
-
-    const [linkValue, setLinkValue] = useState(link);
-    const linkInput = useRef(null);
-
-    const clearSelection = () => {
-        if (window.getSelection()) window.getSelection().removeAllRanges();
-    };
-
-    useEffect(() => {
-        // focus and select title if in edit mode, otherwise deselect
-        if (editMode) {
-            titleInput.current.focus();
-            titleInput.current.select();
-        } else {
-            clearSelection();
-        }
-    }, [editMode]);
 
     // dynamic bg image
     const style = {
@@ -64,38 +45,25 @@ export function Tile({ title, link, setTileData }) {
                 )}
 
                 {/* name preview */}
-                <input
-                    ref={titleInput}
-                    type='text'
+                <EditableProperty
                     className='tile__title'
-                    value={titleValue}
-                    disabled={!editMode}
-                    onChange={e => setTitleValue(e.target.value)}
-                    onKeyDown={e => {
-                        if (e.key === 'Enter') {
-                            // @ts-ignore
-                            e.target.blur();
-                            setEditMode(false);
-                            setTileData({ title: titleValue, link });
-                        }
+                    focus
+                    value={title}
+                    editMode={editMode}
+                    onPropertySet={titleValue => {
+                        setEditMode(false);
+                        setTileData({ title: titleValue, link });
                     }}
                 />
 
                 {/* link path */}
-                <input
-                    ref={linkInput}
-                    type='text'
+                <EditableProperty
                     className='tile__link'
-                    value={linkValue}
-                    disabled={!editMode}
-                    onChange={e => setLinkValue(e.target.value)}
-                    onKeyDown={e => {
-                        if (e.key === 'Enter') {
-                            // @ts-ignore
-                            e.target.blur();
-                            setEditMode(false);
-                            setTileData({ title, link: linkValue });
-                        }
+                    value={link}
+                    editMode={editMode}
+                    onPropertySet={linkValue => {
+                        setEditMode(false);
+                        setTileData({ title, link: linkValue });
                     }}
                 />
             </div>
