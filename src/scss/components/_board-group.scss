@@ -8,10 +8,10 @@
     }
 
     &__name {
-        @include ext-each(my-auto, p-0, bg-transparent, text-light, border-0, border-bottom, border-light, pointer);
+        @include ext-each(my-auto, p-0, bg-transparent, text-light, border-0, border-bottom, border-light);
 
         &:disabled {
-            @include ext-each(border-0);
+            @include ext-each(border-0, pointer);
         }
 
         &::placeholder {
