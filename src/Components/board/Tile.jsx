@@ -49,6 +49,7 @@ export function Tile({ title, link, setTileData }) {
                     className='tile__title'
                     focus
                     value={title}
+                    defaultValue='Tile'
                     editMode={editMode}
                     onPropertySet={titleValue => {
                         setEditMode(false);

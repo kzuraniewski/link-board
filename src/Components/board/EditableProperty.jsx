@@ -32,7 +32,9 @@ export function EditableProperty({
 
     // call onPropertySet if given and use default value if specified
     const exit = () => {
-        onPropertySet?.(propertyValue.length ? propertyValue : defaultValue);
+        const output = propertyValue.length ? propertyValue : defaultValue;
+        onPropertySet?.(output);
+        setPropertyValue(output);
     };
 
     // focus on input if in edit mode, otherwise clear selection
