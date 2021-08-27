@@ -1,10 +1,11 @@
 .tile {
     @include ext-each(d-block, text-light, overflow-hidden, rounded, m-1, d-block);
 
-    width: 10rem;
+    width: 100%;
     height: 10rem;
-
-    flex-shrink: 0;
+    @include media-breakpoint-up(sm) {
+        width: 10rem;
+    }
 
     background-size: cover;
     cursor: default;
