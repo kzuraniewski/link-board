@@ -32,6 +32,8 @@ export function EditableProperty({
 
     // call onPropertySet if given and use default value if specified
     const exit = () => {
+        if (propertyValue === value) return;
+
         const output = propertyValue.length ? propertyValue : defaultValue;
         onPropertySet?.(output);
         setPropertyValue(output);
@@ -39,7 +41,10 @@ export function EditableProperty({
 
     // focus on input if in edit mode, otherwise clear selection
     useEffect(() => {
-        if (!editMode) return;
+        if (!editMode) {
+            exit();
+            return;
+        }
 
         if (focus) {
             element.current.focus();
