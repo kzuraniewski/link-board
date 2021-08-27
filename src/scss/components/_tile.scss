@@ -19,6 +19,17 @@
 
     &__btn-edit {
         @include ext-each(text-light, bg-transparent, border-0, position-absolute, top-0, end-0, mt-2, me-2);
+
+        opacity: 1;
+        transition: opacity 0.1s;
+
+        &:hover {
+            filter: brightness(90%);
+        }
+
+        &.tile__btn-edit--hidden {
+            opacity: 0;
+        }
     }
 
     &__title {
