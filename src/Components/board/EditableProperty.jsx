@@ -39,13 +39,14 @@ export function EditableProperty({
         setPropertyValue(output);
     };
 
-    // focus on input if in edit mode, otherwise clear selection
     useEffect(() => {
+        // exit if not in edit mode
         if (!editMode) {
             exit();
             return;
         }
 
+        // focus on input if in edit mode, otherwise clear selection
         if (focus) {
             element.current.focus();
             element.current.select();
