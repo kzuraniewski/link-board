@@ -7,13 +7,29 @@ import { EditableProperty } from './EditableProperty';
  * @param {object} props
  * @param {string} props.title - tile's title
  * @param {string} props.link - tile's path
+ * @param {any} props.mouseDownTarget - mouse down target to detect if user clicked outside of tile
+ * @param {any} props.addTileBtn - only exception to clicking outside so the tile stays in edit mode after added
  * @param {function} props.setTileData - callback to update changed properties in parent element
  * @returns
  */
-export function Tile({ title, link, setTileData }) {
+export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData }) {
     // Edit mode on when title or link empty
     const [editMode, setEditMode] = useState(!title.length || !link.length);
     const [showEditBtn, setShowEditBtn] = useState(false);
+
+    // Exit edit mode when user clicked outside of tile
+    const tile = useRef(null);
+    useEffect(() => {
+        if (
+            mouseDownTarget &&
+            tile.current &&
+            mouseDownTarget !== addTileBtn &&
+            !tile.current.contains(mouseDownTarget)
+        ) {
+            console.log(1);
+            if (editMode) setEditMode(false);
+        }
+    }, [mouseDownTarget]);
 
     // dynamic bg image
     const style = {
@@ -22,6 +38,7 @@ export function Tile({ title, link, setTileData }) {
 
     return (
         <a
+            ref={tile}
             className='tile'
             href={link}
             target='_blank'

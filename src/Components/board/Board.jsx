@@ -1,5 +1,5 @@
 import { MDBContainer } from 'mdb-react-ui-kit';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AddGroupBtn } from './AddGroupBtn';
 import { BoardGroup } from './BoardGroup';
 import { Tile } from './Tile';
@@ -7,8 +7,20 @@ import { Tile } from './Tile';
 export default function Board() {
     const [groups, setGroups] = useState([]);
 
+    // Set mouse down target which will be passed to Tile elements
+    const [mouseDownTarget, setMouseDownTarget] = useState(null);
+    const addTileBtn = useRef(null);
+    useEffect(() => {
+        const cb = e => setMouseDownTarget(e.target);
+        document.addEventListener('mousedown', cb);
+
+        return () => {
+            document.removeEventListener('mousedown', cb);
+        };
+    }, []);
+
+    // add new empty editable group
     const addGroup = () => {
-        // add new empty editable group
         setGroups(groups => [
             ...groups,
             {
@@ -89,16 +101,26 @@ export default function Board() {
                             return t;
                         });
                     }}
-                    addTile={() => setTileData(groupIndex, tiles.length, emptyTileTemplate())}
                 >
                     {tiles.map(({ title, link }, tileIndex) => (
                         <Tile
                             key={tileIndex}
                             title={title}
                             link={link}
+                            mouseDownTarget={mouseDownTarget}
+                            addTileBtn={addTileBtn}
                             setTileData={tileData => setTileData(groupIndex, tileIndex, tileData)}
                         />
                     ))}
+
+                    {/* new tile button */}
+                    <button
+                        ref={addTileBtn}
+                        className={`board-group__btn-add`}
+                        onClick={() => setTileData(groupIndex, tiles.length, emptyTileTemplate())}
+                    >
+                        <i className='far fa-plus-square'></i>
+                    </button>
                 </BoardGroup>
             ))}
             <AddGroupBtn onAdd={addGroup} />
