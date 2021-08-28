@@ -1,6 +1,5 @@
-import { MDBContainer } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
 import React, { useEffect, useRef, useState } from 'react';
-import { AddGroupBtn } from './AddGroupBtn';
 import { BoardGroup } from './BoardGroup';
 import { Tile } from './Tile';
 
@@ -123,7 +122,10 @@ export default function Board() {
                     </button>
                 </BoardGroup>
             ))}
-            <AddGroupBtn onAdd={addGroup} />
+
+            <MDBBtn className='add-group' size='sm' block outline onClick={addGroup}>
+                <i className='fas fa-plus'></i>
+            </MDBBtn>
         </MDBContainer>
     );
 }
