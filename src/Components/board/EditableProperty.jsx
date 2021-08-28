@@ -34,7 +34,7 @@ export function EditableProperty({
 
     // call onPropertySet if given and use default value if specified
     const exit = () => {
-        if (propertyValue === value) return;
+        if (propertyValue.length && propertyValue === value) return;
 
         const output = propertyValue.length ? propertyValue : defaultValue;
         onPropertySet?.(output);
