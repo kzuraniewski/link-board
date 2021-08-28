@@ -9,19 +9,26 @@ import { EditableProperty } from './EditableProperty';
  * @param {object} props
  * @param {string} props.name - name of the group
  * @param {function} props.setName - callback to update this group's name in the parent component
- * @param {function} props.addTile - callback to store new tile in parent component
  * @param {boolean} [props.open = true] - whether the group is open
  * @param {any} [props.children = null]
  */
-export function BoardGroup({ name, setName, addTile, open = true, children = null }) {
+export function BoardGroup({ name, setName, open = true, children = null }) {
     const [show, setShow] = useState(open);
     const [editMode, setEditMode] = useState(name.length ? false : true);
 
     // Hide and expand the collapse so its height adjusts to content
     // since bootstrap collapse does not support dynamic content
+    const fixCollapseHeight = useRef(false);
     useEffect(() => {
-        if (!show) setShow(true);
+        setShow(false);
+        fixCollapseHeight.current = true;
     }, [children]);
+
+    useEffect(() => {
+        if (!show && fixCollapseHeight) {
+            setShow(true);
+        }
+    }, [show]);
 
     return (
         <div className='board-group'>
@@ -53,14 +60,6 @@ export function BoardGroup({ name, setName, addTile, open = true, children = nul
                 {children.length ? (
                     <div className='board-group__tiles-container'>
                         {children}
-
-                        {/* new tile button */}
-                        <AddTileBtn
-                            onClick={() => {
-                                setShow(false);
-                                addTile();
-                            }}
-                        />
                     </div>
                 ) : (
                     // default text

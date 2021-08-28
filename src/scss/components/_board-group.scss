@@ -30,10 +30,6 @@
         @include ext-each(btn-blank, text-light, me-5);
 
         transition: 0.1s;
-
-        &--hidden {
-            opacity: 0;
-        }
     }
 
     &__arrow {
