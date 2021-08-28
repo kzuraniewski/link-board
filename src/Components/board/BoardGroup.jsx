@@ -19,13 +19,9 @@ export function BoardGroup({ name, setName, addTile, open = true, children = nul
 
     // Hide and expand the collapse so its height adjusts to content
     // since bootstrap collapse does not support dynamic content
-    const fixCollapseHeight = useRef(false);
     useEffect(() => {
-        if (fixCollapseHeight.current && !show) {
-            setShow(true);
-            fixCollapseHeight.current = false;
-        }
-    }, [show]);
+        if (!show) setShow(true);
+    }, [children]);
 
     return (
         <div className='board-group'>
@@ -60,9 +56,7 @@ export function BoardGroup({ name, setName, addTile, open = true, children = nul
 
                         {/* new tile button */}
                         <AddTileBtn
-                            show={show}
                             onClick={() => {
-                                fixCollapseHeight.current = true;
                                 setShow(false);
                                 addTile();
                             }}
