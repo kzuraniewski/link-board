@@ -1,5 +1,5 @@
 import { MDBCollapse } from 'mdb-react-ui-kit';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AddTileBtn } from './AddTileBtn';
 import { CollapseArrow } from './CollapseArrow';
 import { EditableProperty } from './EditableProperty';
@@ -16,6 +16,16 @@ import { EditableProperty } from './EditableProperty';
 export function BoardGroup({ name, setName, addTile, open = true, children = null }) {
     const [show, setShow] = useState(open);
     const [editMode, setEditMode] = useState(name.length ? false : true);
+
+    // Hide and expand the collapse so its height adjusts to content
+    // since bootstrap collapse does not support dynamic content
+    const fixCollapseHeight = useRef(false);
+    useEffect(() => {
+        if (fixCollapseHeight.current && !show) {
+            setShow(true);
+            fixCollapseHeight.current = false;
+        }
+    }, [show]);
 
     return (
         <div className='board-group'>
@@ -49,7 +59,14 @@ export function BoardGroup({ name, setName, addTile, open = true, children = nul
                         {children}
 
                         {/* new tile button */}
-                        <AddTileBtn show={show} onClick={addTile} />
+                        <AddTileBtn
+                            show={show}
+                            onClick={() => {
+                                fixCollapseHeight.current = true;
+                                setShow(false);
+                                addTile();
+                            }}
+                        />
                     </div>
                 ) : (
                     // default text
