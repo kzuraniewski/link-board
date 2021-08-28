@@ -1,6 +1,5 @@
 import { MDBCollapse } from 'mdb-react-ui-kit';
 import React, { useEffect, useRef, useState } from 'react';
-import { AddTileBtn } from './AddTileBtn';
 import { CollapseArrow } from './CollapseArrow';
 import { EditableProperty } from './EditableProperty';
 
@@ -25,8 +24,9 @@ export function BoardGroup({ name, setName, open = true, children = null }) {
     }, [children]);
 
     useEffect(() => {
-        if (!show && fixCollapseHeight) {
+        if (!show && fixCollapseHeight.current) {
             setShow(true);
+            fixCollapseHeight.current = false;
         }
     }, [show]);
 
