@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import placeholder from '../../images/placeholder.jpeg';
-import { EditableProperty } from './EditableProperty';
+import { EditableLabel } from './EditableLabel';
 
 /**
  * Editable tile containing its title, link and preview
@@ -74,7 +74,7 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData }) 
                 </button>
 
                 {/* name preview */}
-                <EditableProperty
+                <EditableLabel
                     className='tile__title'
                     focus
                     value={title}
@@ -87,7 +87,7 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData }) 
                 />
 
                 {/* link path */}
-                <EditableProperty
+                <EditableLabel
                     className='tile__link'
                     value={link}
                     placeholder='No link specified'

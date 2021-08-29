@@ -13,7 +13,7 @@ import React, { useState, useEffect, useRef } from 'react';
  * @param {boolean} [props.exitOnBlur] - whether to call onPropertySet on blur
  * @param {number} [props.maxDigits] - maximal length of input value
  */
-export function EditableProperty({
+export function EditableLabel({
     editMode,
     value = '',
     defaultValue = '',

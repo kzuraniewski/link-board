@@ -1,7 +1,7 @@
 import { MDBCollapse } from 'mdb-react-ui-kit';
 import React, { useEffect, useRef, useState } from 'react';
 import { CollapseArrow } from './CollapseArrow';
-import { EditableProperty } from './EditableProperty';
+import { EditableLabel } from './EditableLabel';
 
 /**
  * Hideable and editable board group containing its tiles
@@ -39,7 +39,7 @@ export function BoardGroup({ name, setName, open = true, children = null }) {
                     if (!editMode) setShow(show => !show);
                 }}
             >
-                <EditableProperty
+                <EditableLabel
                     editMode={editMode}
                     value={name}
                     defaultValue='New group'
