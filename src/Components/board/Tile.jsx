@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import placeholder from '../../images/placeholder.jpeg';
 import { EditableProperty } from './EditableProperty';
 
@@ -23,13 +24,19 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData }) 
         if (
             mouseDownTarget &&
             tile.current &&
-            mouseDownTarget !== addTileBtn &&
+            ![mouseDownTarget, ReactDOM.findDOMNode(mouseDownTarget).parentElement].includes(
+                addTileBtn
+            ) &&
             !tile.current.contains(mouseDownTarget)
         ) {
-            console.log(1);
             if (editMode) setEditMode(false);
         }
     }, [mouseDownTarget]);
+
+    // Enter edit mode if mounted and labels not set
+    useEffect(() => {
+        if (!title.length || !link.length) setEditMode(true);
+    }, []);
 
     // dynamic bg image
     const style = {
