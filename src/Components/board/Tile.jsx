@@ -52,20 +52,31 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData }) 
             }}
         >
             <div className='tile__mask'>
-                {/* Edit mode button */}
-                <button
-                    className={`tile__btn-edit${
-                        !editMode && !showEditBtn ? ' tile__btn-edit--hidden' : ''
-                    }`}
-                    onClick={e => {
-                        e.preventDefault();
-                        e.stopPropagation();
+                <div className='tile__btn-container'>
+                    {/* Delete button */}
+                    <button className={`tile__btn${editMode ? '' : ' tile__btn--hidden'}`}>
+                        <i className='fas fa-trash-alt'></i>
+                    </button>
 
-                        setEditMode(editMode => !editMode);
-                    }}
-                >
-                    {editMode ? <i className='fas fa-check'></i> : <i className='fas fa-pen'></i>}
-                </button>
+                    {/* Edit mode button */}
+                    <button
+                        className={`tile__btn${
+                            !editMode && !showEditBtn ? ' tile__btn--hidden' : ''
+                        }`}
+                        onClick={e => {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            setEditMode(editMode => !editMode);
+                        }}
+                    >
+                        {editMode ? (
+                            <i className='fas fa-check'></i>
+                        ) : (
+                            <i className='fas fa-pen'></i>
+                        )}
+                    </button>
+                </div>
 
                 {/* name preview */}
                 <EditableLabel
