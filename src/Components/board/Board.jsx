@@ -123,7 +123,8 @@ export default function Board() {
                 </BoardGroup>
             ))}
 
-            <MDBBtn className='add-group' size='sm' block outline onClick={addGroup}>
+            {/* new board button */}
+            <MDBBtn className='board__add-group' size='sm' block outline onClick={addGroup}>
                 <i className='fas fa-plus'></i>
             </MDBBtn>
         </MDBContainer>
