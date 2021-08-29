@@ -2,6 +2,8 @@
     &__group {
         padding: 8rem 0;
 
+        background: $light;
+
         &:nth-of-type(2n) {
             background-color: $secondary;
             color: $light;

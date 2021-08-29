@@ -1,14 +1,9 @@
-$primary: #303841;
-$secondary: #00adb5;
-$light: #eeeeee;
-$accent: #ff5722;
-
 html {
     overflow-y: scroll;
 }
 
 body {
-    background-color: #eeeeee;
+    background-color: $secondary !important;
     margin: 0;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

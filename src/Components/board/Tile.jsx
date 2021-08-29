@@ -38,18 +38,12 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData }) 
         if (!title.length || !link.length) setEditMode(true);
     }, []);
 
-    // dynamic bg image
-    const style = {
-        backgroundImage: `url(${placeholder})`,
-    };
-
     return (
         <a
             ref={tile}
             className='tile'
             href={link}
             target='_blank'
-            style={style}
             onMouseEnter={() => setShowEditBtn(true)}
             onMouseLeave={() => setShowEditBtn(false)}
             onClick={e => {

@@ -1,7 +1,8 @@
 .board-group {
     @include ext-each(mb-3, p-1, rounded, text-light);
 
-    background-color: $secondary;
+    // background: color.scale($primary); ???
+    background: $board-primary;
 
     &__topbar {
         @include ext-each(w-100, p-1, d-flex, justify-content-between, user-select-none, pointer);
@@ -14,6 +15,8 @@
 
         &:disabled {
             @include ext-each(border-0, pointer);
+
+            pointer-events: none;
         }
 
         &::placeholder {

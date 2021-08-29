@@ -2,14 +2,12 @@
     @extend .py-4;
 
     &__add-group {
-        transition: 0.1s;
-
-        color: $secondary !important;
-        border-color: $secondary !important;
+        color: $board-primary !important;
+        border-color: $board-primary !important;
 
         &:hover {
-            background-color: $secondary !important;
-            color: $light !important;
+            background-color: $board-primary !important;
+            color: $secondary !important;
         }
     }
 
@@ -24,9 +22,7 @@
 
         &:hover {
             background-color: $light !important;
-            color: $secondary !important;
+            color: $board-primary !important;
         }
-
-        transition: 0.1s;
     }
 }
