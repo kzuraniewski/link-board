@@ -12,4 +12,21 @@
             color: $light !important;
         }
     }
+
+    &__add-tile-btn {
+        @include ext-each(m-1);
+        
+        width: 10rem;
+        height: 2rem;
+
+        color: $light !important;
+        border-color: $light !important;
+
+        &:hover {
+            background-color: $light !important;
+            color: $secondary !important;
+        }
+
+        transition: 0.1s;
+    }
 }

@@ -26,12 +26,6 @@
         @include ext-each(d-flex);
     }
 
-    &__btn-add {
-        @include ext-each(btn-blank, text-light, me-5);
-
-        transition: 0.1s;
-    }
-
     &__arrow {
         transition: 0.1s;
 

@@ -113,13 +113,15 @@ export default function Board() {
                     ))}
 
                     {/* new tile button */}
-                    <button
+                    <MDBBtn
                         ref={addTileBtn}
-                        className={`board-group__btn-add`}
+                        className='board__add-tile-btn'
+                        size='sm'
+                        outline
                         onClick={() => setTileData(groupIndex, tiles.length, emptyTileTemplate())}
                     >
-                        <i className='far fa-plus-square'></i>
-                    </button>
+                        <i className='fas fa-plus'></i>
+                    </MDBBtn>
                 </BoardGroup>
             ))}
 
