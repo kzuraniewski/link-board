@@ -31,6 +31,7 @@ export default function Board() {
     };
 
     /**
+     * Set or add tile record
      * @param {number} groupIndex - index of the group object from groups list
      * @param {number} tileIndex - index of tile from the selected group
      * @param {{ title: string, link: string }} tileData - title and link of the tile
@@ -39,6 +40,19 @@ export default function Board() {
         setGroups(groups => {
             let t = [...groups];
             t[groupIndex].tiles[tileIndex] = { ...tileData };
+            return t;
+        });
+    };
+
+    /**
+     * Delete tile record
+     * @param {number} groupIndex - index of the group object from groups list
+     * @param {number} tileIndex - index of tile from the selected group
+     */
+    const deleteTileData = (groupIndex, tileIndex) => {
+        setGroups(groups => {
+            let t = [...groups];
+            delete t[groupIndex].tiles[tileIndex];
             return t;
         });
     };
@@ -109,6 +123,7 @@ export default function Board() {
                             mouseDownTarget={mouseDownTarget}
                             addTileBtn={addTileBtn}
                             setTileData={tileData => setTileData(groupIndex, tileIndex, tileData)}
+                            deleteTileData={() => deleteTileData(groupIndex, tileIndex)}
                         />
                     ))}
 
