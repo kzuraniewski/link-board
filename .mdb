@@ -4,5 +4,6 @@
     "starter": "mdb5-free-react",
     "type": "frontend"
   },
-  "hash": "9409cdff"
+  "hash": "9409cdff",
+  "domain": "link-board.mdbgo.io"
 }
