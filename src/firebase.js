@@ -26,6 +26,17 @@ const analytics = getAnalytics(app);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
+let expectSignIn = () => localStorage.getItem('expectSignIn') === 'true';
+
+// Expect sign in on reload
+auth.onAuthStateChanged(user => {
+    if (user) {
+        localStorage.setItem('expectSignIn', 'true');
+    } else {
+        localStorage.removeItem('expectSignIn');
+    }
+});
+
 const signIn = () =>
     signInWithPopup(auth, provider)
         .then(result => {
@@ -34,7 +45,6 @@ const signIn = () =>
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            // ...
         })
         .catch(error => {
             // Handle Errors here.
@@ -44,8 +54,7 @@ const signIn = () =>
             const email = error.email;
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
         });
 
-export { auth, signIn };
+export { auth, signIn, expectSignIn };
 export default firebase;
