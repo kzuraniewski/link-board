@@ -1,0 +1,12 @@
+.user-info {
+    &__toggle {
+        @include ext-each(link-light);
+
+        cursor: pointer;
+    }
+
+    &__photo {
+        height: 1.5rem;
+        border-radius: 50%;
+    }
+}
