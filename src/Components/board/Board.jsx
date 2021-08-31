@@ -1,10 +1,15 @@
 import { MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
 import React, { useEffect, useRef, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, expectSignIn } from '../../firebase';
+import Loading from '../authentication/Loading';
+import LogIn from '../authentication/LogIn';
 import { BoardGroup } from './BoardGroup';
 import { Tile } from './Tile';
 
 export default function Board() {
     const [groups, setGroups] = useState([]);
+    const [user] = useAuthState(auth);
 
     // Set mouse down target which will be passed to Tile elements
     const [mouseDownTarget, setMouseDownTarget] = useState(null);
@@ -96,6 +101,11 @@ export default function Board() {
 
         setTileData(0, 1, { title: 'asdf', link: 'dedasd' });
     }, []);
+
+    if (!user) {
+        if (expectSignIn()) return <Loading centered />;
+        else return <LogIn />;
+    }
 
     return (
         <MDBContainer className='board'>

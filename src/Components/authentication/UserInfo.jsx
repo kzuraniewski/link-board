@@ -7,16 +7,18 @@ import {
     MDBDropdownHeader,
     MDBDropdownLink,
 } from 'mdb-react-ui-kit';
-import { auth } from '../../firebase';
+import { auth, expectSignIn } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import LogIn from '../authentication/LogIn';
+import Loading from '../authentication/Loading';
 
 export default function UserInfo() {
     const [user] = useAuthState(auth);
 
-    useEffect(() => console.log(user));
-
-    if (!user) return <LogIn />;
+    if (!user) {
+        if (expectSignIn()) return <Loading />;
+        else return <LogIn />;
+    }
 
     return (
         <MDBDropdown className='user-info'>
