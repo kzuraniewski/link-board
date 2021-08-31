@@ -8,15 +8,10 @@ import {
     MDBNavbarNav,
     MDBNavbarItem,
     MDBNavbarLink,
-    MDBBtn,
-    MDBDropdown,
-    MDBDropdownToggle,
-    MDBDropdownMenu,
-    MDBDropdownItem,
-    MDBDropdownLink,
     MDBCollapse,
 } from 'mdb-react-ui-kit';
 import Logo from './Logo';
+import UserInfo from './authentication/UserInfo';
 
 export default function Header() {
     const [showBasic, setShowBasic] = useState(false);
@@ -57,6 +52,9 @@ export default function Header() {
                             </MDBNavbarLink>
                         </MDBNavbarItem>
                     </MDBNavbarNav>
+
+                    {/* user info */}
+                    <UserInfo />
                 </MDBCollapse>
             </MDBContainer>
         </MDBNavbar>
