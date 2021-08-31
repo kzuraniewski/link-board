@@ -9,4 +9,12 @@
         height: $header-element-size;
         border-radius: 50%;
     }
+
+    &__dropdown {
+        @include ext-each(user-select-none);
+    }
+
+    &__link {
+        cursor: pointer !important;
+    }
 }

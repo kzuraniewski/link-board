@@ -1,8 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import firebase from 'firebase/compat';
+import { getAuth, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,6 +15,7 @@ const firebaseConfig = {
     messagingSenderId: '624060620235',
     appId: '1:624060620235:web:e552a3f9f20610f3e3aa4e',
     measurementId: 'G-XV093TGGR6',
+    databaseURL: 'https://LinkBoard.europe-central2.firebaseio.com',
 };
 
 // Initialize Firebase
@@ -24,7 +24,7 @@ const analytics = getAnalytics(app);
 
 // const database = firebase.firestore();
 const provider = new GoogleAuthProvider();
-const auth = getAuth();
+const auth = getAuth(app);
 
 let expectSignIn = () => localStorage.getItem('expectSignIn') === 'true';
 
@@ -57,15 +57,15 @@ const signIn = () => {
         });
 };
 
-const signOut = () => {
-    auth.signOut()
-        .then(function () {
-            localStorage.removeItem('expectSignIn');
-        })
-        .catch(function (error) {
-            console.error(error);
+const handleSignOut = () => {
+    signOut(auth)
+        .catch(error => {
+            console.log(error);
         });
 };
 
-export { auth, signIn, expectSignIn, signOut };
-export default firebase;
+// Get a reference to the database service
+const database = getFirestore(app);
+
+export { auth, signIn, expectSignIn, handleSignOut };
+export default database;
