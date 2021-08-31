@@ -37,7 +37,7 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-const signIn = () =>
+const signIn = () => {
     signInWithPopup(auth, provider)
         .then(result => {
             // This gives you a Google Access Token. You can use it to access the Google API.
@@ -55,6 +55,17 @@ const signIn = () =>
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
         });
+};
 
-export { auth, signIn, expectSignIn };
+const signOut = () => {
+    auth.signOut()
+        .then(function () {
+            localStorage.removeItem('expectSignIn');
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+};
+
+export { auth, signIn, expectSignIn, signOut };
 export default firebase;

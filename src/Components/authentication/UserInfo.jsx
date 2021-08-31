@@ -11,6 +11,7 @@ import { auth, expectSignIn } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import LogIn from '../authentication/LogIn';
 import Loading from '../authentication/Loading';
+import { signOut } from 'firebase/auth';
 
 export default function UserInfo() {
     const [user] = useAuthState(auth);
@@ -22,16 +23,13 @@ export default function UserInfo() {
 
     return (
         <MDBDropdown className='user-info'>
-            <MDBDropdownToggle tag='a' className='user-info__toggle'>
-                {/* <i className='fas fa-user-circle'></i> */}
-                <img className='user-info__photo' src={user.photoURL} alt='user photo' />
-            </MDBDropdownToggle>
+            <MDBDropdownToggle tag='a' className='user-info__toggle'></MDBDropdownToggle>
             <MDBDropdownMenu className='user-info__dropdown'>
                 <MDBDropdownItem>
                     <MDBDropdownHeader>{user.displayName}</MDBDropdownHeader>
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                    <MDBDropdownLink>Log out</MDBDropdownLink>
+                    <MDBDropdownLink onClick={signOut}>Log out</MDBDropdownLink>
                 </MDBDropdownItem>
             </MDBDropdownMenu>
         </MDBDropdown>
