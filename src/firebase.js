@@ -67,5 +67,5 @@ const handleSignOut = () => {
 // Get a reference to the database service
 const database = getFirestore(app);
 
-export { auth, signIn, expectSignIn, handleSignOut };
+export { auth, database, signIn, expectSignIn, handleSignOut };
 export default database;

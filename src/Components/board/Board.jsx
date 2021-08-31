@@ -1,20 +1,94 @@
-import { MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
 import React, { useEffect, useRef, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, expectSignIn } from '../../firebase';
+import { MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
+import { useUpdateEffect } from '../../hooks';
+
 import Loading from '../authentication/Loading';
 import LogIn from '../authentication/LogIn';
 import { BoardGroup } from './BoardGroup';
 import { Tile } from './Tile';
 
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, expectSignIn, database } from '../../firebase';
+import { collection, getDocs, doc } from '@firebase/firestore';
+import { setDoc } from 'firebase/firestore';
+
+/**
+ *
+ * @param {Array} initialState - array's initial state
+ * @param {*} firestore - database reference
+ * @param {string} path - path to a document
+ * @param {*} [pathSegments] - additional path segments
+ * @returns
+ */
+const useDatabaseState = (initialState, firestore, path, pathSegments) => {
+    const [state, setState] = useState(initialState);
+
+    // Upload data to server
+    const uploadState = () => {
+        setDoc(doc(firestore, path, pathSegments), {});
+    };
+
+    // Collect group data from database
+    const pullState = () =>
+        getDocs(collection(firestore, path)).then(snapshot => {
+            setState(() => {
+                const r = [];
+                snapshot.forEach(doc => r.push(doc.data()));
+                return r;
+            });
+        });
+
+    useEffect(() => {
+        pullState();
+    }, []);
+
+    useEffect(() => {
+        uploadState();
+    }, [state]);
+
+    return [state, setState];
+};
+
 export default function Board() {
-    const [groups, setGroups] = useState([]);
+    const databasePath = 'BoardData';
+
+    const [groups, setGroups] = useState({});
     const [user] = useAuthState(auth);
 
     // Set mouse down target which will be passed to Tile elements
     const [mouseDownTarget, setMouseDownTarget] = useState(null);
     const addTileBtn = useRef(null);
+
+    // Upload data to server
+    const uploadGroups = () => {
+        // setDoc(doc(database, databasePath, '9nZP4O6VhAZ51nE0HtRm'), {});
+        getDocs(collection(database, databasePath)).then(snapshot => {
+            snapshot.forEach(doc => {
+                console.log(groups);
+                setDoc(doc.ref, groups[doc.id]);
+            });
+        });
+    };
+
+    // Collect group data from database
+    const pullGroups = () => {
+        getDocs(collection(database, databasePath)).then(snapshot => {
+            setGroups(() => {
+                const r = {};
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    r[doc.id] = data;
+                });
+
+                return r;
+            });
+        });
+    };
+
     useEffect(() => {
+        pullGroups();
+
         const cb = e => setMouseDownTarget(e.target);
         document.addEventListener('mousedown', cb);
 
@@ -23,41 +97,45 @@ export default function Board() {
         };
     }, []);
 
+    useUpdateEffect(() => {
+        uploadGroups();
+    }, [groups]);
+
     // add new empty editable group
     const addGroup = () => {
-        setGroups(groups => [
-            ...groups,
-            {
-                name: '',
-                open: true,
-                tiles: [],
-            },
-        ]);
+        // setGroups(groups => [
+        //     ...groups,
+        //     {
+        //         name: '',
+        //         open: true,
+        //         tiles: [],
+        //     },
+        // ]);
     };
 
     /**
      * Set or add tile record
-     * @param {number} groupIndex - index of the group object from groups list
+     * @param {number} groupKey - key of the group object from groups list
      * @param {number} tileIndex - index of tile from the selected group
      * @param {{ title: string, link: string }} tileData - title and link of the tile
      */
-    const setTileData = (groupIndex, tileIndex, tileData) => {
+    const setTileData = (groupKey, tileIndex, tileData) => {
         setGroups(groups => {
-            let t = [...groups];
-            t[groupIndex].tiles[tileIndex] = { ...tileData };
+            let t = { ...groups };
+            t[groupKey].tiles[tileIndex] = { ...tileData };
             return t;
         });
     };
 
     /**
      * Delete tile record
-     * @param {number} groupIndex - index of the group object from groups list
+     * @param {number} groupKey - key of the group object from groups list
      * @param {number} tileIndex - index of tile from the selected group
      */
-    const deleteTileData = (groupIndex, tileIndex) => {
+    const deleteTileData = (groupKey, tileIndex) => {
         setGroups(groups => {
-            let t = [...groups];
-            delete t[groupIndex].tiles[tileIndex];
+            let t = { ...groups };
+            delete t[groupKey].tiles[tileIndex];
             return t;
         });
     };
@@ -65,42 +143,6 @@ export default function Board() {
     const emptyTileTemplate = () => {
         return { title: '', link: '' };
     };
-
-    //test
-    useEffect(() => {
-        setGroups([
-            {
-                name: 'General',
-                open: true,
-                tiles: [
-                    {
-                        title: 'Lorem',
-                        link: 'https://google.com',
-                    },
-                    {
-                        title: 'Ipsum',
-                        link: 'https://google.com',
-                    },
-                    {
-                        title: 'Dolor',
-                        link: 'https://google.com',
-                    },
-                ],
-            },
-            {
-                name: 'Group test',
-                open: false,
-                tiles: [
-                    {
-                        title: 'Sit',
-                        link: 'https://google.com',
-                    },
-                ],
-            },
-        ]);
-
-        setTileData(0, 1, { title: 'asdf', link: 'dedasd' });
-    }, []);
 
     if (!user) {
         if (expectSignIn()) return <Loading centered />;
@@ -110,7 +152,7 @@ export default function Board() {
     return (
         <MDBContainer className='board'>
             {/* translate groups into components */}
-            {groups.map(({ name, open, tiles }, groupIndex) => (
+            {Object.values(groups).map(({ name, open, tiles }, groupIndex) => (
                 <BoardGroup
                     key={groupIndex}
                     open={open}
@@ -118,7 +160,7 @@ export default function Board() {
                     setName={name => {
                         // Update board's name in the groups object
                         setGroups(groups => {
-                            const t = [...groups];
+                            const t = { ...groups };
                             t[groupIndex].name = name;
 
                             return t;
