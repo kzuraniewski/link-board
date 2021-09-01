@@ -121,14 +121,19 @@ export default function Board() {
     };
 
     /**
-     * Update board's name in the groups object
+     * Update board's data in the groups object
      * @param {string} groupKey - key of the group object from groups list
-     * @param {string} name - group's new name
+     * @param {object} data - group's modified keys
      */
-    const setGroupName = (groupKey, name) => {
+    const setGroupData = (groupKey, data) => {
         setGroups(groups => {
             const t = { ...groups };
-            t[groupKey].name = name;
+
+            t[groupKey] = {
+                ...t[groupKey],
+                ...data,
+            };
+
             return t;
         });
     };
@@ -144,7 +149,7 @@ export default function Board() {
                         key={key}
                         open={open}
                         name={name}
-                        setName={name => setGroupName(key, name)}
+                        setData={data => setGroupData(key, data)}
                     >
                         {tiles &&
                             tiles.map(({ title, link }, tileIndex) => (

@@ -8,11 +8,11 @@ import { useUpdateEffect } from '../../hooks';
  * Hideable and editable board group containing its tiles
  * @param {object} props
  * @param {string} props.name - name of the group
- * @param {function} props.setName - callback to update this group's name in the parent component
+ * @param {function} props.setData - callback to update this group's data in the parent component
  * @param {boolean} [props.open = true] - whether the group is open
  * @param {any} [props.children = null]
  */
-export function BoardGroup({ name, setName, open = true, children = null }) {
+export function BoardGroup({ name, setData, open = true, children = null }) {
     const [show, setShow] = useState(open);
     const [editMode, setEditMode] = useState(name.length ? false : true);
 
@@ -38,14 +38,17 @@ export function BoardGroup({ name, setName, open = true, children = null }) {
                 className='board-group__topbar'
                 onClick={() => {
                     // Lock board group toggling when in edit mode
-                    if (!editMode) setShow(show => !show);
+                    if (!editMode) {
+                        setShow(show => !show);
+                        setData({ show: false });
+                    }
                 }}
             >
                 <EditableLabel
                     editMode={editMode}
                     setEditMode={setEditMode}
                     value={name}
-                    setValue={setName}
+                    setValue={name => setData({ name })}
                     className='board-group__name'
                     focus
                     exitOnBlur
