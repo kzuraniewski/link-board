@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { useUpdateEffect } from '../../hooks';
 import placeholder from '../../images/placeholder.jpeg';
 import { EditableLabel } from './EditableLabel';
 
@@ -25,7 +26,7 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, de
     const [linkValue, setLinkValue] = useState(link);
 
     // Update data after closing edit mode
-    useEffect(() => {
+    useUpdateEffect(() => {
         if (!editMode) {
             const data = {
                 title: titleValue,

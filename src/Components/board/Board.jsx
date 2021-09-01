@@ -73,6 +73,8 @@ export default function Board() {
 
     // Upload data to server
     const upload = async () => {
+        console.log('upload');
+
         const snapshot = await getDocs(firebaseCollection);
 
         snapshot.forEach(groupDoc => {
@@ -94,6 +96,71 @@ export default function Board() {
             document.removeEventListener('mousedown', cb);
         };
     }, []);
+
+    // Upload groups every time it changes
+    useUpdateEffect(() => {
+        upload();
+    }, [groups]);
+
+    // add new empty editable group
+    const addGroup = async () => {
+        /// Upload first then pull so Firebase generates id on its own
+
+        // Empty group template
+        const docData = {
+            name: '',
+            open: true,
+            tiles: [],
+        };
+
+        // Create new doc with auto id
+        await addDoc(firebaseCollection, docData);
+
+        // Pull from server
+        refresh();
+    };
+
+    /**
+     * Set or add tile record
+     * @param {string} groupKey - key of the group object from groups list
+     * @param {number} tileIndex - index of tile from the selected group
+     * @param {{ title: string, link: string }} tileData - title and link of the tile
+     */
+    const setTileData = (groupKey, tileIndex, tileData) => {
+        console.log('settiledata');
+
+        setGroups(groups => {
+            const t = { ...groups };
+            t[groupKey].tiles[tileIndex] = tileData;
+            return t;
+        });
+    };
+
+    /**
+     * Delete tile record
+     * @param {string} groupKey - key of the group object from groups list
+     * @param {number} tileIndex - index of tile from the selected group
+     */
+    const deleteTileData = (groupKey, tileIndex) => {
+        setGroups(groups => {
+            let t = { ...groups };
+            delete t[groupKey].tiles[tileIndex];
+            return t;
+        });
+    };
+
+    /**
+     * Update board's name in the groups object
+     * @param {string} groupKey - key of the group object from groups list
+     * @param {string} name - group's new name
+     */
+    const setGroupName = (groupKey, name) => {
+        setGroups(groups => {
+            const t = { ...groups };
+            t[groupKey].name = name;
+            return t;
+        });
+    };
 
     // Generate group elements outside of return statement (because for...of)
     useEffect(() => {
@@ -137,73 +204,6 @@ export default function Board() {
             return groupElements;
         });
     }, [groups]);
-
-    // Upload groups every time it changes
-    useUpdateEffect(() => {
-        upload();
-    }, [groups]);
-
-    // add new empty editable group
-    const addGroup = async () => {
-        /// Upload first then pull so Firebase generates id on its own
-
-        // Empty group template
-        const docData = {
-            name: '',
-            open: true,
-            tiles: [],
-        };
-
-        // Create new doc with auto id
-        await addDoc(firebaseCollection, docData);
-
-        // Pull from server
-        refresh();
-    };
-
-    /**
-     * Set or add tile record
-     * @param {string} groupKey - key of the group object from groups list
-     * @param {number} tileIndex - index of tile from the selected group
-     * @param {{ title: string, link: string }} tileData - title and link of the tile
-     */
-    const setTileData = (groupKey, tileIndex, tileData) => {
-        /// Set data locally then push
-        console.log(tileData);
-
-        setGroups(groups => {
-            groups[groupKey].tiles[tileIndex] = tileData;
-            return groups;
-        });
-
-        upload();
-        refresh();
-    };
-
-    /**
-     * Delete tile record
-     * @param {string} groupKey - key of the group object from groups list
-     * @param {number} tileIndex - index of tile from the selected group
-     */
-    const deleteTileData = (groupKey, tileIndex) => {
-        setGroups(groups => {
-            let t = { ...groups };
-            delete t[groupKey].tiles[tileIndex];
-            return t;
-        });
-
-        upload();
-    };
-
-    const setGroupName = (groupKey, name) => {
-        // Update board's name in the groups object
-        setGroups(groups => {
-            groups[groupKey].name = name;
-            return groups;
-        });
-
-        upload();
-    };
 
     if (!user) {
         if (expectSignIn()) return <Loading centered />;
