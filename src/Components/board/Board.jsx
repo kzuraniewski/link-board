@@ -49,9 +49,15 @@ export default function Board() {
         const snapshot = await getDocs(firebaseCollection);
 
         snapshot.forEach(groupDoc => {
-            if (groupDoc.id in groups) setDoc(groupDoc.ref, groups[groupDoc.id]);
-            // Erase Firebase doc if not in groups
-            else deleteDoc(groupDoc.ref);
+            if (groupDoc.id in groups) {
+				// Filter out undefined tiles
+                const fixedGroup = {
+                    ...groups[groupDoc.id],
+                    tiles: groups[groupDoc.id].tiles.filter(it => it !== undefined),
+                };
+
+                setDoc(groupDoc.ref, fixedGroup);
+            } else deleteDoc(groupDoc.ref);
         });
     };
 
