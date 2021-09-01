@@ -39,8 +39,10 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
                 onClick={() => {
                     // Lock board group toggling when in edit mode
                     if (!editMode) {
-                        setShow(show => !show);
-                        setData({ show: false });
+                        setShow(show => {
+                            setData({ open: !show });
+                            return !show;
+                        });
                     }
                 }}
             >
