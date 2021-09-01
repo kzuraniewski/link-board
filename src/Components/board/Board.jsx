@@ -48,14 +48,10 @@ export default function Board() {
 
         const snapshot = await getDocs(firebaseCollection);
 
-        // snapshot.forEach(groupDoc => {
-        //     if (groupDoc.id in groups) setDoc(groupDoc.ref, groups[groupDoc.id]);
-        //     // Erase Firebase doc if not in groups
-        //     else deleteDoc(groupDoc.ref);
-        // });
-
-        snapshot.forEach(doc => {
-            setDoc(doc.ref, {});
+        snapshot.forEach(groupDoc => {
+            if (groupDoc.id in groups) setDoc(groupDoc.ref, groups[groupDoc.id]);
+            // Erase Firebase doc if not in groups
+            else deleteDoc(groupDoc.ref);
         });
     };
 
@@ -169,7 +165,9 @@ export default function Board() {
                             className='board__add-tile-btn'
                             size='sm'
                             outline
-                            onClick={() => setTileData(key, tiles.length, { title: '', link: '' })}
+                            onClick={() =>
+                                setTileData(key, tiles ? tiles.length : 0, { title: '', link: '' })
+                            }
                         >
                             <i className='fas fa-plus'></i>
                         </MDBBtn>
