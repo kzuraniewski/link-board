@@ -55,19 +55,8 @@ export default function Board() {
     const [mouseDownTarget, setMouseDownTarget] = useState(null);
     const addTileBtn = useRef(null);
 
-    // Upload data to server
-    const uploadGroups = async () => {
-        const snapshot = await getDocs(firebaseCollection);
-
-        snapshot.forEach(groupDoc => {
-            if (groupDoc.id in groups) setDoc(groupDoc.ref, groups[groupDoc.id]);
-            // Erase Firebase doc if not in groups
-            else deleteDoc(groupDoc.ref);
-        });
-    };
-
     // Collect group data from database
-    const pullGroups = async () => {
+    const refresh = async () => {
         const snapshot = await getDocs(firebaseCollection);
 
         setGroups(() => {
@@ -82,9 +71,20 @@ export default function Board() {
         });
     };
 
+    // Upload data to server
+    const upload = async () => {
+        const snapshot = await getDocs(firebaseCollection);
+
+        snapshot.forEach(groupDoc => {
+            if (groupDoc.id in groups) setDoc(groupDoc.ref, groups[groupDoc.id]);
+            // Erase Firebase doc if not in groups
+            else deleteDoc(groupDoc.ref);
+        });
+    };
+
     useEffect(() => {
         // Collect data from database
-        pullGroups();
+        refresh();
 
         // Listen for mouse click for exiting tiles' edit mode
         const cb = e => setMouseDownTarget(e.target);
@@ -140,7 +140,7 @@ export default function Board() {
 
     // Upload groups every time it changes
     useUpdateEffect(() => {
-        uploadGroups();
+        upload();
     }, [groups]);
 
     // add new empty editable group
@@ -158,7 +158,7 @@ export default function Board() {
         await addDoc(firebaseCollection, docData);
 
         // Pull from server
-        pullGroups();
+        refresh();
     };
 
     /**
@@ -176,7 +176,8 @@ export default function Board() {
             return groups;
         });
 
-        uploadGroups();
+        upload();
+        refresh();
     };
 
     /**
@@ -191,7 +192,7 @@ export default function Board() {
             return t;
         });
 
-        uploadGroups();
+        upload();
     };
 
     const setGroupName = (groupKey, name) => {
@@ -201,7 +202,7 @@ export default function Board() {
             return groups;
         });
 
-        uploadGroups();
+        upload();
     };
 
     if (!user) {
