@@ -12,35 +12,6 @@ import { auth, expectSignIn, database } from '../../firebase';
 import { collection, getDocs, doc } from '@firebase/firestore';
 import { addDoc, deleteDoc, setDoc } from 'firebase/firestore';
 
-// /**
-//  * Gathers group info and interacts with firebase
-//  * @param {Array} initialState - array's initial state
-//  * @param {*} firestore - database reference
-//  * @param {string} path - path to a document
-//  * @param {*} [pathSegments] - additional path segments
-//  */
-// const useDatabaseState = (initialState, firestore, path, pathSegments) => {
-//     const [state, setState] = useState(initialState);
-
-//     // Collect data from database on mount
-//     useEffect(() => {
-//         getDocs(collection(firestore, path)).then(snapshot => {
-//             setState(() => {
-//                 const r = [];
-//                 snapshot.forEach(doc => r.push(doc.data()));
-//                 return r;
-//             });
-//         });
-//     }, []);
-
-//     // Upload data to database every time it changes
-//     useEffect(() => {
-//         setDoc(doc(firestore, path, pathSegments), {});
-//     }, [state]);
-
-//     return [state, setState];
-// };
-
 /**
  * Gathers group info and interacts with firebase
  */
@@ -56,7 +27,7 @@ export default function Board() {
     const addTileBtn = useRef(null);
 
     // Collect group data from database
-    const refresh = async () => {
+    const pull = async () => {
         const snapshot = await getDocs(firebaseCollection);
 
         setGroups(() => {
@@ -77,16 +48,20 @@ export default function Board() {
 
         const snapshot = await getDocs(firebaseCollection);
 
-        snapshot.forEach(groupDoc => {
-            if (groupDoc.id in groups) setDoc(groupDoc.ref, groups[groupDoc.id]);
-            // Erase Firebase doc if not in groups
-            else deleteDoc(groupDoc.ref);
+        // snapshot.forEach(groupDoc => {
+        //     if (groupDoc.id in groups) setDoc(groupDoc.ref, groups[groupDoc.id]);
+        //     // Erase Firebase doc if not in groups
+        //     else deleteDoc(groupDoc.ref);
+        // });
+
+        snapshot.forEach(doc => {
+            setDoc(doc.ref, {});
         });
     };
 
     useEffect(() => {
         // Collect data from database
-        refresh();
+        pull();
 
         // Listen for mouse click for exiting tiles' edit mode
         const cb = e => setMouseDownTarget(e.target);
@@ -117,7 +92,7 @@ export default function Board() {
         await addDoc(firebaseCollection, docData);
 
         // Pull from server
-        refresh();
+        pull();
     };
 
     /**
@@ -175,17 +150,18 @@ export default function Board() {
                         name={name}
                         setName={name => setGroupName(key, name)}
                     >
-                        {tiles.map(({ title, link }, tileIndex) => (
-                            <Tile
-                                key={tileIndex}
-                                title={title}
-                                link={link}
-                                mouseDownTarget={mouseDownTarget}
-                                addTileBtn={addTileBtn}
-                                setTileData={tileData => setTileData(key, tileIndex, tileData)}
-                                deleteTileData={() => deleteTileData(key, tileIndex)}
-                            />
-                        ))}
+                        {tiles &&
+                            tiles.map(({ title, link }, tileIndex) => (
+                                <Tile
+                                    key={tileIndex}
+                                    title={title}
+                                    link={link}
+                                    mouseDownTarget={mouseDownTarget}
+                                    addTileBtn={addTileBtn}
+                                    setTileData={tileData => setTileData(key, tileIndex, tileData)}
+                                    deleteTileData={() => deleteTileData(key, tileIndex)}
+                                />
+                            ))}
 
                         {/* new tile button */}
                         <MDBBtn
