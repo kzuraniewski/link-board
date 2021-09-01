@@ -59,7 +59,7 @@ export function BoardGroup({ name, setName, open = true, children = null }) {
 
             {/* Group content */}
             <MDBCollapse show={show}>
-                {children.length ? (
+                {children ? (
                     <div className='board-group__tiles-container'>{children}</div>
                 ) : (
                     // default text

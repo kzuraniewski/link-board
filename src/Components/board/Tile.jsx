@@ -14,9 +14,33 @@ import { EditableLabel } from './EditableLabel';
  * @param {function} props.deleteTileData - callback to delete the tile from tiles list
  */
 export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, deleteTileData }) {
+    const titleDefaultValue = 'New tile';
+
     // Edit mode on when title or link empty
-    const [editMode, setEditMode] = useState(!title.length || !link.length);
+    const [editMode, setEditMode] = useState(title.length === 0);
     const [showEditBtn, setShowEditBtn] = useState(false);
+
+    // Label values
+    const [titleValue, setTitleValue] = useState(title);
+    const [linkValue, setLinkValue] = useState(link);
+
+    // Update data after closing edit mode
+    useEffect(() => {
+        if (!editMode) {
+            const data = {
+                title: titleValue,
+                link: linkValue,
+            };
+
+            // Use default title when empty
+            if (!titleValue.length) {
+                data.title = titleDefaultValue;
+                setTitleValue(titleDefaultValue);
+            }
+
+            setTileData(data);
+        }
+    }, [editMode]);
 
     // Exit edit mode when user clicked outside of tile
     const tile = useRef(null);
@@ -35,7 +59,7 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, de
 
     // Enter edit mode if mounted and labels not set
     useEffect(() => {
-        if (!title.length || !link.length) setEditMode(true);
+        if (!title.length) setEditMode(true);
     }, []);
 
     return (
@@ -85,25 +109,20 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, de
                 <EditableLabel
                     className='tile__title'
                     focus
-                    value={title}
-                    defaultValue='Tile'
+                    value={titleValue}
+                    setValue={setTitleValue}
                     editMode={editMode}
-                    onPropertySet={titleValue => {
-                        setEditMode(false);
-                        setTileData({ title: titleValue, link });
-                    }}
+                    setEditMode={setEditMode}
                 />
 
                 {/* link path */}
                 <EditableLabel
                     className='tile__link'
-                    value={link}
+                    value={linkValue}
+                    setValue={setLinkValue}
                     placeholder='No link specified'
                     editMode={editMode}
-                    onPropertySet={linkValue => {
-                        setEditMode(false);
-                        setTileData({ title, link: linkValue });
-                    }}
+                    setEditMode={setEditMode}
                 />
             </div>
         </a>
