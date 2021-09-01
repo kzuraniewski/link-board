@@ -11,7 +11,7 @@ import { useUpdateEffect } from '../../hooks';
  * @param {string} [props.className = null] - optional class
  * @param {string} [props.placeholder] - input field's placeholder
  * @param {boolean} [props.focus] - whether the property should be focused and selected on edit mode
- * @param {boolean} [props.exitOnBlur] - whether to call onPropertySet on blur
+ * @param {boolean} [props.exitOnBlur] - whether to exit when lost focus
  * @param {number} [props.maxDigits] - maximal length of input value
  */
 export function EditableLabel({

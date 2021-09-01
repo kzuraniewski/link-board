@@ -43,15 +43,12 @@ export function BoardGroup({ name, setName, open = true, children = null }) {
             >
                 <EditableLabel
                     editMode={editMode}
+                    setEditMode={setEditMode}
                     value={name}
-                    defaultValue='New group'
+                    setValue={setName}
                     className='board-group__name'
                     focus
                     exitOnBlur
-                    onPropertySet={nameValue => {
-                        setEditMode(false);
-                        setName(nameValue);
-                    }}
                 />
 
                 <CollapseArrow show={show} />
