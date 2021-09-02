@@ -10,58 +10,74 @@ import { Tile } from './Tile';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, expectSignIn, database } from '../../firebase';
 import { collection, getDocs, doc } from '@firebase/firestore';
-import { addDoc, deleteDoc, setDoc } from 'firebase/firestore';
+import { setDoc } from 'firebase/firestore';
 
 /**
  * Gathers group info and interacts with firebase
  */
 export default function Board() {
-    const firebaseCollection = collection(database, 'BoardData');
-
-    const [groups, setGroups] = useState({});
-    const [groupElements, setGroupElements] = useState([]);
     const [user] = useAuthState(auth);
+
+    const [groups, setGroups] = useState([]);
+    const [groupElements, setGroupElements] = useState([]);
 
     // Set mouse down target which will be passed to Tile elements
     const [mouseDownTarget, setMouseDownTarget] = useState(null);
     const addTileBtn = useRef(null);
 
+    // Get the user's group doc, create if not found
+    const getBoardDoc = async () => {
+        const firebaseCollection = collection(database, 'BoardData');
+
+        // Get the user's group doc
+        let boardDoc = await getDocs(firebaseCollection).then(
+            snapshot => snapshot.docs.filter(doc => doc.id === user.uid)[0]
+        );
+
+        // let boardDoc = doc(firebaseCollection, user.uid);
+
+        // Create new user's group doc if not found
+        if (!boardDoc) {
+            const templateGroup = {
+                groups: [
+                    {
+                        name: 'New group',
+                        open: true,
+                        tiles: [],
+                    },
+                ],
+            };
+
+            await setDoc(doc(firebaseCollection, user.uid), templateGroup);
+            boardDoc = await getDocs(firebaseCollection)[user.uid];
+        }
+
+        return boardDoc;
+    };
+
     // Collect group data from database
     const pull = async () => {
-        const snapshot = await getDocs(firebaseCollection);
+        const boardDoc = await getBoardDoc();
 
-        setGroups(() => {
-            const r = {};
-
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                r[doc.id] = data;
-            });
-
-            return r;
-        });
+        setGroups(() => boardDoc.data().groups);
     };
 
     // Upload data to server
-    const upload = async () => {
-        console.log('upload');
+    const push = async () => {
+        const boardDoc = await getBoardDoc();
 
-        const snapshot = await getDocs(firebaseCollection);
+        // Filter out all undefined tiles
+        const fixedGroups = groups.map(group => ({
+            ...group,
+            tiles: group.tiles.filter(tile => tile !== undefined),
+        }));
 
-        snapshot.forEach(groupDoc => {
-            if (groupDoc.id in groups) {
-				// Filter out undefined tiles
-                const fixedGroup = {
-                    ...groups[groupDoc.id],
-                    tiles: groups[groupDoc.id].tiles.filter(it => it !== undefined),
-                };
-
-                setDoc(groupDoc.ref, fixedGroup);
-            } else deleteDoc(groupDoc.ref);
-        });
+        setDoc(boardDoc.ref, { groups: fixedGroups });
     };
 
     useEffect(() => {
+        if (!user) return;
+
         // Collect data from database
         pull();
 
@@ -72,11 +88,11 @@ export default function Board() {
         return () => {
             document.removeEventListener('mousedown', cb);
         };
-    }, []);
+    }, [user]);
 
     // Upload groups every time it changes
     useUpdateEffect(() => {
-        upload();
+        push();
     }, [groups]);
 
     // add new empty editable group
@@ -84,59 +100,53 @@ export default function Board() {
         /// Upload first then pull so Firebase generates id on its own
 
         // Empty group template
-        const docData = {
+        const groupTemplate = {
             name: '',
             open: true,
             tiles: [],
         };
 
-        // Create new doc with auto id
-        await addDoc(firebaseCollection, docData);
-
-        // Pull from server
-        pull();
+        setGroups(groups => [...groups, groupTemplate]);
     };
 
     /**
      * Set or add tile record
-     * @param {string} groupKey - key of the group object from groups list
+     * @param {string} groupIndex - index of the group object from groups list
      * @param {number} tileIndex - index of tile from the selected group
      * @param {{ title: string, link: string }} tileData - title and link of the tile
      */
-    const setTileData = (groupKey, tileIndex, tileData) => {
-        console.log('settiledata');
-
+    const setTileData = (groupIndex, tileIndex, tileData) => {
         setGroups(groups => {
-            const t = { ...groups };
-            t[groupKey].tiles[tileIndex] = tileData;
+            const t = [...groups];
+            t[groupIndex].tiles[tileIndex] = tileData;
             return t;
         });
     };
 
     /**
      * Delete tile record
-     * @param {string} groupKey - key of the group object from groups list
+     * @param {string} groupIndex - key of the group object from groups list
      * @param {number} tileIndex - index of tile from the selected group
      */
-    const deleteTileData = (groupKey, tileIndex) => {
+    const deleteTileData = (groupIndex, tileIndex) => {
         setGroups(groups => {
-            let t = { ...groups };
-            delete t[groupKey].tiles[tileIndex];
+            let t = [...groups];
+            delete t[groupIndex].tiles[tileIndex];
             return t;
         });
     };
 
     /**
      * Update board's data in the groups object
-     * @param {string} groupKey - key of the group object from groups list
+     * @param {string} groupIndex - key of the group object from groups list
      * @param {object} data - group's modified keys
      */
-    const setGroupData = (groupKey, data) => {
+    const setGroupData = (groupIndex, data) => {
         setGroups(groups => {
-            const t = { ...groups };
+            const t = [...groups];
 
-            t[groupKey] = {
-                ...t[groupKey],
+            t[groupIndex] = {
+                ...t[groupIndex],
                 ...data,
             };
 
