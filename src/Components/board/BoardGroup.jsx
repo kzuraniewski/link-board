@@ -1,8 +1,7 @@
-import { MDBCollapse } from 'mdb-react-ui-kit';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { CollapseArrow } from './CollapseArrow';
 import { EditableLabel } from './EditableLabel';
-import { useUpdateEffect } from '../../hooks';
+import DynamicCollapse from '../DynamicCollapse';
 
 /**
  * Hideable and editable board group containing its tiles
@@ -16,22 +15,6 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
     const [show, setShow] = useState(open);
     const [editMode, setEditMode] = useState(name.length ? false : true);
     const [showEditBtn, setShowEditBtn] = useState(false);
-
-    // Hide and expand the collapse so its height adjusts to content
-    // since bootstrap collapse does not support dynamic content
-    const fixCollapseHeight = useRef(false);
-    useUpdateEffect(() => {
-        setShow(false);
-
-        fixCollapseHeight.current = true;
-    }, [children]);
-
-    useEffect(() => {
-        if (!show && fixCollapseHeight.current) {
-            setShow(true);
-            fixCollapseHeight.current = false;
-        }
-    }, [show]);
 
     return (
         <div className='board-group'>
@@ -95,14 +78,14 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
             </div>
 
             {/* Group content */}
-            <MDBCollapse show={show}>
+            <DynamicCollapse show={show}>
                 {children ? (
                     <div className='board-group__tiles-container'>{children}</div>
                 ) : (
                     // default text
                     <div className='board-group__empty'>This group has no links yet</div>
                 )}
-            </MDBCollapse>
+            </DynamicCollapse>
         </div>
     );
 }
