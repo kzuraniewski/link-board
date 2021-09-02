@@ -132,6 +132,7 @@ export default function Board() {
         setGroups(groups => {
             let t = [...groups];
             delete t[groupIndex].tiles[tileIndex];
+            // t[groupIndex].tiles.splice(tileIndex, 1);
             return t;
         });
     };
@@ -151,6 +152,17 @@ export default function Board() {
             };
 
             return t;
+        });
+    };
+
+    /**
+     * Removes a group of given index from groups array
+     * @param {number} groupIndex
+     */
+    const deleteGroup = groupIndex => {
+        setGroups(groups => {
+            groups.splice(groupIndex, 1);
+            return groups;
         });
     };
 
