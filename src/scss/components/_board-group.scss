@@ -6,6 +6,8 @@
 
     &__topbar {
         @include ext-each(w-100, p-1, d-flex, justify-content-between, user-select-none, pointer);
+
+        position: relative;
     }
 
     &__name {

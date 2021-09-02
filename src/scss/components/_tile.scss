@@ -22,13 +22,14 @@
     }
 
     &__btn {
-        @include ext-each(text-light, btn-blank, mt-2, me-2);
+        @include ext-each(btn-blank, mt-2, me-2);
 
         opacity: 1;
-        transition: opacity 0.15s;
+        transition: opacity 0.15s, color 0.1s;
+        color: $light;
 
         &:hover {
-            filter: brightness(90%);
+            color: $accent;
         }
 
         &.tile__btn--hidden {

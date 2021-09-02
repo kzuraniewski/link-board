@@ -4,6 +4,26 @@ import { CollapseArrow } from './CollapseArrow';
 import { EditableLabel } from './EditableLabel';
 import { useUpdateEffect } from '../../hooks';
 
+function EditBtn({ show }) {
+    return (
+        <div
+            className={`edit${
+                !show ? ' edit--hide' : ''
+            }`}
+        >
+            <button
+                className={`edit__btn`}
+                disabled={!show}
+                onClick={e => {
+                    e.stopPropagation();
+                }}
+            >
+                <i className='fas fa-cog'></i>
+            </button>
+        </div>
+    );
+}
+
 /**
  * Hideable and editable board group containing its tiles
  * @param {object} props
@@ -15,6 +35,7 @@ import { useUpdateEffect } from '../../hooks';
 export function BoardGroup({ name, setData, open = true, children = null }) {
     const [show, setShow] = useState(open);
     const [editMode, setEditMode] = useState(name.length ? false : true);
+    const [showEditBtn, setShowEditBtn] = useState(false);
 
     // Hide and expand the collapse so its height adjusts to content
     // since bootstrap collapse does not support dynamic content
@@ -34,6 +55,7 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
 
     return (
         <div className='board-group'>
+            {/* topbar */}
             <div
                 className='board-group__topbar'
                 onClick={() => {
@@ -45,7 +67,13 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
                         });
                     }
                 }}
+                onMouseEnter={() => setShowEditBtn(true)}
+                onMouseLeave={() => setShowEditBtn(false)}
             >
+                {/* edit button */}
+                <EditBtn show={showEditBtn && show} />
+
+                {/* name label */}
                 <EditableLabel
                     editMode={editMode}
                     setEditMode={setEditMode}

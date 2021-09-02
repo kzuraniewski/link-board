@@ -1,0 +1,24 @@
+.edit {
+    position: absolute;
+    top: 50%;
+    left: -2rem;
+    transform: translateY(-50%);
+
+    opacity: 1;
+    transition: opacity 0.2s, color 1s;
+
+    &.edit--hide {
+        opacity: 0;
+    }
+
+    &__btn {
+        @include ext-each(btn-blank);
+
+        transition: color 1s !important;
+        color: $light;
+
+        :hover {
+            color: $accent;
+        }
+    }
+}
