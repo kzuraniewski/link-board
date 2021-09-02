@@ -37,6 +37,10 @@
             opacity: 0;
         }
 
+        &:disabled {
+            cursor: pointer;
+        }
+
         &:hover {
             color: $accent;
         }
