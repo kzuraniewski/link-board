@@ -3,26 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CollapseArrow } from './CollapseArrow';
 import { EditableLabel } from './EditableLabel';
 import { useUpdateEffect } from '../../hooks';
-
-function EditBtn({ show }) {
-    return (
-        <div
-            className={`edit${
-                !show ? ' edit--hide' : ''
-            }`}
-        >
-            <button
-                className={`edit__btn`}
-                disabled={!show}
-                onClick={e => {
-                    e.stopPropagation();
-                }}
-            >
-                <i className='fas fa-cog'></i>
-            </button>
-        </div>
-    );
-}
+import { EditBtn } from './EditBtn';
 
 /**
  * Hideable and editable board group containing its tiles
@@ -71,7 +52,13 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
                 onMouseLeave={() => setShowEditBtn(false)}
             >
                 {/* edit button */}
-                <EditBtn show={showEditBtn && show} />
+                <EditBtn
+                    show={showEditBtn && show}
+                    onClick={e => {
+                        e.stopPropagation();
+                        setEditMode(editMode => !editMode);
+                    }}
+                />
 
                 {/* name label */}
                 <EditableLabel
