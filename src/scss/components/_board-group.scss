@@ -27,6 +27,21 @@
         }
     }
 
+    &__delete-btn {
+        @include ext-each(btn-blank);
+
+        color: $light;
+        transition: 0.2s;
+
+        &.board-group__delete-btn--hide {
+            opacity: 0;
+        }
+
+        &:hover {
+            color: $accent;
+        }
+    }
+
     &__icons-container {
         @include ext-each(d-flex);
     }

@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CollapseArrow } from './CollapseArrow';
 import { EditableLabel } from './EditableLabel';
 import { useUpdateEffect } from '../../hooks';
-import { EditBtn } from './EditBtn';
 
 /**
  * Hideable and editable board group containing its tiles
@@ -52,24 +51,45 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
                 onMouseLeave={() => setShowEditBtn(false)}
             >
                 {/* edit button */}
-                <EditBtn
-                    show={showEditBtn && show}
-                    onClick={e => {
-                        e.stopPropagation();
-                        setEditMode(editMode => !editMode);
-                    }}
-                />
+                <div className={`edit${!(show && showEditBtn) ? ' edit--hide' : ''}`}>
+                    <button
+                        className={`edit__btn`}
+                        disabled={!show}
+                        onClick={e => {
+                            e.stopPropagation();
+                            setEditMode(editMode => !editMode);
+                        }}
+                    >
+                        <i className='fas fa-cog'></i>
+                    </button>
+                </div>
 
-                {/* name label */}
-                <EditableLabel
-                    editMode={editMode}
-                    setEditMode={setEditMode}
-                    value={name}
-                    setValue={name => setData({ name })}
-                    className='board-group__name'
-                    focus
-                    exitOnBlur
-                />
+                <div>
+                    {/* name label */}
+                    <EditableLabel
+                        editMode={editMode}
+                        setEditMode={setEditMode}
+                        value={name}
+                        setValue={name => setData({ name })}
+                        className='board-group__name'
+                        focus
+                        exitOnBlur
+                    />
+
+                    {/* delete button */}
+                    <button
+                        className={`board-group__delete-btn${
+                            !editMode ? ' board-group__delete-btn--hide' : ''
+                        }`}
+                        disabled={!editMode}
+                        onClick={e => {
+                            e.stopPropagation();
+                            setEditMode(editMode => !editMode);
+                        }}
+                    >
+                        <i className='fas fa-trash-alt'></i>
+                    </button>
+                </div>
 
                 <CollapseArrow show={show} />
             </div>
