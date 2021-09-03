@@ -18,11 +18,14 @@ import { EditableLabel } from '../EditableLabel';
 export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, deleteTileData }) {
     const titleDefaultValue = 'New tile';
 
-    const [showIconSelect, setShowIconSelect] = useState(false);
+    const thisTile = useRef(null);
+    const iconContainer = useRef(null);
+    const iconBtn = useRef(null);
 
-    // Edit mode on when title or link empty
+    // Edit mode on when title empty
     const [editMode, setEditMode] = useState(title.length === 0);
     const [showEditBtn, setShowEditBtn] = useState(false);
+    const [showIconSelect, setShowIconSelect] = useState(false);
 
     // Label values
     const [titleValue, setTitleValue] = useState(title);
@@ -48,12 +51,14 @@ export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, d
         }
     }, [editMode]);
 
-    // Exit edit mode when user clicked outside of tile
-    const thisTile = useRef(null);
     useUpdateEffect(() => {
         const target = mouseEvent.target;
-        if (target && !thisTile.current.contains(target)) {
-            if (editMode) setEditMode(false);
+        if (target && editMode) {
+            // Clicked outside of tile
+            if (!thisTile.current.contains(target)) setEditMode(false);
+            // Clicked inside the tile but outside of icon container
+            else if (!iconContainer.current.contains(target) && !iconBtn.current.contains(target))
+                setShowIconSelect(false);
         }
     }, [mouseEvent]);
 
@@ -84,6 +89,7 @@ export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, d
                 {/* icon select button */}
                 <div className={`tile__icon-select${editMode ? ' show' : ''}`}>
                     <button
+                        ref={iconBtn}
                         onClick={() => setShowIconSelect(showIconSelect => !showIconSelect)}
                         disabled={!editMode}
                     >
@@ -91,18 +97,20 @@ export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, d
                     </button>
 
                     <MDBCollapse show={showIconSelect}>
-                        <div className='tile__icon-container'>
-                            {['align-left', 'star', 'music', 'shopping-basket'].map((iconName, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => {
-                                        setTileData({ icon: iconName });
-                                        setShowIconSelect(false);
-                                    }}
-                                >
-                                    <i className={`fas fa-${iconName}`}></i>
-                                </button>
-                            ))}
+                        <div ref={iconContainer} className='tile__icon-container'>
+                            {['align-left', 'star', 'music', 'shopping-basket'].map(
+                                (iconName, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => {
+                                            setTileData({ icon: iconName });
+                                            setShowIconSelect(false);
+                                        }}
+                                    >
+                                        <i className={`fas fa-${iconName}`}></i>
+                                    </button>
+                                )
+                            )}
                         </div>
                     </MDBCollapse>
                 </div>
