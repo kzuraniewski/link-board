@@ -1,7 +1,7 @@
+import { MDBCollapse } from 'mdb-react-ui-kit';
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { useUpdateEffect } from '../../hooks';
-import placeholder from '../../images/placeholder.jpeg';
 import { EditableLabel } from '../EditableLabel';
 
 /**
@@ -9,13 +9,16 @@ import { EditableLabel } from '../EditableLabel';
  * @param {object} props
  * @param {string} props.title - tile's title
  * @param {string} props.link - tile's path
+ * @param {string} props.icon - tile's background as a Font Awesome icon name
  * @param {any} [props.mouseTarget] - mouse down target to detect if user clicked outside of tile
  * @param {any} props.addTileBtn - only exception to clicking outside so the tile stays in edit mode after added
  * @param {function} props.setTileData - callback to update changed properties in parent element
  * @param {function} props.deleteTileData - callback to delete the tile from tiles list
  */
-export function Tile({ title, link, mouseTarget, addTileBtn, setTileData, deleteTileData }) {
+export function Tile({ title, link, icon, mouseTarget, addTileBtn, setTileData, deleteTileData }) {
     const titleDefaultValue = 'New tile';
+
+    const [showIconSelect, setShowIconSelect] = useState(false);
 
     // Edit mode on when title or link empty
     const [editMode, setEditMode] = useState(title.length === 0);
@@ -40,6 +43,8 @@ export function Tile({ title, link, mouseTarget, addTileBtn, setTileData, delete
             }
 
             setTileData(data);
+
+            setShowIconSelect(false);
         }
     }, [editMode]);
 
@@ -76,14 +81,41 @@ export function Tile({ title, link, mouseTarget, addTileBtn, setTileData, delete
         >
             {/* background */}
             <div className='tile__background'>
-                <i className='fas fa-align-left'></i>
+                <i className={`fas fa-${icon}`}></i>
             </div>
 
             <div className='tile__mask'>
+                {/* icon select button */}
+                <div className={`tile__icon-select${editMode ? ' show' : ''}`}>
+                    <button
+                        onClick={() => setShowIconSelect(showIconSelect => !showIconSelect)}
+                        disabled={!editMode}
+                    >
+                        <i className='fas fa-ellipsis-v'></i>
+                    </button>
+
+                    <MDBCollapse show={showIconSelect}>
+                        <div className='tile__icon-container'>
+                            {['align-left', 'star', 'music'].map((iconName, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => {
+                                        setTileData({ icon: iconName });
+                                        setShowIconSelect(false);
+                                    }}
+                                >
+                                    <i className={`fas fa-${iconName}`}></i>
+                                </button>
+                            ))}
+                        </div>
+                    </MDBCollapse>
+                </div>
+
                 <div className='tile__btn-container'>
                     {/* Delete button */}
                     <button
                         className={`tile__btn${editMode ? '' : ' tile__btn--hidden'}`}
+                        disabled={!editMode}
                         onClick={() => deleteTileData()}
                     >
                         <i className='fas fa-trash-alt'></i>

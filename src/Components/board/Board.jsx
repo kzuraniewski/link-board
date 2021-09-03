@@ -92,7 +92,6 @@ export default function Board() {
     // Upload groups every time it changes
     useUpdateEffect(() => {
         push();
-        console.log(groups.length);
     }, [groups]);
 
     // add new empty editable group
@@ -113,12 +112,17 @@ export default function Board() {
      * Set or add tile record
      * @param {number} groupIndex - index of the group object from groups list
      * @param {number} tileIndex - index of tile from the selected group
-     * @param {{ title: string, link: string }} tileData - title and link of the tile
+     * @param {{ title: string, link: string, icon: string }} tileData - title and link of the tile
      */
     const setTileData = (groupIndex, tileIndex, tileData) => {
         setGroups(groups => {
             const t = [...groups];
-            t[groupIndex].tiles[tileIndex] = tileData;
+
+            t[groupIndex].tiles[tileIndex] = {
+                ...t[groupIndex].tiles[tileIndex],
+                ...tileData,
+            };
+
             return t;
         });
     };
@@ -189,11 +193,12 @@ export default function Board() {
                     deleteGroup={() => deleteGroup(groupIndex)}
                 >
                     {tiles &&
-                        tiles.map(({ title, link }, tileIndex) => (
+                        tiles.map(({ title, link, icon }, tileIndex) => (
                             <Tile
                                 key={tileIndex}
                                 title={title}
                                 link={link}
+                                icon={icon}
                                 // mouseTarget={mouseTarget}
                                 addTileBtn={addTileBtn}
                                 setTileData={tileData =>
@@ -213,6 +218,7 @@ export default function Board() {
                             setTileData(groupIndex, tiles ? tiles.length : 0, {
                                 title: '',
                                 link: '',
+                                icon: 'align-left',
                             })
                         }
                     >

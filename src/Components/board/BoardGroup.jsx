@@ -74,7 +74,7 @@ export function BoardGroup({ name, setData, deleteGroup, open = true, children =
                         className={`board-group__delete-btn${
                             !editMode ? ' board-group__delete-btn--hide' : ''
                         }`}
-                        disabled={false}
+                        disabled={!editMode}
                         onMouseDown={e => {
                             e.stopPropagation();
 
