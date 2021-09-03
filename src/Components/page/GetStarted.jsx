@@ -1,6 +1,6 @@
 import { MDBCol, MDBRow } from 'mdb-react-ui-kit';
 import React from 'react';
-import Logo from './Logo';
+import Logo from '../Logo';
 
 export default function GetStarted() {
     return (

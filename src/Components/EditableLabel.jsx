@@ -1,30 +1,29 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 /**
  * Returns an input which allows to be editable when in edit mode
  * @param {object} props
  * @param {boolean} props.editMode - whether the input should be editable or not
- * @param {function} [props.onPropertySet] - called after entering input ended
+ * @param {function} props.setEditMode - function to set parent's edit mode state
+ * @param {string} props.value - label value
+ * @param {function} props.setValue - function to set label's value
  * @param {string} [props.className = null] - optional class
- * @param {string} [props.value = ''] - initial value
- * @param {string} [props.defaultValue] - value used instead of empty string
  * @param {string} [props.placeholder] - input field's placeholder
  * @param {boolean} [props.focus] - whether the property should be focused and selected on edit mode
- * @param {boolean} [props.exitOnBlur] - whether to call onPropertySet on blur
+ * @param {boolean} [props.exitOnBlur] - whether to exit when lost focus
  * @param {number} [props.maxDigits] - maximal length of input value
  */
 export function EditableLabel({
     editMode,
-    value = '',
-    defaultValue = '',
+    setEditMode,
+    value,
+    setValue,
     placeholder = '',
     className = null,
     focus = false,
     exitOnBlur = false,
-    onPropertySet = null,
     maxDigits = 999,
 }) {
-    const [propertyValue, setPropertyValue] = useState(value);
     const element = useRef(null);
 
     // clear all text selection
@@ -32,23 +31,8 @@ export function EditableLabel({
         if (window.getSelection()) window.getSelection().removeAllRanges();
     };
 
-    // call onPropertySet if given and use default value if specified
-    const exit = () => {
-        if (propertyValue.length && propertyValue === value) return;
-
-        const output = propertyValue.length ? propertyValue : defaultValue;
-        onPropertySet?.(output);
-        setPropertyValue(output);
-    };
-
+    // focus on input if in edit mode, otherwise clear selection
     useEffect(() => {
-        // exit if not in edit mode
-        if (!editMode) {
-            exit();
-            return;
-        }
-
-        // focus on input if in edit mode, otherwise clear selection
         if (focus) {
             element.current.focus();
             element.current.select();
@@ -63,22 +47,22 @@ export function EditableLabel({
             type='text'
             spellCheck='false'
             className={className}
-            value={propertyValue}
             placeholder={placeholder}
             disabled={!editMode}
+            value={value}
             onChange={e => {
                 const value = e.target.value;
-                if (value.length <= maxDigits) setPropertyValue(value);
+                if (value.length <= maxDigits) setValue(value);
             }}
             onKeyDown={e => {
                 if (e.key === 'Enter') {
                     // @ts-ignore
                     e.target.blur();
-                    exit();
+                    setEditMode(false);
                 }
             }}
             onBlur={() => {
-                if (exitOnBlur) exit();
+                if (exitOnBlur) setEditMode(false);
             }}
         />
     );

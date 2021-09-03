@@ -1,46 +1,70 @@
+import { MDBCollapse } from 'mdb-react-ui-kit';
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import placeholder from '../../images/placeholder.jpeg';
-import { EditableLabel } from './EditableLabel';
+import { useUpdateEffect } from '../../hooks';
+import { EditableLabel } from '../EditableLabel';
 
 /**
  * Editable tile containing its title, link and preview
  * @param {object} props
  * @param {string} props.title - tile's title
  * @param {string} props.link - tile's path
- * @param {any} props.mouseDownTarget - mouse down target to detect if user clicked outside of tile
+ * @param {string} props.icon - tile's background as a Font Awesome icon name
+ * @param {any} [props.mouseEvent] - mouse down event to detect if user clicked outside of tile
  * @param {any} props.addTileBtn - only exception to clicking outside so the tile stays in edit mode after added
  * @param {function} props.setTileData - callback to update changed properties in parent element
  * @param {function} props.deleteTileData - callback to delete the tile from tiles list
  */
-export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, deleteTileData }) {
+export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, deleteTileData }) {
+    const titleDefaultValue = 'New tile';
+
+    const [showIconSelect, setShowIconSelect] = useState(false);
+
     // Edit mode on when title or link empty
-    const [editMode, setEditMode] = useState(!title.length || !link.length);
+    const [editMode, setEditMode] = useState(title.length === 0);
     const [showEditBtn, setShowEditBtn] = useState(false);
 
+    // Label values
+    const [titleValue, setTitleValue] = useState(title);
+    const [linkValue, setLinkValue] = useState(link);
+
+    // Update data after closing edit mode
+    useUpdateEffect(() => {
+        if (!editMode) {
+            const data = {
+                title: titleValue,
+                link: linkValue,
+            };
+
+            // Use default title when empty
+            if (!titleValue.length) {
+                data.title = titleDefaultValue;
+                setTitleValue(titleDefaultValue);
+            }
+
+            setTileData(data);
+
+            setShowIconSelect(false);
+        }
+    }, [editMode]);
+
     // Exit edit mode when user clicked outside of tile
-    const tile = useRef(null);
-    useEffect(() => {
-        if (
-            mouseDownTarget &&
-            tile.current &&
-            ![mouseDownTarget, ReactDOM.findDOMNode(mouseDownTarget).parentElement].includes(
-                addTileBtn
-            ) &&
-            !tile.current.contains(mouseDownTarget)
-        ) {
+    const thisTile = useRef(null);
+    useUpdateEffect(() => {
+        const target = mouseEvent.target;
+        if (target && !thisTile.current.contains(target)) {
             if (editMode) setEditMode(false);
         }
-    }, [mouseDownTarget]);
+    }, [mouseEvent]);
 
     // Enter edit mode if mounted and labels not set
     useEffect(() => {
-        if (!title.length || !link.length) setEditMode(true);
+        if (!title.length) setEditMode(true);
     }, []);
 
     return (
         <a
-            ref={tile}
+            ref={thisTile}
             className='tile'
             href={link}
             target='_blank'
@@ -51,11 +75,43 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, de
                 if (editMode) e.preventDefault();
             }}
         >
+            {/* background */}
+            <div className='tile__background'>
+                <i className={`fas fa-${icon}`}></i>
+            </div>
+
             <div className='tile__mask'>
+                {/* icon select button */}
+                <div className={`tile__icon-select${editMode ? ' show' : ''}`}>
+                    <button
+                        onClick={() => setShowIconSelect(showIconSelect => !showIconSelect)}
+                        disabled={!editMode}
+                    >
+                        <i className='fas fa-ellipsis-v'></i>
+                    </button>
+
+                    <MDBCollapse show={showIconSelect}>
+                        <div className='tile__icon-container'>
+                            {['align-left', 'star', 'music'].map((iconName, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => {
+                                        setTileData({ icon: iconName });
+                                        setShowIconSelect(false);
+                                    }}
+                                >
+                                    <i className={`fas fa-${iconName}`}></i>
+                                </button>
+                            ))}
+                        </div>
+                    </MDBCollapse>
+                </div>
+
                 <div className='tile__btn-container'>
                     {/* Delete button */}
                     <button
                         className={`tile__btn${editMode ? '' : ' tile__btn--hidden'}`}
+                        disabled={!editMode}
                         onClick={() => deleteTileData()}
                     >
                         <i className='fas fa-trash-alt'></i>
@@ -85,25 +141,20 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, de
                 <EditableLabel
                     className='tile__title'
                     focus
-                    value={title}
-                    defaultValue='Tile'
+                    value={titleValue}
+                    setValue={setTitleValue}
                     editMode={editMode}
-                    onPropertySet={titleValue => {
-                        setEditMode(false);
-                        setTileData({ title: titleValue, link });
-                    }}
+                    setEditMode={setEditMode}
                 />
 
                 {/* link path */}
                 <EditableLabel
                     className='tile__link'
-                    value={link}
+                    value={linkValue}
+                    setValue={setLinkValue}
                     placeholder='No link specified'
                     editMode={editMode}
-                    onPropertySet={linkValue => {
-                        setEditMode(false);
-                        setTileData({ title, link: linkValue });
-                    }}
+                    setEditMode={setEditMode}
                 />
             </div>
         </a>

@@ -3,9 +3,9 @@ html {
 }
 
 body {
-    background-color: $secondary !important;
+    background-color: $light !important;
     margin: 0;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-family: Lato, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -42,6 +42,17 @@ a:focus {
     color: #1266f1;
 }
 
+.btn-signin {
+    background-color: $accent !important;
+}
+
 .btn-container {
     @include ext-each(d-flex);
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

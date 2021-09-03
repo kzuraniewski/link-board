@@ -1,6 +1,6 @@
 import { MDBBtn, MDBCol, MDBContainer, MDBRow } from 'mdb-react-ui-kit';
 import React from 'react';
-import Logo from './Logo';
+import Logo from '../Logo';
 // import badBookmarks from '../images/bad-bookmarks.png';
 // import goodBookmarks from '../images/good-bookmarks.png';
 

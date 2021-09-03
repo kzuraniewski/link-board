@@ -10,6 +10,20 @@
     background: $light;
     cursor: default;
 
+    position: relative;
+
+    &__background {
+        @include ext-each(centered);
+
+        $color: rgba(0, 0, 0, 0.5);
+
+        color: $color;
+        font-size: 4.5rem;
+        text-shadow: 0px 0px 4px $color;
+
+        top: 40%;
+    }
+
     &__mask {
         @include ext-each(w-100, h-100, d-flex, flex-column, justify-content-end, p-2, position-relative);
 
@@ -22,13 +36,14 @@
     }
 
     &__btn {
-        @include ext-each(text-light, btn-blank, mt-2, me-2);
+        @include ext-each(btn-blank, mt-2, me-2);
 
         opacity: 1;
-        transition: opacity 0.15s;
+        transition: opacity 0.15s, color 0.1s;
+        color: $light;
 
         &:hover {
-            filter: brightness(90%);
+            color: $accent;
         }
 
         &.tile__btn--hidden {
@@ -66,5 +81,46 @@
 
         font-size: 0.6em;
         color: $accent;
+    }
+
+    &__icon-select {
+        @include ext-each(mt-2, ms-2, position-absolute, top-0, start-0);
+
+        opacity: 0;
+        transition: opacity 0.15s, color 0.1s;
+        color: $light;
+
+        &.show {
+            opacity: 1;
+        }
+
+        button {
+            @include ext-each(btn-blank);
+
+            color: $light;
+            transition: color 0.2s;
+
+            &:hover {
+                color: $accent;
+            }
+        }
+    }
+
+    &__icon-container {
+        background: $light;
+        padding: 0.3rem;
+        border-radius: 5px;
+
+        > * {
+            margin-right: 0.3rem;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        button {
+            color: gray;
+        }
     }
 }

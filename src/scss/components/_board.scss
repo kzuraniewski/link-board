@@ -1,13 +1,13 @@
 .board {
-    @extend .py-4;
+    @include ext-each(py-4, position-relative);
 
     &__add-group {
-        color: $board-primary !important;
-        border-color: $board-primary !important;
+        color: $secondary !important;
+        border-color: $secondary !important;
 
         &:hover {
-            background-color: $board-primary !important;
-            color: $secondary !important;
+            background-color: $secondary !important;
+            color: $light !important;
         }
     }
 
@@ -22,7 +22,7 @@
 
         &:hover {
             background-color: $light !important;
-            color: $board-primary !important;
+            color: $secondary !important;
         }
     }
 }
