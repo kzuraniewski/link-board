@@ -19,10 +19,7 @@ export default function Intro() {
                             </p>
 
                             <div className='btn-container'>
-                                <MDBBtn href='#/getstarted' className='article__cta'>
-                                    Get started
-                                </MDBBtn>
-                                <MDBBtn href='#/board' className='article__cta article__cta--alt'>
+                                <MDBBtn href='#/board' className='article__cta'>
                                     Your board
                                 </MDBBtn>
                             </div>
