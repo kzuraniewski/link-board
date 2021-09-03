@@ -19,10 +19,9 @@ export default function Board() {
     const [user] = useAuthState(auth);
 
     const [groups, setGroups] = useState([]);
-    const [groupElements, setGroupElements] = useState([]);
 
     // Set mouse down target which will be passed to Tile elements
-    const [mouseDownTarget, setMouseDownTarget] = useState(null);
+    // const [mouseTarget, setMouseTarget] = useState(null);
     const addTileBtn = useRef(null);
 
     // Get the user's group doc, create if not found
@@ -82,17 +81,18 @@ export default function Board() {
         pull();
 
         // Listen for mouse click for exiting tiles' edit mode
-        const cb = e => setMouseDownTarget(e.target);
-        document.addEventListener('mousedown', cb);
+        // const cb = e => setMouseTarget(e.target);
+        // document.addEventListener('mouseup', cb);
 
-        return () => {
-            document.removeEventListener('mousedown', cb);
-        };
+        // return () => {
+        //     document.removeEventListener('mouseup', cb);
+        // };
     }, [user]);
 
     // Upload groups every time it changes
     useUpdateEffect(() => {
         push();
+        console.log(groups.length);
     }, [groups]);
 
     // add new empty editable group
@@ -111,7 +111,7 @@ export default function Board() {
 
     /**
      * Set or add tile record
-     * @param {string} groupIndex - index of the group object from groups list
+     * @param {number} groupIndex - index of the group object from groups list
      * @param {number} tileIndex - index of tile from the selected group
      * @param {{ title: string, link: string }} tileData - title and link of the tile
      */
@@ -125,10 +125,10 @@ export default function Board() {
 
     /**
      * Delete tile record
-     * @param {string} groupIndex - key of the group object from groups list
+     * @param {number} groupIndex - key of the group object from groups list
      * @param {number} tileIndex - index of tile from the selected group
      */
-    const deleteTileData = (groupIndex, tileIndex) => {
+    const deleteTile = (groupIndex, tileIndex) => {
         setGroups(groups => {
             let t = [...groups];
             delete t[groupIndex].tiles[tileIndex];
@@ -139,7 +139,7 @@ export default function Board() {
 
     /**
      * Update board's data in the groups object
-     * @param {string} groupIndex - key of the group object from groups list
+     * @param {number} groupIndex - key of the group object from groups list
      * @param {object} data - group's modified keys
      */
     const setGroupData = (groupIndex, data) => {
@@ -161,56 +161,11 @@ export default function Board() {
      */
     const deleteGroup = groupIndex => {
         setGroups(groups => {
-            groups.splice(groupIndex, 1);
-            return groups;
+            const t = [...groups];
+            t.splice(groupIndex, 1);
+            return t;
         });
     };
-
-    // Generate group elements outside of return statement (because for...of)
-    useEffect(() => {
-        setGroupElements(() => {
-            const groupElements = [];
-
-            for (const [key, { name, open, tiles }] of Object.entries(groups)) {
-                groupElements.push(
-                    <BoardGroup
-                        key={key}
-                        open={open}
-                        name={name}
-                        setData={data => setGroupData(key, data)}
-                    >
-                        {tiles &&
-                            tiles.map(({ title, link }, tileIndex) => (
-                                <Tile
-                                    key={tileIndex}
-                                    title={title}
-                                    link={link}
-                                    mouseDownTarget={mouseDownTarget}
-                                    addTileBtn={addTileBtn}
-                                    setTileData={tileData => setTileData(key, tileIndex, tileData)}
-                                    deleteTileData={() => deleteTileData(key, tileIndex)}
-                                />
-                            ))}
-
-                        {/* new tile button */}
-                        <MDBBtn
-                            ref={addTileBtn}
-                            className='board__add-tile-btn'
-                            size='sm'
-                            outline
-                            onClick={() =>
-                                setTileData(key, tiles ? tiles.length : 0, { title: '', link: '' })
-                            }
-                        >
-                            <i className='fas fa-plus'></i>
-                        </MDBBtn>
-                    </BoardGroup>
-                );
-            }
-
-            return groupElements;
-        });
-    }, [groups]);
 
     if (!user) {
         if (expectSignIn()) return <Loading centered />;
@@ -219,7 +174,46 @@ export default function Board() {
 
     return (
         <MDBContainer className='board'>
-            {groupElements}
+            {groups.map(({ name, open, tiles }, groupIndex) => (
+                <BoardGroup
+                    key={groupIndex}
+                    open={open}
+                    name={name}
+                    setData={data => setGroupData(groupIndex, data)}
+                    deleteGroup={() => deleteGroup(groupIndex)}
+                >
+                    {tiles &&
+                        tiles.map(({ title, link }, tileIndex) => (
+                            <Tile
+                                key={tileIndex}
+                                title={title}
+                                link={link}
+                                // mouseTarget={mouseTarget}
+                                addTileBtn={addTileBtn}
+                                setTileData={tileData =>
+                                    setTileData(groupIndex, tileIndex, tileData)
+                                }
+                                deleteTileData={() => deleteTile(groupIndex, tileIndex)}
+                            />
+                        ))}
+
+                    {/* new tile button */}
+                    <MDBBtn
+                        ref={addTileBtn}
+                        className='board__add-tile-btn'
+                        size='sm'
+                        outline
+                        onClick={() =>
+                            setTileData(groupIndex, tiles ? tiles.length : 0, {
+                                title: '',
+                                link: '',
+                            })
+                        }
+                    >
+                        <i className='fas fa-plus'></i>
+                    </MDBBtn>
+                </BoardGroup>
+            ))}
 
             {/* new board button */}
             <MDBBtn className='board__add-group' size='sm' block outline onClick={addGroup}>

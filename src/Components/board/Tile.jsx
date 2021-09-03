@@ -9,12 +9,12 @@ import { EditableLabel } from './EditableLabel';
  * @param {object} props
  * @param {string} props.title - tile's title
  * @param {string} props.link - tile's path
- * @param {any} props.mouseDownTarget - mouse down target to detect if user clicked outside of tile
+ * @param {any} [props.mouseTarget] - mouse down target to detect if user clicked outside of tile
  * @param {any} props.addTileBtn - only exception to clicking outside so the tile stays in edit mode after added
  * @param {function} props.setTileData - callback to update changed properties in parent element
  * @param {function} props.deleteTileData - callback to delete the tile from tiles list
  */
-export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, deleteTileData }) {
+export function Tile({ title, link, mouseTarget, addTileBtn, setTileData, deleteTileData }) {
     const titleDefaultValue = 'New tile';
 
     // Edit mode on when title or link empty
@@ -47,16 +47,14 @@ export function Tile({ title, link, mouseDownTarget, addTileBtn, setTileData, de
     const tile = useRef(null);
     useEffect(() => {
         if (
-            mouseDownTarget &&
+            mouseTarget &&
             tile.current &&
-            ![mouseDownTarget, ReactDOM.findDOMNode(mouseDownTarget).parentElement].includes(
-                addTileBtn
-            ) &&
-            !tile.current.contains(mouseDownTarget)
+            ![mouseTarget, ReactDOM.findDOMNode(mouseTarget).parentElement].includes(addTileBtn) &&
+            !tile.current.contains(mouseTarget)
         ) {
             if (editMode) setEditMode(false);
         }
-    }, [mouseDownTarget]);
+    }, [mouseTarget]);
 
     // Enter edit mode if mounted and labels not set
     useEffect(() => {

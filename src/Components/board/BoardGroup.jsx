@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CollapseArrow } from './CollapseArrow';
 import { EditableLabel } from './EditableLabel';
 import DynamicCollapse from '../DynamicCollapse';
@@ -8,20 +8,30 @@ import DynamicCollapse from '../DynamicCollapse';
  * @param {object} props
  * @param {string} props.name - name of the group
  * @param {function} props.setData - callback to update this group's data in the parent component
+ * @param {function} props.deleteGroup - callbak to remove this group
  * @param {boolean} [props.open = true] - whether the group is open
  * @param {any} [props.children = null]
  */
-export function BoardGroup({ name, setData, open = true, children = null }) {
+export function BoardGroup({ name, setData, deleteGroup, open = true, children = null }) {
+    const defaultName = 'New group';
+
     const [show, setShow] = useState(open);
     const [editMode, setEditMode] = useState(name.length ? false : true);
     const [showEditBtn, setShowEditBtn] = useState(false);
+
+    // Use default group name if empty
+    useEffect(() => {
+        if (!editMode && !name.length) {
+            setData({ name: defaultName });
+        }
+    }, [editMode]);
 
     return (
         <div className='board-group'>
             {/* topbar */}
             <div
                 className='board-group__topbar'
-                onClick={() => {
+                onMouseDown={() => {
                     // Lock board group toggling when in edit mode
                     if (!editMode) {
                         setShow(show => {
@@ -38,7 +48,7 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
                     <button
                         className={`edit__btn`}
                         disabled={!show}
-                        onClick={e => {
+                        onMouseDown={e => {
                             e.stopPropagation();
                             setEditMode(editMode => !editMode);
                         }}
@@ -64,10 +74,11 @@ export function BoardGroup({ name, setData, open = true, children = null }) {
                         className={`board-group__delete-btn${
                             !editMode ? ' board-group__delete-btn--hide' : ''
                         }`}
-                        disabled={!editMode}
-                        onClick={e => {
+                        disabled={false}
+                        onMouseDown={e => {
                             e.stopPropagation();
-                            setEditMode(editMode => !editMode);
+
+                            deleteGroup();
                         }}
                     >
                         <i className='fas fa-trash-alt'></i>
