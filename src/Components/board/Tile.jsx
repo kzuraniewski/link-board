@@ -17,6 +17,7 @@ import { EditableLabel } from '../EditableLabel';
  */
 export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, deleteTileData }) {
     const titleDefaultValue = 'New tile';
+    const mobileBreakpoint = 768;
 
     const thisTile = useRef(null);
     const iconContainer = useRef(null);
@@ -86,8 +87,8 @@ export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, d
             </div>
 
             <div className='tile__mask'>
-                {/* icon select button */}
                 <div className={`tile__icon-select${editMode ? ' show' : ''}`}>
+                    {/* icon select button */}
                     <button
                         ref={iconBtn}
                         onClick={() => setShowIconSelect(showIconSelect => !showIconSelect)}
@@ -96,6 +97,7 @@ export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, d
                         <i className='fas fa-ellipsis-v'></i>
                     </button>
 
+                    {/* icon collapse */}
                     <MDBCollapse show={showIconSelect}>
                         <div ref={iconContainer} className='tile__icon-container'>
                             {['align-left', 'star', 'music', 'shopping-basket'].map(
@@ -118,7 +120,7 @@ export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, d
                 <div className='tile__btn-container'>
                     {/* Delete button */}
                     <button
-                        className={`tile__btn${editMode ? '' : ' tile__btn--hidden'}`}
+                        className={`tile__btn${editMode ? ' show' : ''}`}
                         disabled={!editMode}
                         onClick={() => deleteTileData()}
                     >
@@ -128,7 +130,9 @@ export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, d
                     {/* Edit mode button */}
                     <button
                         className={`tile__btn${
-                            !editMode && !showEditBtn ? ' tile__btn--hidden' : ''
+                            editMode || showEditBtn || window.innerWidth <= mobileBreakpoint
+                                ? ' show'
+                                : ''
                         }`}
                         onClick={e => {
                             e.preventDefault();

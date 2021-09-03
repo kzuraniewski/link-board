@@ -5,24 +5,28 @@
         color: $secondary !important;
         border-color: $secondary !important;
 
-        &:hover {
-            background-color: $secondary !important;
-            color: $light !important;
+        @media (min-width: 768px) {
+            &:hover {
+                background-color: $secondary !important;
+                color: $light !important;
+            }
         }
     }
 
     &__add-tile-btn {
         @include ext-each(m-1);
-        
+
         width: 10rem;
         height: 2rem;
 
         color: $light !important;
         border-color: $light !important;
 
-        &:hover {
-            background-color: $light !important;
-            color: $secondary !important;
+        @media (min-width: 768px) {
+            &:hover {
+                background-color: $light !important;
+                color: $secondary !important;
+            }
         }
     }
 }
