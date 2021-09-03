@@ -42,7 +42,7 @@
     }
 
     &__image {
-        @include ext-each(img-fluid);
+        @include ext-each(img-fluid, my-3);
     }
 
     &__row {

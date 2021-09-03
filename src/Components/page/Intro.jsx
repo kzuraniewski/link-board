@@ -1,8 +1,9 @@
 import { MDBBtn, MDBCol, MDBContainer, MDBRow } from 'mdb-react-ui-kit';
 import React from 'react';
 import Logo from '../Logo';
-// import badBookmarks from '../images/bad-bookmarks.png';
-// import goodBookmarks from '../images/good-bookmarks.png';
+import badBookmarks from '../../images/bad-bookmarks.png';
+import goodBookmarks from '../../images/good-bookmarks.png';
+import preview from '../../images/preview.png';
 
 export default function Intro() {
     return (
@@ -29,7 +30,7 @@ export default function Intro() {
                             className='article__content-container article__content-container--center'
                         >
                             <img
-                                src={'badBookmarks'}
+                                src={badBookmarks}
                                 alt='Bad bookmarks'
                                 className='article__image'
                             />
@@ -37,7 +38,7 @@ export default function Intro() {
                             <i className='fas fa-long-arrow-alt-down article__arrow'></i>
 
                             <img
-                                src={'goodBookmarks'}
+                                src={goodBookmarks}
                                 alt='Good bookmarks'
                                 className='article__image'
                             />
@@ -71,7 +72,7 @@ export default function Intro() {
                             size='md'
                             className='article__content-container article__content-container--center'
                         >
-                            <img src='asd' alt='Board preview' className='article__image' />
+                            <img src={preview} alt='Board preview' className='article__image' />
                         </MDBCol>
 
                         <MDBCol size='md' className='article__content-container'>
