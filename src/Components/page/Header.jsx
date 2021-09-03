@@ -41,12 +41,6 @@ export default function Header() {
                         </MDBNavbarItem>
 
                         <MDBNavbarItem>
-                            <MDBNavbarLink href='#/getstarted' onClick={() => setShowBasic(false)}>
-                                Get started
-                            </MDBNavbarLink>
-                        </MDBNavbarItem>
-
-                        <MDBNavbarItem>
                             <MDBNavbarLink href='#/info' onClick={() => setShowBasic(false)}>
                                 About
                             </MDBNavbarLink>
