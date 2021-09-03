@@ -92,7 +92,7 @@ export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, d
 
                     <MDBCollapse show={showIconSelect}>
                         <div className='tile__icon-container'>
-                            {['align-left', 'star', 'music'].map((iconName, index) => (
+                            {['align-left', 'star', 'music', 'shopping-basket'].map((iconName, index) => (
                                 <button
                                     key={index}
                                     onClick={() => {
