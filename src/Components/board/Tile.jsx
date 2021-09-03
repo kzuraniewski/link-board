@@ -74,6 +74,11 @@ export function Tile({ title, link, mouseTarget, addTileBtn, setTileData, delete
                 if (editMode) e.preventDefault();
             }}
         >
+            {/* background */}
+            <div className='tile__background'>
+                <i className='fas fa-align-left'></i>
+            </div>
+
             <div className='tile__mask'>
                 <div className='tile__btn-container'>
                     {/* Delete button */}

@@ -10,6 +10,18 @@
     background: $light;
     cursor: default;
 
+    position: relative;
+
+    &__background {
+        @include ext-each(centered);
+
+        color: gray;
+        font-size: 4rem;
+        text-shadow: 0px 0px 4px gray;
+
+        top: 40%;
+    }
+
     &__mask {
         @include ext-each(w-100, h-100, d-flex, flex-column, justify-content-end, p-2, position-relative);
 
