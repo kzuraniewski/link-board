@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CollapseArrow } from './CollapseArrow';
-import { EditableLabel } from './EditableLabel';
+import { EditableLabel } from '../EditableLabel';
 import DynamicCollapse from '../DynamicCollapse';
 
 /**

@@ -10,8 +10,8 @@ import {
     MDBNavbarLink,
     MDBCollapse,
 } from 'mdb-react-ui-kit';
-import Logo from './Logo';
-import UserInfo from './authentication/UserInfo';
+import Logo from '../Logo';
+import UserInfo from '../authentication/UserInfo';
 
 export default function Header() {
     const [showBasic, setShowBasic] = useState(false);
@@ -54,7 +54,9 @@ export default function Header() {
                     </MDBNavbarNav>
 
                     {/* user info */}
-                    <UserInfo />
+                    <div className='flex-shrink-0'>
+                        <UserInfo />
+                    </div>
                 </MDBCollapse>
             </MDBContainer>
         </MDBNavbar>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { useUpdateEffect } from '../../hooks';
 import placeholder from '../../images/placeholder.jpeg';
-import { EditableLabel } from './EditableLabel';
+import { EditableLabel } from '../EditableLabel';
 
 /**
  * Editable tile containing its title, link and preview

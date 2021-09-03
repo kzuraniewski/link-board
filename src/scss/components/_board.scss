@@ -1,5 +1,5 @@
 .board {
-    @extend .py-4;
+    @include ext-each(py-4, position-relative);
 
     &__add-group {
         color: $board-primary !important;

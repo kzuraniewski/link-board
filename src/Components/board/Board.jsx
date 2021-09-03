@@ -169,7 +169,13 @@ export default function Board() {
 
     if (!user) {
         if (expectSignIn()) return <Loading centered />;
-        else return <LogIn />;
+        else
+            return (
+                <div className='centered d-flex flex-column align-items-center'>
+                    <h3>You are not signed in. To use your board, sign in first.</h3>
+                    <LogIn />
+                </div>
+            );
     }
 
     return (

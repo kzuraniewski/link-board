@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useUpdateEffect } from '../../hooks';
+import React, { useEffect, useRef } from 'react';
 
 /**
  * Returns an input which allows to be editable when in edit mode

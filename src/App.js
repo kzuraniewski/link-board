@@ -1,12 +1,11 @@
 import React from 'react';
-import Header from './Components/Header';
+import Header from './Components/page/Header';
 import Board from './Components/board/Board';
-import GetStarted from './Components/GetStarted';
-import About from './Components/About';
-import Intro from './Components/Intro';
-import LogIn from './Components/authentication/LogIn';
+import GetStarted from './Components/page/GetStarted';
+import About from './Components/page/About';
+import Intro from './Components/page/Intro';
+import NotFound from './Components/page/NotFound';
 import { HashRouter, Route, Link, Switch, NavLink } from 'react-router-dom';
-import NotFound from './Components/NotFound';
 
 function App() {
     return (
