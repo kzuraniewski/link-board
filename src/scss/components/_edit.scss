@@ -15,7 +15,7 @@
         @include ext-each(btn-blank);
 
         transition: color 1s !important;
-        color: $light;
+        color: $secondary;
 
         :hover {
             color: $accent;
