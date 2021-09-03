@@ -21,7 +21,7 @@ export default function Board() {
     const [groups, setGroups] = useState([]);
 
     // Set mouse down target which will be passed to Tile elements
-    // const [mouseTarget, setMouseTarget] = useState(null);
+    const [mouseEvent, setMouseEvent] = useState(null);
     const addTileBtn = useRef(null);
 
     // Get the user's group doc, create if not found
@@ -81,12 +81,12 @@ export default function Board() {
         pull();
 
         // Listen for mouse click for exiting tiles' edit mode
-        // const cb = e => setMouseTarget(e.target);
-        // document.addEventListener('mouseup', cb);
+        const cb = e => setMouseEvent(e);
+        document.addEventListener('mouseup', cb);
 
-        // return () => {
-        //     document.removeEventListener('mouseup', cb);
-        // };
+        return () => {
+            document.removeEventListener('mouseup', cb);
+        };
     }, [user]);
 
     // Upload groups every time it changes
@@ -199,7 +199,7 @@ export default function Board() {
                                 title={title}
                                 link={link}
                                 icon={icon}
-                                // mouseTarget={mouseTarget}
+                                mouseEvent={mouseEvent}
                                 addTileBtn={addTileBtn}
                                 setTileData={tileData =>
                                     setTileData(groupIndex, tileIndex, tileData)

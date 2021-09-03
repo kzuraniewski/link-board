@@ -10,12 +10,12 @@ import { EditableLabel } from '../EditableLabel';
  * @param {string} props.title - tile's title
  * @param {string} props.link - tile's path
  * @param {string} props.icon - tile's background as a Font Awesome icon name
- * @param {any} [props.mouseTarget] - mouse down target to detect if user clicked outside of tile
+ * @param {any} [props.mouseEvent] - mouse down event to detect if user clicked outside of tile
  * @param {any} props.addTileBtn - only exception to clicking outside so the tile stays in edit mode after added
  * @param {function} props.setTileData - callback to update changed properties in parent element
  * @param {function} props.deleteTileData - callback to delete the tile from tiles list
  */
-export function Tile({ title, link, icon, mouseTarget, addTileBtn, setTileData, deleteTileData }) {
+export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, deleteTileData }) {
     const titleDefaultValue = 'New tile';
 
     const [showIconSelect, setShowIconSelect] = useState(false);
@@ -49,17 +49,13 @@ export function Tile({ title, link, icon, mouseTarget, addTileBtn, setTileData, 
     }, [editMode]);
 
     // Exit edit mode when user clicked outside of tile
-    const tile = useRef(null);
-    useEffect(() => {
-        if (
-            mouseTarget &&
-            tile.current &&
-            ![mouseTarget, ReactDOM.findDOMNode(mouseTarget).parentElement].includes(addTileBtn) &&
-            !tile.current.contains(mouseTarget)
-        ) {
+    const thisTile = useRef(null);
+    useUpdateEffect(() => {
+        const target = mouseEvent.target;
+        if (target && !thisTile.current.contains(target)) {
             if (editMode) setEditMode(false);
         }
-    }, [mouseTarget]);
+    }, [mouseEvent]);
 
     // Enter edit mode if mounted and labels not set
     useEffect(() => {
@@ -68,7 +64,7 @@ export function Tile({ title, link, icon, mouseTarget, addTileBtn, setTileData, 
 
     return (
         <a
-            ref={tile}
+            ref={thisTile}
             className='tile'
             href={link}
             target='_blank'
