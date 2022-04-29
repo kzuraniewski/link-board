@@ -1,11 +1,11 @@
 .header {
-    background-color: $primary !important;
+	background-color: $primary !important;
 
-    &__navbar-container {
-        @include ext-each(d-flex, justify-content-between);
-    }
+	&__navbar-container {
+		@include ext-each(d-flex, justify-content-between);
+	}
 
-    &__nav {
-        @include ext-each(me-auto, mb-2, mb-lg-0);
-    }
+	&__nav {
+		@include ext-each(me-auto, mb-2, mb-lg-0);
+	}
 }

@@ -1,7 +1,7 @@
 // allows to move all bootstrap styling into sass files
 
 @mixin ext-each($classes...) {
-    @each $class in $classes {
-        @extend .#{$class};
-    }
+	@each $class in $classes {
+		@extend .#{$class};
+	}
 }

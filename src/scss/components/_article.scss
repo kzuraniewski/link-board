@@ -1,69 +1,69 @@
 .article {
-    &__group {
-        padding: 8rem 0;
+	&__group {
+		padding: 8rem 0;
 
-        background: $light;
+		background: $light;
 
-        &:nth-of-type(2n) {
-            background-color: $secondary;
-            color: $light;
+		&:nth-of-type(2n) {
+			background-color: $secondary;
+			color: $light;
 
-            .article__big {
-                @include ext-each(text-white);
-            }
+			.article__big {
+				@include ext-each(text-white);
+			}
 
-            .fas {
-                color: $light;
-            }
-        }
-    }
+			.fas {
+				color: $light;
+			}
+		}
+	}
 
-    &__content-container {
-        @include ext-each(d-flex, flex-column, justify-content-center);
+	&__content-container {
+		@include ext-each(d-flex, flex-column, justify-content-center);
 
-        &.article__content-container--center {
-            @include ext-each(align-items-center);
-        }
-    }
+		&.article__content-container--center {
+			@include ext-each(align-items-center);
+		}
+	}
 
-    &__icon-container {
-        @include ext-each(d-flex, p-2, mt-3);
+	&__icon-container {
+		@include ext-each(d-flex, p-2, mt-3);
 
-        .fas {
-            @include ext-each(mx-4);
+		.fas {
+			@include ext-each(mx-4);
 
-            font-size: 2.4rem;
-            color: $secondary;
-        }
-    }
+			font-size: 2.4rem;
+			color: $secondary;
+		}
+	}
 
-    &__big {
-        @include ext-each(text-dark);
-    }
+	&__big {
+		@include ext-each(text-dark);
+	}
 
-    &__image {
-        @include ext-each(img-fluid, my-3);
-    }
+	&__image {
+		@include ext-each(img-fluid, my-3);
+	}
 
-    &__row {
-        @include ext-each(flex-wrap-reverse);
-    }
+	&__row {
+		@include ext-each(flex-wrap-reverse);
+	}
 
-    &__cta {
-        @include ext-each(me-3);
+	&__cta {
+		@include ext-each(me-3);
 
-        background-color: $accent !important;
-    }
+		background-color: $accent !important;
+	}
 
-    &__cta--alt {
-        background: none !important;
-        border: 2px solid $accent !important;
-        color: $accent !important;
-    }
+	&__cta--alt {
+		background: none !important;
+		border: 2px solid $accent !important;
+		color: $accent !important;
+	}
 
-    &__arrow {
-        @include ext-each(mt-3, mb-3);
+	&__arrow {
+		@include ext-each(mt-3, mb-3);
 
-        font-size: 2rem;
-    }
+		font-size: 2rem;
+	}
 }

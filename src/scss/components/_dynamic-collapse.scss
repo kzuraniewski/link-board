@@ -1,9 +1,9 @@
 .dynamic-collapse {
-    max-height: 0;
-    overflow: hidden;
-    transition: 0.5s ease-in-out;
+	max-height: 0;
+	overflow: hidden;
+	transition: 0.5s ease-in-out;
 
-    &.show {
-        max-height: 999vh;
-    }
+	&.show {
+		max-height: 999vh;
+	}
 }

@@ -1,22 +1,22 @@
 .button {
-    @include ext-each(my-1);
+	@include ext-each(my-1);
 
-    background: none;
-    color: $accent;
-    border: 3px solid $accent;
-    transition: 0.2s;
+	background: none;
+	color: $accent;
+	border: 3px solid $accent;
+	transition: 0.2s;
 
-    border-radius: 6px;
-    padding: 0.2rem 2.5rem;
+	border-radius: 6px;
+	padding: 0.2rem 2.5rem;
 
-    font-weight: bold;
+	font-weight: bold;
 
-    &:hover {
-        background-color: $accent;
-        color: $light;
-    }
+	&:hover {
+		background-color: $accent;
+		color: $light;
+	}
 
-    &.block {
-        display: block;
-    }
+	&.block {
+		display: block;
+	}
 }

@@ -1,58 +1,58 @@
 html {
-    overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 body {
-    background-color: $light !important;
-    margin: 0;
-    font-family: Lato, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	background-color: $light !important;
+	margin: 0;
+	font-family: Lato, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 a:focus {
-    outline: 0;
-    border: none;
+	outline: 0;
+	border: none;
 }
 
 /// General classes
 
 .logo-link {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .pointer {
-    cursor: pointer !important;
+	cursor: pointer !important;
 }
 
 .accent {
-    color: $accent;
+	color: $accent;
 }
 
 .btn-blank {
-    border: none;
-    background: none;
+	border: none;
+	background: none;
 }
 
 .btn-edit:hover {
-    color: #1266f1;
+	color: #1266f1;
 }
 
 .btn-signin {
-    background-color: $accent !important;
+	background-color: $accent !important;
 }
 
 .btn-container {
-    @include ext-each(d-flex);
+	@include ext-each(d-flex);
 }
 
 .centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }

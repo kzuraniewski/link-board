@@ -1,9 +1,9 @@
 {
-  "projectName": "mdb5-free-react",
-  "meta": {
-    "starter": "mdb5-free-react",
-    "type": "frontend"
-  },
-  "hash": "9409cdff",
-  "domain": "link-board.mdbgo.io"
+	"projectName": "mdb5-free-react",
+	"meta": {
+		"starter": "mdb5-free-react",
+		"type": "frontend"
+	},
+	"hash": "9409cdff",
+	"domain": "link-board.mdbgo.io"
 }

@@ -7,5 +7,5 @@ import React from 'react';
  * @param {*} [props.children]
  */
 export default function DynamicCollapse({ show, children }) {
-    return <div className={`dynamic-collapse${show ? ' show' : ''}`}>{children}</div>;
+	return <div className={`dynamic-collapse${show ? ' show' : ''}`}>{children}</div>;
 }

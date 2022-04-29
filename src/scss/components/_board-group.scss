@@ -1,69 +1,77 @@
 .board-group {
-    @include ext-each(mb-3, p-1, rounded, text-light);
+	@include ext-each(mb-3, p-1, rounded, text-light);
 
-    background: $secondary;
+	background: $secondary;
 
-    &__topbar {
-        @include ext-each(w-100, p-1, d-flex, justify-content-between, user-select-none, pointer);
+	&__topbar {
+		@include ext-each(w-100, p-1, d-flex, justify-content-between, user-select-none, pointer);
 
-        position: relative;
-    }
+		position: relative;
+	}
 
-    &__name {
-        @include ext-each(my-auto, p-0, bg-transparent, text-light, border-0, border-bottom, border-light);
+	&__name {
+		@include ext-each(
+			my-auto,
+			p-0,
+			bg-transparent,
+			text-light,
+			border-0,
+			border-bottom,
+			border-light
+		);
 
-        font-weight: bold;
+		font-weight: bold;
 
-        &:disabled {
-            @include ext-each(border-0, pointer);
+		&:disabled {
+			@include ext-each(border-0, pointer);
 
-            pointer-events: none;
-        }
+			pointer-events: none;
+		}
 
-        &::placeholder {
-            color: $light;
-            opacity: 0.5;
-        }
-    }
+		&::placeholder {
+			color: $light;
+			opacity: 0.5;
+		}
+	}
 
-    &__delete-btn {
-        @include ext-each(btn-blank);
+	&__delete-btn {
+		@include ext-each(btn-blank);
 
-        color: $light;
-        transition: 0.2s;
+		color: $light;
+		transition: 0.2s;
 
-        &.board-group__delete-btn--hide {
-            opacity: 0;
-        }
+		&.board-group__delete-btn--hide {
+			opacity: 0;
+		}
 
-        &:disabled {
-            cursor: pointer;
-        }
+		&:disabled {
+			cursor: pointer;
+		}
 
-        &:hover {
-            color: $accent;
-        }
-    }
+		&:hover {
+			color: $accent;
+		}
+	}
 
-    &__icons-container {
-        @include ext-each(d-flex);
-    }
+	&__icons-container {
+		@include ext-each(d-flex);
+	}
 
-    &__arrow {
-        transition: 0.1s;
+	&__arrow {
+		transition: 0.1s;
 
-        &--hidden {
-            transform: rotate(90deg);
-        }
-    }
+		&--hidden {
+			transform: rotate(90deg);
+		}
+	}
 
-    &__tiles-container {
-        @include ext-each(d-flex, flex-wrap);
-    }
+	&__tiles-container {
+		@include ext-each(d-flex, flex-wrap);
+	}
 
-    &__empty {
-        @include ext-each(p-5, d-flex, justify-content-center, align-items-center);
+	&__empty {
+		@include ext-each(p-5, d-flex, justify-content-center, align-items-center);
 
-        opacity: 0.5;
-    }
+		opacity: 0.5;
+	}
 }

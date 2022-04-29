@@ -1,20 +1,20 @@
 .user-info {
-    &__toggle {
-        @include ext-each(link-light);
+	&__toggle {
+		@include ext-each(link-light);
 
-        cursor: pointer;
-    }
+		cursor: pointer;
+	}
 
-    &__photo {
-        height: $header-element-size;
-        border-radius: 50%;
-    }
+	&__photo {
+		height: $header-element-size;
+		border-radius: 50%;
+	}
 
-    &__dropdown {
-        @include ext-each(user-select-none);
-    }
+	&__dropdown {
+		@include ext-each(user-select-none);
+	}
 
-    &__link {
-        cursor: pointer !important;
-    }
+	&__link {
+		cursor: pointer !important;
+	}
 }

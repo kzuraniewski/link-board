@@ -1,32 +1,32 @@
 .board {
-    @include ext-each(py-4, position-relative);
+	@include ext-each(py-4, position-relative);
 
-    &__add-group {
-        color: $secondary !important;
-        border-color: $secondary !important;
+	&__add-group {
+		color: $secondary !important;
+		border-color: $secondary !important;
 
-        @media (min-width: 768px) {
-            &:hover {
-                background-color: $secondary !important;
-                color: $light !important;
-            }
-        }
-    }
+		@media (min-width: 768px) {
+			&:hover {
+				background-color: $secondary !important;
+				color: $light !important;
+			}
+		}
+	}
 
-    &__add-tile-btn {
-        @include ext-each(m-1);
+	&__add-tile-btn {
+		@include ext-each(m-1);
 
-        width: 10rem;
-        height: 2rem;
+		width: 10rem;
+		height: 2rem;
 
-        color: $light !important;
-        border-color: $light !important;
+		color: $light !important;
+		border-color: $light !important;
 
-        @media (min-width: 768px) {
-            &:hover {
-                background-color: $light !important;
-                color: $secondary !important;
-            }
-        }
-    }
+		@media (min-width: 768px) {
+			&:hover {
+				background-color: $light !important;
+				color: $secondary !important;
+			}
+		}
+	}
 }

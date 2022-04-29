@@ -14,56 +14,56 @@ import React, { useEffect, useRef } from 'react';
  * @param {number} [props.maxDigits] - maximal length of input value
  */
 export function EditableLabel({
-    editMode,
-    setEditMode,
-    value,
-    setValue,
-    placeholder = '',
-    className = null,
-    focus = false,
-    exitOnBlur = false,
-    maxDigits = 999,
+	editMode,
+	setEditMode,
+	value,
+	setValue,
+	placeholder = '',
+	className = null,
+	focus = false,
+	exitOnBlur = false,
+	maxDigits = 999,
 }) {
-    const element = useRef(null);
+	const element = useRef(null);
 
-    // clear all text selection
-    const clearSelection = () => {
-        if (window.getSelection()) window.getSelection().removeAllRanges();
-    };
+	// clear all text selection
+	const clearSelection = () => {
+		if (window.getSelection()) window.getSelection().removeAllRanges();
+	};
 
-    // focus on input if in edit mode, otherwise clear selection
-    useEffect(() => {
-        if (focus) {
-            element.current.focus();
-            element.current.select();
-        } else {
-            clearSelection();
-        }
-    }, [editMode]);
+	// focus on input if in edit mode, otherwise clear selection
+	useEffect(() => {
+		if (focus) {
+			element.current.focus();
+			element.current.select();
+		} else {
+			clearSelection();
+		}
+	}, [editMode]);
 
-    return (
-        <input
-            ref={element}
-            type='text'
-            spellCheck='false'
-            className={className}
-            placeholder={placeholder}
-            disabled={!editMode}
-            value={value}
-            onChange={e => {
-                const value = e.target.value;
-                if (value.length <= maxDigits) setValue(value);
-            }}
-            onKeyDown={e => {
-                if (e.key === 'Enter') {
-                    // @ts-ignore
-                    e.target.blur();
-                    setEditMode(false);
-                }
-            }}
-            onBlur={() => {
-                if (exitOnBlur) setEditMode(false);
-            }}
-        />
-    );
+	return (
+		<input
+			ref={element}
+			type="text"
+			spellCheck="false"
+			className={className}
+			placeholder={placeholder}
+			disabled={!editMode}
+			value={value}
+			onChange={e => {
+				const value = e.target.value;
+				if (value.length <= maxDigits) setValue(value);
+			}}
+			onKeyDown={e => {
+				if (e.key === 'Enter') {
+					// @ts-ignore
+					e.target.blur();
+					setEditMode(false);
+				}
+			}}
+			onBlur={() => {
+				if (exitOnBlur) setEditMode(false);
+			}}
+		/>
+	);
 }
