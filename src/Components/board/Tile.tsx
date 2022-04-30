@@ -1,7 +1,7 @@
-import { MDBCollapse } from 'mdb-react-ui-kit';
 import React, { useState, useEffect, useRef } from 'react';
 import { useUpdateEffect } from '../../hooks';
 import { EditableLabel } from '../EditableLabel';
+import { Collapse } from 'react-bootstrap';
 
 export interface TileData {
 	/**
@@ -144,7 +144,7 @@ export function Tile({
 					</button>
 
 					{/* icon collapse */}
-					<MDBCollapse show={showIconSelect}>
+					<Collapse in={showIconSelect}>
 						<div ref={iconContainer} className="tile__icon-container">
 							{['align-left', 'star', 'music', 'shopping-basket'].map(
 								(iconName, index) => (
@@ -160,7 +160,7 @@ export function Tile({
 								)
 							)}
 						</div>
-					</MDBCollapse>
+					</Collapse>
 				</div>
 
 				<div className="tile__btn-container">
