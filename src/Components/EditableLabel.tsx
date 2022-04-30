@@ -49,18 +49,19 @@ export function EditableLabel({
 	focus = false,
 	exitOnBlur = false,
 	maxDigits = 999,
+	className,
 	...other
 }: EditableLabelProps) {
-	const element = useRef(null);
+	const element = useRef<HTMLInputElement>(null);
 
 	// clear all text selection
 	const clearSelection = () => {
-		if (window.getSelection()) window.getSelection().removeAllRanges();
+		window.getSelection()?.removeAllRanges();
 	};
 
 	// focus on input if in edit mode, otherwise clear selection
 	useEffect(() => {
-		if (focus) {
+		if (element.current && focus) {
 			element.current.focus();
 			element.current.select();
 		} else {
