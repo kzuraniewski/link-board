@@ -24,7 +24,11 @@ export default function UserInfo() {
 	return (
 		<MDBDropdown className="user-info">
 			<MDBDropdownToggle tag="a" className="user-info__toggle">
-				<img src={user.photoURL} alt="User photo" className="user-info__photo" />
+				<img
+					src={user.photoURL as string | undefined}
+					alt="User photo"
+					className="user-info__photo"
+				/>
 			</MDBDropdownToggle>
 			<MDBDropdownMenu className="user-info__dropdown">
 				<MDBDropdownItem>
