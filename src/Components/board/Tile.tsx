@@ -36,6 +36,11 @@ export interface TileProps extends TileData {
 	 * callback to delete the tile from tiles list
 	 */
 	deleteTileData: () => any;
+
+	/**
+	 * only exception to clicking outside so the tile stays in edit mode after added
+	 */
+	addTileBtn: React.RefObject<HTMLElement>;
 }
 
 /**
