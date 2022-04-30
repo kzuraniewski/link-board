@@ -9,7 +9,7 @@ export interface BoardGroupData {
 }
 
 export interface BoardGroupProps extends BoardGroupData {
-	setData: Function;
+	setData: (data: BoardGroupData) => any;
 	deleteGroup: Function;
 	children?: React.ReactNode;
 }
