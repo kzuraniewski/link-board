@@ -1,17 +1,44 @@
 import React, { useEffect, useRef } from 'react';
 
+export interface EditableLabelProps extends React.InputHTMLAttributes<HTMLInputElement> {
+	/**
+	 * Whether the input should be editable or not
+	 */
+	editMode: boolean;
+
+	/**
+	 * Function to set parent's edit mode state
+	 */
+	setEditMode: Function;
+
+	/**
+	 * Function to set label's value
+	 */
+	setValue: Function;
+
+	/**
+	 * Input field's placeholder
+	 */
+	placeholder?: string;
+
+	/**
+	 * Whether the property should be focused and selected on edit mode
+	 */
+	focus?: boolean;
+
+	/**
+	 * Whether to exit when lost focus
+	 */
+	exitOnBlur?: boolean;
+
+	/**
+	 * Maximal length of input value
+	 */
+	maxDigits?: number;
+}
+
 /**
  * Returns an input which allows to be editable when in edit mode
- * @param {object} props
- * @param {boolean} props.editMode - whether the input should be editable or not
- * @param {function} props.setEditMode - function to set parent's edit mode state
- * @param {string} props.value - label value
- * @param {function} props.setValue - function to set label's value
- * @param {string} [props.className = null] - optional class
- * @param {string} [props.placeholder] - input field's placeholder
- * @param {boolean} [props.focus] - whether the property should be focused and selected on edit mode
- * @param {boolean} [props.exitOnBlur] - whether to exit when lost focus
- * @param {number} [props.maxDigits] - maximal length of input value
  */
 export function EditableLabel({
 	editMode,
@@ -19,11 +46,11 @@ export function EditableLabel({
 	value,
 	setValue,
 	placeholder = '',
-	className = null,
 	focus = false,
 	exitOnBlur = false,
 	maxDigits = 999,
-}) {
+	...other
+}: EditableLabelProps) {
 	const element = useRef(null);
 
 	// clear all text selection
@@ -64,6 +91,7 @@ export function EditableLabel({
 			onBlur={() => {
 				if (exitOnBlur) setEditMode(false);
 			}}
+			{...other}
 		/>
 	);
 }
