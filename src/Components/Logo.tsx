@@ -1,5 +1,12 @@
 import React from 'react';
 
+export interface LogoProps {
+	/**
+	 * Whether to use the smaller version of logo
+	 */
+	small?: boolean;
+}
+
 export default function Logo({ small = false }) {
 	return (
 		<>
