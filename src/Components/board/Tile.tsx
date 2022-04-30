@@ -3,23 +3,25 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useUpdateEffect } from '../../hooks';
 import { EditableLabel } from '../EditableLabel';
 
-export interface TileProps {
+export interface TileData {
 	/**
 	 * tile's title. If an empty string is passed, then the default value of 'New tile' will
 	 * be set after exitting edit mode.
 	 */
-	title: string;
+	title?: string;
 
 	/**
 	 * tile's url
 	 */
-	link: string;
+	link?: string;
 
 	/**
 	 * tile's background as a Font Awesome icon name
 	 */
-	icon: string;
+	icon?: string;
+}
 
+export interface TileProps extends TileData {
 	/**
 	 * mouse down event to detect if user clicked outside of tile
 	 */
@@ -28,24 +30,31 @@ export interface TileProps {
 	/**
 	 * callback to update changed properties in parent element
 	 */
-	setTileData: Function;
+	setTileData: (data: TileData) => any;
 
 	/**
 	 * callback to delete the tile from tiles list
 	 */
-	deleteTileData: Function;
+	deleteTileData: () => any;
 }
 
 /**
  * Editable tile containing its title, link and preview
  */
-export function Tile({ title, link, icon, mouseEvent, setTileData, deleteTileData }: TileProps) {
+export function Tile({
+	title = '',
+	link = '',
+	icon = '',
+	mouseEvent,
+	setTileData,
+	deleteTileData,
+}: TileProps) {
 	const titleDefaultValue = 'New tile';
 	const mobileBreakpoint = 768;
 
-	const thisTile = useRef(null);
-	const iconContainer = useRef(null);
-	const iconBtn = useRef(null);
+	const thisTile = useRef<HTMLAnchorElement>(null);
+	const iconContainer = useRef<HTMLDivElement>(null);
+	const iconBtn = useRef<HTMLButtonElement>(null);
 
 	// Edit mode on when title empty
 	const [editMode, setEditMode] = useState(title.length === 0);
@@ -59,7 +68,7 @@ export function Tile({ title, link, icon, mouseEvent, setTileData, deleteTileDat
 	// Update data after closing edit mode
 	useUpdateEffect(() => {
 		if (!editMode) {
-			const data = {
+			const data: TileData = {
 				title: titleValue,
 				link: linkValue,
 			};
@@ -77,13 +86,21 @@ export function Tile({ title, link, icon, mouseEvent, setTileData, deleteTileDat
 	}, [editMode]);
 
 	useUpdateEffect(() => {
-		const target = mouseEvent.target;
+		if (!mouseEvent) return;
+
+		const target = mouseEvent.target as Node;
 		if (target && editMode) {
 			// Clicked outside of tile
-			if (!thisTile.current.contains(target)) setEditMode(false);
+			if (!thisTile.current?.contains(target)) {
+				setEditMode(false);
+			}
 			// Clicked inside the tile but outside of icon container
-			else if (!iconContainer.current.contains(target) && !iconBtn.current.contains(target))
+			else if (
+				!iconContainer.current?.contains(target) &&
+				!iconBtn.current?.contains(target)
+			) {
 				setShowIconSelect(false);
+			}
 		}
 	}, [mouseEvent]);
 
