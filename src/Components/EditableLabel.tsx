@@ -9,12 +9,12 @@ export interface EditableLabelProps extends React.InputHTMLAttributes<HTMLInputE
 	/**
 	 * Function to set parent's edit mode state
 	 */
-	setEditMode: Function;
+	setEditMode: (on: boolean) => void;
 
 	/**
 	 * Function to set label's value
 	 */
-	setValue: Function;
+	setValue: (value: string) => void;
 
 	/**
 	 * Input field's placeholder
