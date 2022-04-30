@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function Loading({ centered = false }) {
+export interface LoadingProps {
+	centered?: boolean;
+}
+
+export default function Loading({ centered = false }: LoadingProps) {
 	const style = {
 		position: 'absolute',
 		top: '50%',
