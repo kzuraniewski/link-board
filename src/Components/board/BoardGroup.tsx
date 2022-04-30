@@ -3,16 +3,27 @@ import { CollapseArrow } from './CollapseArrow';
 import { EditableLabel } from '../EditableLabel';
 import DynamicCollapse from '../DynamicCollapse';
 
+export interface BoardGroupData {
+	name?: string;
+	open?: boolean;
+}
+
+export interface BoardGroupProps extends BoardGroupData {
+	setData: Function;
+	deleteGroup: Function;
+	children?: React.ReactNode;
+}
+
 /**
  * Hideable and editable board group containing its tiles
- * @param {object} props
- * @param {string} props.name - name of the group
- * @param {function} props.setData - callback to update this group's data in the parent component
- * @param {function} props.deleteGroup - callbak to remove this group
- * @param {boolean} [props.open = true] - whether the group is open
- * @param {any} [props.children = null]
  */
-export function BoardGroup({ name, setData, deleteGroup, open = true, children = null }) {
+export function BoardGroup({
+	name = '',
+	open = true,
+	setData,
+	deleteGroup,
+	children = null,
+}: BoardGroupProps) {
 	const defaultName = 'New group';
 
 	const [show, setShow] = useState(open);
