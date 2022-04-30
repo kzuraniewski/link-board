@@ -1,10 +1,9 @@
-// @ts-nocheck
-const path = require('path');
-const Html = require('html-webpack-plugin');
-const MiniCSS = require('mini-css-extract-plugin');
+import path from 'path';
+import Html from 'html-webpack-plugin';
+import MiniCSS from 'mini-css-extract-plugin';
 
 module.exports = {
-	entry: './src/js/index.js',
+	entry: './src/js/index.tsx',
 
 	output: {
 		path: path.resolve(__dirname, 'build'),
@@ -12,7 +11,7 @@ module.exports = {
 	},
 
 	devServer: {
-		contentBase: path.join(__dirname, `public`),
+		contentBase: path.join(__dirname, 'public'),
 		publicPath: '/public/',
 		compress: true,
 		port: 9000,
