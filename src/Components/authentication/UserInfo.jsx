@@ -9,8 +9,8 @@ import {
 } from 'mdb-react-ui-kit';
 import { auth, expectSignIn } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import LogIn from './LogIn';
-import Loading from './Loading';
+import LogIn from '../authentication/LogIn';
+import Loading from '../authentication/Loading';
 import { handleSignOut } from '../../firebase';
 
 export default function UserInfo() {
