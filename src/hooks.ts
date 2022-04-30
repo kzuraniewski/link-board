@@ -1,7 +1,10 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // useEffect but does not trigger on mount
-export const useUpdateEffect = (effect, deps) => {
+export const useUpdateEffect = (
+	effect: React.EffectCallback,
+	deps: React.DependencyList | undefined
+) => {
 	const didMount = useRef(false);
 
 	useEffect(() => {
