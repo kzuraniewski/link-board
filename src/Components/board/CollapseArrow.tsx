@@ -1,6 +1,10 @@
 import React from 'react';
 
-export function CollapseArrow({ show }) {
+export interface CollapseArrowProps {
+	show: boolean;
+}
+
+export function CollapseArrow({ show }: CollapseArrowProps) {
 	return (
 		<i
 			className={`fas fa-sort-down board-group__arrow${
