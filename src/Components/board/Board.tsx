@@ -1,16 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
 import { useUpdateEffect } from '../../hooks';
 
 import Loading from '../authentication/Loading';
 import LogIn from '../authentication/LogIn';
-import { BoardGroup } from './BoardGroup';
-import { Tile } from './Tile';
+import { BoardGroup, BoardGroupData } from './BoardGroup';
+import { Tile, TileData } from './Tile';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, expectSignIn, database } from '../../firebase';
-import { collection, getDocs, doc } from '@firebase/firestore';
+import { collection, getDocs, doc, QueryDocumentSnapshot, DocumentData } from '@firebase/firestore';
 import { setDoc } from 'firebase/firestore';
+import { User } from 'firebase/auth';
+
+interface Group extends BoardGroupData {
+	tiles: TileData[];
+}
 
 /**
  * Gathers group info and interacts with firebase
@@ -18,52 +23,49 @@ import { setDoc } from 'firebase/firestore';
 export default function Board() {
 	const [user] = useAuthState(auth);
 
-	const [groups, setGroups] = useState([]);
+	const [groups, setGroups] = useState<Group[]>([]);
 
 	// Set mouse down target which will be passed to Tile elements
-	const [mouseEvent, setMouseEvent] = useState(null);
-	const addTileBtn = useRef(null);
+	const [mouseEvent, setMouseEvent] = useState<MouseEvent>();
+	// TODO: Proper template type
+	const addTileBtn = useRef<any>(null);
 
 	// Get the user's group doc, create if not found
-	const getBoardDoc = async () => {
+	const getBoardDoc = async (user: User) => {
 		const firebaseCollection = collection(database, 'BoardData');
 
 		// Get the user's group doc
-		let boardDoc = await getDocs(firebaseCollection).then(
-			snapshot => snapshot.docs.filter(doc => doc.id === user.uid)[0]
-		);
-
-		// let boardDoc = doc(firebaseCollection, user.uid);
+		let boardDoc = (await getDocs(firebaseCollection)).docs.find(doc => doc.id === user.uid);
 
 		// Create new user's group doc if not found
 		if (!boardDoc) {
-			const templateGroup = {
-				groups: [
-					{
-						name: 'New group',
-						open: true,
-						tiles: [],
-					},
-				],
+			const templateGroup: Group = {
+				name: 'New group',
+				open: true,
+				tiles: [],
 			};
 
-			await setDoc(doc(firebaseCollection, user.uid), templateGroup);
-			boardDoc = await getDocs(firebaseCollection)[user.uid];
+			const docData = {
+				groups: [templateGroup],
+			};
+
+			await setDoc(doc(firebaseCollection, user.uid), docData);
+			boardDoc = (await getDocs(firebaseCollection)).docs.find(doc => doc.id === user.uid);
 		}
 
-		return boardDoc;
+		return boardDoc as QueryDocumentSnapshot<DocumentData>;
 	};
 
 	// Collect group data from database
-	const pull = async () => {
-		const boardDoc = await getBoardDoc();
+	const pull = async (user: User) => {
+		const boardDoc = await getBoardDoc(user);
 
 		setGroups(() => boardDoc.data().groups);
 	};
 
 	// Upload data to server
-	const push = async () => {
-		const boardDoc = await getBoardDoc();
+	const push = async (user: User) => {
+		const boardDoc = await getBoardDoc(user);
 
 		// Filter out all undefined tiles
 		const fixedGroups = groups.map(group => ({
@@ -78,10 +80,10 @@ export default function Board() {
 		if (!user) return;
 
 		// Collect data from database
-		pull();
+		pull(user);
 
 		// Listen for mouse click for exiting tiles' edit mode
-		const cb = e => setMouseEvent(e);
+		const cb = (e: MouseEvent) => setMouseEvent(e);
 		document.addEventListener('mouseup', cb);
 
 		return () => {
@@ -91,7 +93,9 @@ export default function Board() {
 
 	// Upload groups every time it changes
 	useUpdateEffect(() => {
-		push();
+		if (!user) return;
+
+		push(user);
 	}, [groups]);
 
 	// add new empty editable group
@@ -99,7 +103,7 @@ export default function Board() {
 		/// Upload first then pull so Firebase generates id on its own
 
 		// Empty group template
-		const groupTemplate = {
+		const groupTemplate: Group = {
 			name: '',
 			open: true,
 			tiles: [],
@@ -110,11 +114,11 @@ export default function Board() {
 
 	/**
 	 * Set or add tile record
-	 * @param {number} groupIndex - index of the group object from groups list
-	 * @param {number} tileIndex - index of tile from the selected group
-	 * @param {{ title: string, link: string, icon: string }} tileData - title and link of the tile
+	 * @param groupIndex - index of the group object from groups list
+	 * @param tileIndex - index of tile from the selected group
+	 * @param tileData - title and link of the tile
 	 */
-	const setTileData = (groupIndex, tileIndex, tileData) => {
+	const setTileData = (groupIndex: number, tileIndex: number, tileData: TileData) => {
 		setGroups(groups => {
 			const t = [...groups];
 
@@ -129,10 +133,10 @@ export default function Board() {
 
 	/**
 	 * Delete tile record
-	 * @param {number} groupIndex - key of the group object from groups list
-	 * @param {number} tileIndex - index of tile from the selected group
+	 * @param groupIndex - key of the group object from groups list
+	 * @param tileIndex - index of tile from the selected group
 	 */
-	const deleteTile = (groupIndex, tileIndex) => {
+	const deleteTile = (groupIndex: number, tileIndex: number) => {
 		setGroups(groups => {
 			let t = [...groups];
 			delete t[groupIndex].tiles[tileIndex];
@@ -143,10 +147,10 @@ export default function Board() {
 
 	/**
 	 * Update board's data in the groups object
-	 * @param {number} groupIndex - key of the group object from groups list
-	 * @param {object} data - group's modified keys
+	 * @param groupIndex - key of the group object from groups list
+	 * @param data - group's modified keys
 	 */
-	const setGroupData = (groupIndex, data) => {
+	const setGroupData = (groupIndex: number, data: Group) => {
 		setGroups(groups => {
 			const t = [...groups];
 
@@ -161,9 +165,9 @@ export default function Board() {
 
 	/**
 	 * Removes a group of given index from groups array
-	 * @param {number} groupIndex
+	 * @param groupIndex - key of the group object from groups list
 	 */
-	const deleteGroup = groupIndex => {
+	const deleteGroup = (groupIndex: number) => {
 		setGroups(groups => {
 			const t = [...groups];
 			t.splice(groupIndex, 1);
@@ -189,7 +193,7 @@ export default function Board() {
 					key={groupIndex}
 					open={open}
 					name={name}
-					setData={data => setGroupData(groupIndex, data)}
+					setData={data => setGroupData(groupIndex, data as Group)}
 					deleteGroup={() => deleteGroup(groupIndex)}
 				>
 					{tiles &&
