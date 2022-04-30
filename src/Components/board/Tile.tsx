@@ -3,18 +3,43 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useUpdateEffect } from '../../hooks';
 import { EditableLabel } from '../EditableLabel';
 
+export interface TileProps {
+	/**
+	 * tile's title. If an empty string is passed, then the default value of 'New tile' will
+	 * be set after exitting edit mode.
+	 */
+	title: string;
+
+	/**
+	 * tile's url
+	 */
+	link: string;
+
+	/**
+	 * tile's background as a Font Awesome icon name
+	 */
+	icon: string;
+
+	/**
+	 * mouse down event to detect if user clicked outside of tile
+	 */
+	mouseEvent?: MouseEvent;
+
+	/**
+	 * callback to update changed properties in parent element
+	 */
+	setTileData: Function;
+
+	/**
+	 * callback to delete the tile from tiles list
+	 */
+	deleteTileData: Function;
+}
+
 /**
  * Editable tile containing its title, link and preview
- * @param {object} props
- * @param {string} props.title - tile's title
- * @param {string} props.link - tile's path
- * @param {string} props.icon - tile's background as a Font Awesome icon name
- * @param {any} [props.mouseEvent] - mouse down event to detect if user clicked outside of tile
- * @param {any} props.addTileBtn - only exception to clicking outside so the tile stays in edit mode after added
- * @param {function} props.setTileData - callback to update changed properties in parent element
- * @param {function} props.deleteTileData - callback to delete the tile from tiles list
  */
-export function Tile({ title, link, icon, mouseEvent, addTileBtn, setTileData, deleteTileData }) {
+export function Tile({ title, link, icon, mouseEvent, setTileData, deleteTileData }: TileProps) {
 	const titleDefaultValue = 'New tile';
 	const mobileBreakpoint = 768;
 
