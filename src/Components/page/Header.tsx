@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-	MDBContainer,
-	MDBNavbar,
-	MDBNavbarBrand,
-	MDBNavbarToggler,
-	MDBIcon,
-	MDBNavbarNav,
-	MDBNavbarItem,
-	MDBNavbarLink,
-	MDBCollapse,
-} from 'mdb-react-ui-kit';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import Logo from '../Logo';
 import UserInfo from '../authentication/UserInfo';
 
@@ -17,42 +7,39 @@ export default function Header() {
 	const [showBasic, setShowBasic] = useState(false);
 
 	return (
-		<MDBNavbar expand="lg" dark className="header">
-			<MDBContainer className="header__navbar-container">
-				<MDBNavbarBrand href="#">
+		<Navbar expand="lg" bg="dark" variant="dark" className="header">
+			<Container className="header__navbar-container">
+				<Navbar.Brand href="#">
 					<Logo />
-				</MDBNavbarBrand>
+				</Navbar.Brand>
 
-				<MDBNavbarToggler
+				<Navbar.Toggle
 					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
+					aria-expanded={showBasic}
 					aria-label="Toggle navigation"
 					onClick={() => setShowBasic(!showBasic)}
 				>
-					<MDBIcon icon="bars" fas />
-				</MDBNavbarToggler>
+					{/* <MDBIcon icon="bars" fas /> */}
+					<i className="fas fa-bars" />
+				</Navbar.Toggle>
 
-				<MDBCollapse navbar show={showBasic}>
-					<MDBNavbarNav className="header__nav">
-						<MDBNavbarItem>
-							<MDBNavbarLink href="#/board" onClick={() => setShowBasic(false)}>
-								Your board
-							</MDBNavbarLink>
-						</MDBNavbarItem>
+				<Navbar.Collapse in={showBasic}>
+					<Nav className="header__nav">
+						<Nav.Link href="#/board" onClick={() => setShowBasic(false)}>
+							Your board
+						</Nav.Link>
 
-						<MDBNavbarItem>
-							<MDBNavbarLink href="#/info" onClick={() => setShowBasic(false)}>
-								About
-							</MDBNavbarLink>
-						</MDBNavbarItem>
-					</MDBNavbarNav>
+						<Nav.Link href="#/info" onClick={() => setShowBasic(false)}>
+							About
+						</Nav.Link>
+					</Nav>
 
 					{/* user info */}
 					<div className="flex-shrink-0">
 						<UserInfo />
 					</div>
-				</MDBCollapse>
-			</MDBContainer>
-		</MDBNavbar>
+				</Navbar.Collapse>
+			</Container>
+		</Navbar>
 	);
 }
