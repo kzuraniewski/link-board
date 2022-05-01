@@ -1,4 +1,4 @@
-import { MDBBtn, MDBCol, MDBContainer, MDBRow } from 'mdb-react-ui-kit';
+import { Container, Button, Col, Row } from 'react-bootstrap';
 import React from 'react';
 import Logo from '../Logo';
 import badBookmarks from '../../images/bad-bookmarks.png';
@@ -9,9 +9,9 @@ export default function Intro() {
 	return (
 		<article className="article">
 			<div className="article__group">
-				<MDBContainer>
-					<MDBRow className="article__row">
-						<MDBCol size="md" className="article__content-container">
+				<Container>
+					<Row className="article__row">
+						<Col size="md" className="article__content-container">
 							<h1 className="article__big">
 								Too many bookmarks? <Logo /> is for you!
 							</h1>
@@ -20,12 +20,12 @@ export default function Intro() {
 							</p>
 
 							<div className="btn-container">
-								<MDBBtn href="#/board" className="article__cta">
+								<Button href="#/board" className="article__cta">
 									Your board
-								</MDBBtn>
+								</Button>
 							</div>
-						</MDBCol>
-						<MDBCol
+						</Col>
+						<Col
 							size="md"
 							className="article__content-container article__content-container--center"
 						>
@@ -42,13 +42,13 @@ export default function Intro() {
 								alt="Good bookmarks"
 								className="article__image"
 							/>
-						</MDBCol>
-					</MDBRow>
-				</MDBContainer>
+						</Col>
+					</Row>
+				</Container>
 			</div>
 
 			<div className="article__group">
-				<MDBContainer>
+				<Container>
 					<div className="article__content-container article__content-container--center">
 						<h1 className="article__big">
 							Over <span className="accent">1</span> users worldwide
@@ -62,25 +62,25 @@ export default function Intro() {
 							<i className="fas fa-laptop"></i>
 						</div>
 					</div>
-				</MDBContainer>
+				</Container>
 			</div>
 
 			<div className="article__group">
-				<MDBContainer>
-					<MDBRow className="article__row">
-						<MDBCol
+				<Container>
+					<Row className="article__row">
+						<Col
 							size="md"
 							className="article__content-container article__content-container--center"
 						>
 							<img src={preview} alt="Board preview" className="article__image" />
-						</MDBCol>
+						</Col>
 
-						<MDBCol size="md" className="article__content-container">
+						<Col size="md" className="article__content-container">
 							<h1 className="article__big">Store your links in one place</h1>
 							<p>Gain access to your bookmarks from any browser or device.</p>
-						</MDBCol>
-					</MDBRow>
-				</MDBContainer>
+						</Col>
+					</Row>
+				</Container>
 			</div>
 		</article>
 	);
