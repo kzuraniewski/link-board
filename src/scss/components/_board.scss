@@ -4,6 +4,7 @@
 	&__add-group {
 		color: $secondary !important;
 		border-color: $secondary !important;
+		width: 100%;
 
 		@media (min-width: 768px) {
 			&:hover {

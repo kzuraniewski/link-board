@@ -1,5 +1,5 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Container } from 'react-bootstrap';
 import { useUpdateEffect } from '../../hooks';
 
 import Loading from '../authentication/Loading';
@@ -187,7 +187,7 @@ export default function Board() {
 	}
 
 	return (
-		<MDBContainer className="board">
+		<Container className="board">
 			{groups.map(({ name, open, tiles }, groupIndex) => (
 				<BoardGroup
 					key={groupIndex}
@@ -213,11 +213,11 @@ export default function Board() {
 						))}
 
 					{/* new tile button */}
-					<MDBBtn
+					<Button
 						ref={addTileBtn}
 						className="board__add-tile-btn"
 						size="sm"
-						outline
+						variant="outline-primary"
 						onClick={() =>
 							setTileData(groupIndex, tiles ? tiles.length : 0, {
 								title: '',
@@ -227,14 +227,19 @@ export default function Board() {
 						}
 					>
 						<i className="fas fa-plus"></i>
-					</MDBBtn>
+					</Button>
 				</BoardGroup>
 			))}
 
 			{/* new board button */}
-			<MDBBtn className="board__add-group" size="sm" block outline onClick={addGroup}>
+			<Button
+				className="board__add-group"
+				variant="outline-primary"
+				size="sm"
+				onClick={addGroup}
+			>
 				<i className="fas fa-plus"></i>
-			</MDBBtn>
-		</MDBContainer>
+			</Button>
+		</Container>
 	);
 }
