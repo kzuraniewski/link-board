@@ -15,7 +15,7 @@ export default function UserInfo() {
 	}
 
 	return (
-		<Dropdown className="user-info">
+		<Dropdown className="user-info" align="end">
 			<Dropdown.Toggle as="a" className="user-info__toggle">
 				<img
 					src={user.photoURL as string | undefined}
