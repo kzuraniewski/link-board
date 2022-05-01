@@ -11,7 +11,7 @@
 	}
 
 	&__dropdown {
-		@include ext-each(user-select-none);
+		@include ext-each(user-select-none, py-1);
 	}
 
 	&__link {
